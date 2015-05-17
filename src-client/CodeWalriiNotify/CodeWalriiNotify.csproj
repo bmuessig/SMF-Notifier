@@ -60,6 +60,8 @@
     <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="FeedRetriever.cs" />
     <Compile Include="MessageBox.cs" />
+    <Compile Include="RecyclerView.cs" />
+    <Compile Include="gtk-gui\CodeWalriiNotify.RecyclerView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

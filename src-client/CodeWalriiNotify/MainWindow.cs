@@ -29,23 +29,16 @@ namespace CodeWalriiNotify
 			String js = fdr.RetrieveData("");
 			List<PostMeta> posts = PostMeta.FromJSON(js);
 
-			// some testing
+			recyclerview1.Clear();
 
-			postwidget1.Topic = posts[0].Subject;
-			postwidget1.Body = posts[0].Body;
-			postwidget1.Poster = posts[0].Poster;
-			postwidget1.Time = posts[0].Time.ToString();
-
-			postwidget2.Topic = posts[1].Subject;
-			postwidget2.Body = posts[1].Body;
-			postwidget2.Poster = posts[1].Poster;
-			postwidget2.Time = posts[1].Time.ToString();
-
-			postwidget3.Topic = posts[2].Subject;
-			postwidget3.Body = posts[2].Body;
-			postwidget3.Poster = posts[2].Poster;
-			postwidget3.Time = posts[2].Time.ToString();
-
+			foreach (PostMeta post in posts) {
+				var pw = new PostWidget();
+				pw.Topic = post.Subject;
+				pw.Body = post.Body;
+				pw.Poster = post.Poster;
+				pw.Time = post.Time.ToString();
+				recyclerview1.InsertTop(pw);
+			}
 		}
 	}
 }

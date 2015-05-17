@@ -14,11 +14,15 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Label titleLabel;
 		
-		private global::Gtk.Label AuthorLabel;
+		private global::Gtk.Label timeLabel;
 		
 		private global::Gtk.EventBox bodyBox;
 		
 		private global::Gtk.Fixed bodyContainer;
+		
+		private global::Gtk.Label bodyMarkup;
+		
+		private global::Gtk.Label authorLabel;
 
 		protected virtual void Build ()
 		{
@@ -55,15 +59,15 @@ namespace CodeWalriiNotify
 			w1.X = 9;
 			w1.Y = 7;
 			// Container child headerContainer.Gtk.Fixed+FixedChild
-			this.AuthorLabel = new global::Gtk.Label ();
-			this.AuthorLabel.WidthRequest = 200;
-			this.AuthorLabel.HeightRequest = 15;
-			this.AuthorLabel.Name = "AuthorLabel";
-			this.AuthorLabel.Xalign = 1F;
-			this.AuthorLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Author");
-			this.headerContainer.Add (this.AuthorLabel);
-			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.AuthorLabel]));
-			w2.X = 241;
+			this.timeLabel = new global::Gtk.Label ();
+			this.timeLabel.WidthRequest = 200;
+			this.timeLabel.HeightRequest = 15;
+			this.timeLabel.Name = "timeLabel";
+			this.timeLabel.Xalign = 1F;
+			this.timeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Time");
+			this.headerContainer.Add (this.timeLabel);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.timeLabel]));
+			w2.X = 244;
 			w2.Y = 53;
 			this.headerBox.Add (this.headerContainer);
 			this.vLayoutBox.Add (this.headerBox);
@@ -78,10 +82,35 @@ namespace CodeWalriiNotify
 			this.bodyContainer.HeightRequest = 200;
 			this.bodyContainer.Name = "bodyContainer";
 			this.bodyContainer.HasWindow = false;
+			// Container child bodyContainer.Gtk.Fixed+FixedChild
+			this.bodyMarkup = new global::Gtk.Label ();
+			this.bodyMarkup.WidthRequest = 430;
+			this.bodyMarkup.HeightRequest = 150;
+			this.bodyMarkup.Name = "bodyMarkup";
+			this.bodyMarkup.Xalign = 0F;
+			this.bodyMarkup.Yalign = 0F;
+			this.bodyMarkup.LabelProp = global::Mono.Unix.Catalog.GetString ("BodyMarkup");
+			this.bodyMarkup.UseMarkup = true;
+			this.bodyMarkup.Wrap = true;
+			this.bodyContainer.Add (this.bodyMarkup);
+			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.bodyMarkup]));
+			w5.X = 10;
+			w5.Y = 11;
+			// Container child bodyContainer.Gtk.Fixed+FixedChild
+			this.authorLabel = new global::Gtk.Label ();
+			this.authorLabel.WidthRequest = 200;
+			this.authorLabel.HeightRequest = 15;
+			this.authorLabel.Name = "authorLabel";
+			this.authorLabel.Xalign = 1F;
+			this.authorLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Author");
+			this.bodyContainer.Add (this.authorLabel);
+			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.authorLabel]));
+			w6.X = 244;
+			w6.Y = 175;
 			this.bodyBox.Add (this.bodyContainer);
 			this.vLayoutBox.Add (this.bodyBox);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
-			w6.Position = 1;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
+			w8.Position = 1;
 			this.mainBox.Add (this.vLayoutBox);
 			this.Add (this.mainBox);
 			if ((this.Child != null)) {

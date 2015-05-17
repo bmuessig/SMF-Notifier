@@ -106,15 +106,15 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="AuthorLabel">
+                      <widget class="Gtk.Label" id="timeLabel">
                         <property name="MemberName" />
                         <property name="WidthRequest">200</property>
                         <property name="HeightRequest">15</property>
                         <property name="Xalign">1</property>
-                        <property name="LabelProp" translatable="yes">Author</property>
+                        <property name="LabelProp" translatable="yes">Time</property>
                       </widget>
                       <packing>
-                        <property name="X">241</property>
+                        <property name="X">244</property>
                         <property name="Y">53</property>
                       </packing>
                     </child>
@@ -135,6 +135,35 @@
                     <property name="WidthRequest">200</property>
                     <property name="HeightRequest">200</property>
                     <property name="HasWindow">False</property>
+                    <child>
+                      <widget class="Gtk.Label" id="bodyMarkup">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">430</property>
+                        <property name="HeightRequest">150</property>
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LabelProp" translatable="yes">BodyMarkup</property>
+                        <property name="UseMarkup">True</property>
+                        <property name="Wrap">True</property>
+                      </widget>
+                      <packing>
+                        <property name="X">10</property>
+                        <property name="Y">11</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="authorLabel">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">200</property>
+                        <property name="HeightRequest">15</property>
+                        <property name="Xalign">1</property>
+                        <property name="LabelProp" translatable="yes">Author</property>
+                      </widget>
+                      <packing>
+                        <property name="X">244</property>
+                        <property name="Y">175</property>
+                      </packing>
+                    </child>
                   </widget>
                 </child>
               </widget>

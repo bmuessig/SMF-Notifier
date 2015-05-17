@@ -3,10 +3,10 @@ using Gtk;
 
 namespace CodeWalriiNotify
 {
-	public partial class MainWindow: Gtk.Window
+	public partial class MainWindow: Window
 	{
 		public MainWindow()
-			: base(Gtk.WindowType.Toplevel)
+			: base(WindowType.Toplevel)
 		{
 			Build();
 		}

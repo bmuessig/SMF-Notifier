@@ -49,6 +49,37 @@ namespace CodeWalriiNotify
 				titleLabel.Text = value;
 			}
 		}
+
+		public String Body {
+			get {
+				return bodyMarkup.Text;
+			}
+
+			set {
+				bodyMarkup.Text = value;
+			}
+		}
+
+		public String Poster {
+			get {
+				return authorLabel.Text;
+			}
+
+			set {
+				authorLabel.Text = value;
+			}
+		}
+
+		public String Time {
+			get {
+				return timeLabel.Text;
+			}
+
+			set {
+				timeLabel.Text = value;
+			}
+		}
+
 	}
 }
 

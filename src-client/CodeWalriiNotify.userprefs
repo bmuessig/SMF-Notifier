@@ -1,15 +1,21 @@
 ﻿<Properties StartupItem="CodeWalriiNotify\CodeWalriiNotify.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\PostMeta.cs">
     <Files>
       <File FileName="CodeWalriiNotify\Program.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="38" Column="2" />
-      <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="3" Column="1" />
-      <File FileName="CodeWalriiNotify\DynamicJsonConverter.cs" Line="8" Column="18" />
+      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="31" Column="37" />
+      <File FileName="CodeWalriiNotify\PostMeta.cs" Line="64" Column="3" />
+      <File FileName="CodeWalriiNotify\DynamicJsonConverter.cs" Line="32" Column="3" />
+      <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="2" Column="18" />
+      <File FileName="CodeWalriiNotify\MessageBox.cs" Line="8" Column="50" />
+      <File FileName="CodeWalriiNotify\PostWidget.cs" Line="45" Column="28" />
+      <File FileName="CodeWalriiNotify\DynamicJsonObject.cs" Line="101" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\PostMeta.cs" line="54" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

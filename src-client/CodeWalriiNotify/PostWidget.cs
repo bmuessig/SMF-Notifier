@@ -39,6 +39,16 @@ namespace CodeWalriiNotify
 		{
 
 		}
+
+		public String Title {
+			get {
+				return titleLabel.Text;
+			}
+
+			set {
+				titleLabel.Text = value;
+			}
+		}
 	}
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
@@ -16,6 +17,12 @@ namespace CodeWalriiNotify
 		{
 			return Time.ToString();
 		}
+
+		public static PostMeta FromJToken(JToken postToken)
+		{
+			return new PostMeta();
+		}
+
 	}
 }
 

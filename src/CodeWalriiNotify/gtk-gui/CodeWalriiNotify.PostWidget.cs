@@ -89,7 +89,8 @@ namespace CodeWalriiNotify
 			this.bodyMarkup.Name = "bodyMarkup";
 			this.bodyMarkup.Xalign = 0F;
 			this.bodyMarkup.Yalign = 0F;
-			this.bodyMarkup.LabelProp = global::Mono.Unix.Catalog.GetString ("BodyMarkup");
+			this.bodyMarkup.LabelProp = "BodyMarkup\n\nSo <u>this</u> <i>is</i> some <a href=\"http://codewalr.us/\">working</" +
+			"a> <b>markup</b>!";
 			this.bodyMarkup.UseMarkup = true;
 			this.bodyMarkup.Wrap = true;
 			this.bodyContainer.Add (this.bodyMarkup);

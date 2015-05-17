@@ -27,7 +27,6 @@
             <child>
               <widget class="Gtk.VBox" id="vbox1">
                 <property name="MemberName" />
-                <property name="HeightRequest">1000</property>
                 <property name="Spacing">6</property>
                 <child>
                   <widget class="CodeWalriiNotify.PostWidget" id="postwidget1">
@@ -142,7 +141,9 @@
                         <property name="HeightRequest">150</property>
                         <property name="Xalign">0</property>
                         <property name="Yalign">0</property>
-                        <property name="LabelProp" translatable="yes">BodyMarkup</property>
+                        <property name="LabelProp">BodyMarkup
+
+So &lt;u&gt;this&lt;/u&gt; &lt;i&gt;is&lt;/i&gt; some &lt;a href="http://codewalr.us/"&gt;working&lt;/a&gt; &lt;b&gt;markup&lt;/b&gt;!</property>
                         <property name="UseMarkup">True</property>
                         <property name="Wrap">True</property>
                       </widget>

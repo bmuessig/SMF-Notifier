@@ -34,6 +34,11 @@ namespace CodeWalriiNotify
 
 			this.ShowAll();
 		}
+
+		public PostWidget(PostMeta Meta, PostFormat Format)
+		{
+
+		}
 	}
 }
 

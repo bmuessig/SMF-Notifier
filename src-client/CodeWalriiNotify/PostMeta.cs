@@ -1,5 +1,7 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Web.Script.Serialization;
+using System.Dynamic;
 
 namespace CodeWalriiNotify
 {
@@ -18,9 +20,17 @@ namespace CodeWalriiNotify
 			return Time.ToString();
 		}
 
-		public static PostMeta FromJToken(JToken postToken)
+		public static List<PostMeta> FromJSON(String json)
 		{
-			return new PostMeta();
+			var posts = new List<PostMeta>();
+			var serializer = new JavaScriptSerializer();
+
+			serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
+			object jsonObj = serializer.Deserialize(json, typeof(object));
+			bool success = ((bool)((dynamic)jsonObj).success);
+			MessageBox.Show(success.ToString());
+
+			return posts;
 		}
 
 	}

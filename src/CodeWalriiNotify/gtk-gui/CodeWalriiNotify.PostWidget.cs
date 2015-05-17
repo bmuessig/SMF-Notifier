@@ -4,13 +4,21 @@ namespace CodeWalriiNotify
 {
 	public partial class PostWidget
 	{
-		private global::Gtk.VBox vbox2;
+		private global::Gtk.EventBox mainBox;
+		
+		private global::Gtk.VBox vLayoutBox;
+		
+		private global::Gtk.EventBox headerBox;
 		
 		private global::Gtk.Fixed headerContainer;
 		
-		private global::Gtk.Label label2;
+		private global::Gtk.Label titleLabel;
 		
-		private global::Gtk.Fixed lowerContainer;
+		private global::Gtk.Label AuthorLabel;
+		
+		private global::Gtk.EventBox bodyBox;
+		
+		private global::Gtk.Fixed bodyContainer;
 
 		protected virtual void Build ()
 		{
@@ -19,37 +27,63 @@ namespace CodeWalriiNotify
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "CodeWalriiNotify.PostWidget";
 			// Container child CodeWalriiNotify.PostWidget.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.mainBox = new global::Gtk.EventBox ();
+			this.mainBox.Name = "mainBox";
+			// Container child mainBox.Gtk.Container+ContainerChild
+			this.vLayoutBox = new global::Gtk.VBox ();
+			this.vLayoutBox.Name = "vLayoutBox";
+			this.vLayoutBox.Spacing = 6;
+			// Container child vLayoutBox.Gtk.Box+BoxChild
+			this.headerBox = new global::Gtk.EventBox ();
+			this.headerBox.Name = "headerBox";
+			// Container child headerBox.Gtk.Container+ContainerChild
 			this.headerContainer = new global::Gtk.Fixed ();
-			this.headerContainer.WidthRequest = 100;
+			this.headerContainer.WidthRequest = 450;
 			this.headerContainer.HeightRequest = 75;
 			this.headerContainer.Name = "headerContainer";
 			this.headerContainer.HasWindow = false;
 			// Container child headerContainer.Gtk.Fixed+FixedChild
-			this.label2 = new global::Gtk.Label ();
-			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("label2");
-			this.headerContainer.Add (this.label2);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.label2]));
-			w1.X = 82;
-			w1.Y = 20;
-			this.vbox2.Add (this.headerContainer);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.headerContainer]));
-			w2.Position = 0;
-			w2.Expand = false;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.lowerContainer = new global::Gtk.Fixed ();
-			this.lowerContainer.WidthRequest = 200;
-			this.lowerContainer.HeightRequest = 200;
-			this.lowerContainer.Name = "lowerContainer";
-			this.lowerContainer.HasWindow = false;
-			this.vbox2.Add (this.lowerContainer);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.lowerContainer]));
-			w3.Position = 1;
-			this.Add (this.vbox2);
+			this.titleLabel = new global::Gtk.Label ();
+			this.titleLabel.WidthRequest = 300;
+			this.titleLabel.HeightRequest = 30;
+			this.titleLabel.Name = "titleLabel";
+			this.titleLabel.Xalign = 0F;
+			this.titleLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Title");
+			this.titleLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
+			this.headerContainer.Add (this.titleLabel);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.titleLabel]));
+			w1.X = 9;
+			w1.Y = 7;
+			// Container child headerContainer.Gtk.Fixed+FixedChild
+			this.AuthorLabel = new global::Gtk.Label ();
+			this.AuthorLabel.WidthRequest = 200;
+			this.AuthorLabel.HeightRequest = 15;
+			this.AuthorLabel.Name = "AuthorLabel";
+			this.AuthorLabel.Xalign = 1F;
+			this.AuthorLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Author");
+			this.headerContainer.Add (this.AuthorLabel);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.AuthorLabel]));
+			w2.X = 241;
+			w2.Y = 53;
+			this.headerBox.Add (this.headerContainer);
+			this.vLayoutBox.Add (this.headerBox);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
+			w4.Position = 0;
+			// Container child vLayoutBox.Gtk.Box+BoxChild
+			this.bodyBox = new global::Gtk.EventBox ();
+			this.bodyBox.Name = "bodyBox";
+			// Container child bodyBox.Gtk.Container+ContainerChild
+			this.bodyContainer = new global::Gtk.Fixed ();
+			this.bodyContainer.WidthRequest = 200;
+			this.bodyContainer.HeightRequest = 200;
+			this.bodyContainer.Name = "bodyContainer";
+			this.bodyContainer.HasWindow = false;
+			this.bodyBox.Add (this.bodyContainer);
+			this.vLayoutBox.Add (this.bodyBox);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
+			w6.Position = 1;
+			this.mainBox.Add (this.vLayoutBox);
+			this.Add (this.mainBox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

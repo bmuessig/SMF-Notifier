@@ -72,47 +72,78 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="CodeWalriiNotify.PostWidget" design-size="423 281">
+  <widget class="Gtk.Bin" id="CodeWalriiNotify.PostWidget" design-size="450 281">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.VBox" id="vbox2">
+      <widget class="Gtk.EventBox" id="mainBox">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Fixed" id="headerContainer">
+          <widget class="Gtk.VBox" id="vLayoutBox">
             <property name="MemberName" />
-            <property name="WidthRequest">100</property>
-            <property name="HeightRequest">75</property>
-            <property name="HasWindow">False</property>
+            <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Label" id="label2">
+              <widget class="Gtk.EventBox" id="headerBox">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">label2</property>
+                <child>
+                  <widget class="Gtk.Fixed" id="headerContainer">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">450</property>
+                    <property name="HeightRequest">75</property>
+                    <property name="HasWindow">False</property>
+                    <child>
+                      <widget class="Gtk.Label" id="titleLabel">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">300</property>
+                        <property name="HeightRequest">30</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">Title</property>
+                        <property name="Ellipsize">End</property>
+                      </widget>
+                      <packing>
+                        <property name="X">9</property>
+                        <property name="Y">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="AuthorLabel">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">200</property>
+                        <property name="HeightRequest">15</property>
+                        <property name="Xalign">1</property>
+                        <property name="LabelProp" translatable="yes">Author</property>
+                      </widget>
+                      <packing>
+                        <property name="X">241</property>
+                        <property name="Y">53</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
               </widget>
               <packing>
-                <property name="X">82</property>
-                <property name="Y">20</property>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.EventBox" id="bodyBox">
+                <property name="MemberName" />
+                <child>
+                  <widget class="Gtk.Fixed" id="bodyContainer">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">200</property>
+                    <property name="HeightRequest">200</property>
+                    <property name="HasWindow">False</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
           </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">False</property>
-            <property name="Expand">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Fixed" id="lowerContainer">
-            <property name="MemberName" />
-            <property name="WidthRequest">200</property>
-            <property name="HeightRequest">200</property>
-            <property name="HasWindow">False</property>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">False</property>
-          </packing>
         </child>
       </widget>
     </child>

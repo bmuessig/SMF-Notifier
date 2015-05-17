@@ -17,7 +17,15 @@ namespace CodeWalriiNotify
 			var bodyBackcolor = new Color(250, 250, 250);
 			var bodyForecolor = new Color(0, 0, 0);
 
-			headerContainer.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
+			var titleFont = Pango.FontDescription.FromString("Tahoma 15.6");
+
+			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
+			titleLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
+			titleLabel.ModifyFont(titleFont);
+			AuthorLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
+			bodyBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
+			mainBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
+
 			this.ShowAll();
 		}
 	}

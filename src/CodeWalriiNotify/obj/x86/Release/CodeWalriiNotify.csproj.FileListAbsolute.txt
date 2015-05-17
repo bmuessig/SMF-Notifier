@@ -1,0 +1,5 @@
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\bin\Release\CodeWalriiNotify.exe
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\bin\Release\CodeWalriiNotify.pdb
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.csprojResolveAssemblyReference.cache
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.exe
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.pdb

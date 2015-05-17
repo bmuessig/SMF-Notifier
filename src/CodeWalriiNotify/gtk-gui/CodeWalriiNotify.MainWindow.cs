@@ -4,6 +4,16 @@ namespace CodeWalriiNotify
 {
 	public partial class MainWindow
 	{
+		private global::Gtk.ScrolledWindow scrolledwindow2;
+		
+		private global::Gtk.VBox vbox1;
+		
+		private global::CodeWalriiNotify.PostWidget postwidget1;
+		
+		private global::CodeWalriiNotify.PostWidget postwidget2;
+		
+		private global::CodeWalriiNotify.PostWidget postwidget3;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -11,6 +21,51 @@ namespace CodeWalriiNotify
 			this.Name = "CodeWalriiNotify.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
+			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow2.CanFocus = true;
+			this.scrolledwindow2.Name = "scrolledwindow2";
+			this.scrolledwindow2.VscrollbarPolicy = ((global::Gtk.PolicyType)(0));
+			this.scrolledwindow2.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
+			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow2.Gtk.Container+ContainerChild
+			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
+			w1.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.vbox1 = new global::Gtk.VBox ();
+			this.vbox1.HeightRequest = 1000;
+			this.vbox1.Name = "vbox1";
+			this.vbox1.Spacing = 6;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.postwidget1 = new global::CodeWalriiNotify.PostWidget ();
+			this.postwidget1.Events = ((global::Gdk.EventMask)(256));
+			this.postwidget1.Name = "postwidget1";
+			this.vbox1.Add (this.postwidget1);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.postwidget1]));
+			w2.Position = 0;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.postwidget2 = new global::CodeWalriiNotify.PostWidget ();
+			this.postwidget2.Events = ((global::Gdk.EventMask)(256));
+			this.postwidget2.Name = "postwidget2";
+			this.vbox1.Add (this.postwidget2);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.postwidget2]));
+			w3.Position = 1;
+			w3.Expand = false;
+			w3.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.postwidget3 = new global::CodeWalriiNotify.PostWidget ();
+			this.postwidget3.Events = ((global::Gdk.EventMask)(256));
+			this.postwidget3.Name = "postwidget3";
+			this.vbox1.Add (this.postwidget3);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.postwidget3]));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
+			w1.Add (this.vbox1);
+			this.scrolledwindow2.Add (w1);
+			this.Add (this.scrolledwindow2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

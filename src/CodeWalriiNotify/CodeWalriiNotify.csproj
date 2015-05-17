@@ -49,6 +49,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.MainWindow.cs" />
+    <Compile Include="PostWidget.cs" />
+    <Compile Include="gtk-gui\CodeWalriiNotify.PostWidget.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

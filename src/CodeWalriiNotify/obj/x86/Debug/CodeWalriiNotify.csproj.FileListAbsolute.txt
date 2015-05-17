@@ -3,3 +3,8 @@ C:\Users\Benedikt\Documents\GitHub\CodeWalriiNotify\CodeWalriiNotify\CodeWalriiN
 C:\Users\Benedikt\Documents\GitHub\CodeWalriiNotify\CodeWalriiNotify\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.csprojResolveAssemblyReference.cache
 C:\Users\Benedikt\Documents\GitHub\CodeWalriiNotify\CodeWalriiNotify\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.exe
 C:\Users\Benedikt\Documents\GitHub\CodeWalriiNotify\CodeWalriiNotify\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.pdb
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\bin\Debug\CodeWalriiNotify.exe
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\bin\Debug\CodeWalriiNotify.pdb
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.csprojResolveAssemblyReference.cache
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.exe
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src\CodeWalriiNotify\obj\x86\Debug\CodeWalriiNotify.pdb

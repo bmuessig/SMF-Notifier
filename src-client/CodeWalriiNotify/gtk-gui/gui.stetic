@@ -128,12 +128,12 @@
                     <property name="HeightRequest">75</property>
                     <property name="HasWindow">False</property>
                     <child>
-                      <widget class="Gtk.Label" id="titleLabel">
+                      <widget class="Gtk.Label" id="topicLabel">
                         <property name="MemberName" />
-                        <property name="WidthRequest">300</property>
+                        <property name="WidthRequest">430</property>
                         <property name="HeightRequest">30</property>
                         <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes">Title</property>
+                        <property name="LabelProp" translatable="yes">Topic</property>
                         <property name="Ellipsize">End</property>
                       </widget>
                       <packing>
@@ -144,13 +144,13 @@
                     <child>
                       <widget class="Gtk.Label" id="timeLabel">
                         <property name="MemberName" />
-                        <property name="WidthRequest">200</property>
+                        <property name="WidthRequest">300</property>
                         <property name="HeightRequest">15</property>
                         <property name="Xalign">1</property>
                         <property name="LabelProp" translatable="yes">Time</property>
                       </widget>
                       <packing>
-                        <property name="X">244</property>
+                        <property name="X">146</property>
                         <property name="Y">53</property>
                       </packing>
                     </child>
@@ -183,6 +183,7 @@
 So &lt;u&gt;this&lt;/u&gt; &lt;i&gt;is&lt;/i&gt; some &lt;a href="http://codewalr.us/"&gt;working&lt;/a&gt; &lt;b&gt;markup&lt;/b&gt;!</property>
                         <property name="UseMarkup">True</property>
                         <property name="Wrap">True</property>
+                        <property name="Ellipsize">End</property>
                       </widget>
                       <packing>
                         <property name="X">10</property>
@@ -190,16 +191,16 @@ So &lt;u&gt;this&lt;/u&gt; &lt;i&gt;is&lt;/i&gt; some &lt;a href="http://codewal
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="authorLabel">
+                      <widget class="Gtk.Label" id="posterLabel">
                         <property name="MemberName" />
-                        <property name="WidthRequest">200</property>
+                        <property name="WidthRequest">300</property>
                         <property name="HeightRequest">15</property>
                         <property name="Xalign">1</property>
-                        <property name="LabelProp" translatable="yes">Author</property>
+                        <property name="LabelProp" translatable="yes">Poster</property>
                       </widget>
                       <packing>
-                        <property name="X">244</property>
-                        <property name="Y">175</property>
+                        <property name="X">145</property>
+                        <property name="Y">177</property>
                       </packing>
                     </child>
                   </widget>

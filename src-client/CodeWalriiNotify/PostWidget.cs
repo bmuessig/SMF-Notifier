@@ -22,15 +22,15 @@ namespace CodeWalriiNotify
 			var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
 
 			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
-			titleLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
-			titleLabel.ModifyFont(titleFont);
+			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
+			topicLabel.ModifyFont(titleFont);
 			timeLabel.ModifyFg(Gtk.StateType.Normal, timeForecolor);
 			timeLabel.ModifyFont(detailFont);
 			bodyBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
 			mainBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
 			bodyMarkup.ModifyFg(Gtk.StateType.Normal, bodyForecolor);
-			authorLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
-			authorLabel.ModifyFont(detailFont);
+			posterLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
+			posterLabel.ModifyFont(detailFont);
 
 			this.ShowAll();
 		}
@@ -40,13 +40,13 @@ namespace CodeWalriiNotify
 
 		}
 
-		public String Title {
+		public String Topic {
 			get {
-				return titleLabel.Text;
+				return topicLabel.Text;
 			}
 
 			set {
-				titleLabel.Text = value;
+				topicLabel.Text = value;
 			}
 		}
 
@@ -62,11 +62,11 @@ namespace CodeWalriiNotify
 
 		public String Poster {
 			get {
-				return authorLabel.Text;
+				return posterLabel.Text;
 			}
 
 			set {
-				authorLabel.Text = value;
+				posterLabel.Text = value;
 			}
 		}
 

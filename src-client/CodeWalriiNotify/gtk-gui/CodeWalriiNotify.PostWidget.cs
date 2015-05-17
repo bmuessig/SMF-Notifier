@@ -12,7 +12,7 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Fixed headerContainer;
 		
-		private global::Gtk.Label titleLabel;
+		private global::Gtk.Label topicLabel;
 		
 		private global::Gtk.Label timeLabel;
 		
@@ -22,7 +22,7 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Label bodyMarkup;
 		
-		private global::Gtk.Label authorLabel;
+		private global::Gtk.Label posterLabel;
 
 		protected virtual void Build ()
 		{
@@ -47,27 +47,27 @@ namespace CodeWalriiNotify
 			this.headerContainer.Name = "headerContainer";
 			this.headerContainer.HasWindow = false;
 			// Container child headerContainer.Gtk.Fixed+FixedChild
-			this.titleLabel = new global::Gtk.Label ();
-			this.titleLabel.WidthRequest = 300;
-			this.titleLabel.HeightRequest = 30;
-			this.titleLabel.Name = "titleLabel";
-			this.titleLabel.Xalign = 0F;
-			this.titleLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Title");
-			this.titleLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
-			this.headerContainer.Add (this.titleLabel);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.titleLabel]));
+			this.topicLabel = new global::Gtk.Label ();
+			this.topicLabel.WidthRequest = 430;
+			this.topicLabel.HeightRequest = 30;
+			this.topicLabel.Name = "topicLabel";
+			this.topicLabel.Xalign = 0F;
+			this.topicLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Topic");
+			this.topicLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
+			this.headerContainer.Add (this.topicLabel);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.topicLabel]));
 			w1.X = 9;
 			w1.Y = 7;
 			// Container child headerContainer.Gtk.Fixed+FixedChild
 			this.timeLabel = new global::Gtk.Label ();
-			this.timeLabel.WidthRequest = 200;
+			this.timeLabel.WidthRequest = 300;
 			this.timeLabel.HeightRequest = 15;
 			this.timeLabel.Name = "timeLabel";
 			this.timeLabel.Xalign = 1F;
 			this.timeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Time");
 			this.headerContainer.Add (this.timeLabel);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.timeLabel]));
-			w2.X = 244;
+			w2.X = 146;
 			w2.Y = 53;
 			this.headerBox.Add (this.headerContainer);
 			this.vLayoutBox.Add (this.headerBox);
@@ -93,21 +93,22 @@ namespace CodeWalriiNotify
 			"a> <b>markup</b>!";
 			this.bodyMarkup.UseMarkup = true;
 			this.bodyMarkup.Wrap = true;
+			this.bodyMarkup.Ellipsize = ((global::Pango.EllipsizeMode)(3));
 			this.bodyContainer.Add (this.bodyMarkup);
 			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.bodyMarkup]));
 			w5.X = 10;
 			w5.Y = 11;
 			// Container child bodyContainer.Gtk.Fixed+FixedChild
-			this.authorLabel = new global::Gtk.Label ();
-			this.authorLabel.WidthRequest = 200;
-			this.authorLabel.HeightRequest = 15;
-			this.authorLabel.Name = "authorLabel";
-			this.authorLabel.Xalign = 1F;
-			this.authorLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Author");
-			this.bodyContainer.Add (this.authorLabel);
-			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.authorLabel]));
-			w6.X = 244;
-			w6.Y = 175;
+			this.posterLabel = new global::Gtk.Label ();
+			this.posterLabel.WidthRequest = 300;
+			this.posterLabel.HeightRequest = 15;
+			this.posterLabel.Name = "posterLabel";
+			this.posterLabel.Xalign = 1F;
+			this.posterLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
+			this.bodyContainer.Add (this.posterLabel);
+			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.posterLabel]));
+			w6.X = 145;
+			w6.Y = 177;
 			this.bodyBox.Add (this.bodyContainer);
 			this.vLayoutBox.Add (this.bodyBox);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));

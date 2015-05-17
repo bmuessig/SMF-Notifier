@@ -7,7 +7,7 @@ namespace CodeWalriiNotify
 {
 	public class PostMeta
 	{
-		public String Title { get; set; }
+		public String Subject { get; set; }
 
 		public String Poster { get; set; }
 
@@ -22,15 +22,15 @@ namespace CodeWalriiNotify
 
 		public PostMeta()
 		{
-			Title = "";
+			Subject = "";
 			Poster = "";
 			Body = "";
 			Time = DateTime.Now;
 		}
 
-		public PostMeta(String Title, String Poster, String Body, DateTime Time)
+		public PostMeta(String Subject, String Poster, String Body, DateTime Time)
 		{
-			this.Title = Title;
+			this.Subject = Subject;
 			this.Poster = Poster;
 			this.Body = Body;
 			this.Time = Time;

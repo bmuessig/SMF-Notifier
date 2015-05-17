@@ -1,7 +1,5 @@
 ﻿using System;
 using Gtk;
-using System.Web.Script.Serialization;
-using System.Net;
 
 namespace CodeWalriiNotify
 {
@@ -26,13 +24,8 @@ namespace CodeWalriiNotify
 
 		protected void RefreshPosts()
 		{
-			var wc = new WebClient();
-			String json = wc.DownloadString("http://api.muessigb.net/walrus_notify.php");
-
-			var serializer = new JavaScriptSerializer();
-			serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
-
-			dynamic obj = serializer.Deserialize(json, typeof(object));
+			var fdr = new FeedRetriever("http://api.muessigb.net/walrus_notify.php", "http://codewalr.us/index.php?action=.xml");
+			fdr.RetrievePosts("");
 		}
 	}
 }

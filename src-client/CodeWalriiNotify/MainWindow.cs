@@ -25,7 +25,7 @@ namespace CodeWalriiNotify
 
 		protected void RefreshPosts()
 		{
-			var fdr = new FeedRetriever("http://api.muessigb.net/walrus_notify.php", "http://codewalr.us/index.php?action=.xml");
+			var fdr = new FeedRetriever("http://api.muessigb.net/walrus_notify.php");
 			String js = fdr.RetrieveData("");
 			List<PostMeta> posts = PostMeta.FromJSON(js);
 

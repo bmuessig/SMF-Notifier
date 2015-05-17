@@ -7,26 +7,15 @@ namespace CodeWalriiNotify
 	{
 		readonly private String apiUrl;
 
-		public FeedRetriever(String ApiUrl, String FeedBaseUrl)
+		public FeedRetriever(String ApiURL)
 		{
-			apiUrl = String.Format("{0}?feed_base_url={1}", ApiUrl, FeedBaseUrl);
+			this.apiUrl = ApiURL;
 		}
 
 		public String RetrieveData(String opts)
 		{
 			var wc = new WebClient();
-			String json = wc.DownloadString(apiUrl + opts);
-
-			return json;
-
-			/*var serializer = new JavaScriptSerializer();
-			serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
-
-			dynamic obj = serializer.Deserialize(json, typeof(object));
-
-			return obj;*/
-
-			//return JObject.Parse(json);
+			return wc.DownloadString(apiUrl + opts);
 		}
 	}
 }

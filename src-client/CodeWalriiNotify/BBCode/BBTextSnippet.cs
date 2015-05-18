@@ -61,28 +61,6 @@ namespace CodeWalriiNotify
 			return fragments;
 		}
 
-		public static List<IBBElement> Union(string BBCode, List<BBTag> Tags)
-		{
-			var fragments = new List<IBBElement>();
-
-			int charIndex = 0;
-			foreach (BBTag tag in Tags) {
-				if (charIndex < tag.Index) {
-					fragments.Add(new BBTextSnippet(BBCode.Substring(charIndex, tag.Index - charIndex), charIndex));
-					fragments.Add(tag);
-					charIndex = tag.Index + tag.Length;
-				} else {
-					fragments.Add(tag);
-					charIndex = tag.Index + tag.Length;
-				}
-			}
-
-			if (charIndex < BBCode.Length)
-				fragments.Add(new BBTextSnippet(BBCode.Substring(charIndex), charIndex));
-
-			return fragments;
-		}
-
 		public override string ToString()
 		{
 			return Text;

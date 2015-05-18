@@ -55,6 +55,41 @@ namespace CodeWalriiNotify
 				throw new ArgumentException("The BBCode is invalid!", "BBTagCode");
 		}
 
+		public static List<BBTag> FromBBCode(string BBCode)
+		{
+			var tags = new List<BBTag>();
+
+			var parserRegex = new Regex("\\[([A-Za-z0-9\\*\\#\\+\\-_]+)(?:[ ]+?([^\\n\\r\\x5d\\x5b]*))?\\](?:([^\\0]*)?(?:\\[\\/\\1\\]))?");
+			var argumentRegex = new Regex("([A-Za-z0-9\\-_]*)[ ]?=[ ]?((?:([\"'])[^\"']*\\3)|(?:[^\\n\\r= \\[\\]]+))");
+			MatchCollection tagResults = parserRegex.Matches(BBCode);
+
+			foreach (Match tagResult in tagResults) {
+				if (tagResult.Success && tagResult.Groups.Count == 4) {
+					string name = tagResult.Groups[1].Value;
+					string content = tagResult.Groups[3].Value;
+					var arguments = new Dictionary<string, object>();
+					int index = tagResult.Index;
+					int length = tagResult.Length;
+
+					MatchCollection argumentResults = argumentRegex.Matches(tagResult.Groups[2].Value);
+
+					foreach (Match argumentResult in argumentResults) {
+						if (argumentResult.Success && argumentResult.Groups.Count == 4) {
+							string key = argumentResult.Groups[1].Value;
+							string value = argumentResult.Groups[2].Value;
+							if (argumentResult.Groups[3].Length > 0)
+								value = value.Replace(argumentResult.Groups[3].Value, "");
+							arguments.Add(key, value);
+						}
+					}
+
+					tags.Add(new BBTag(name, arguments, index, length, content));
+				}
+			}
+
+			return tags;
+		}
+
 		public string Name {
 			get;
 			set;

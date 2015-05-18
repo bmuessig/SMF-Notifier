@@ -8,6 +8,11 @@ namespace CodeWalriiNotify
 			get;
 			set;
 		}
+
+		int Length {
+			get;
+			set;
+		}
 	}
 }
 

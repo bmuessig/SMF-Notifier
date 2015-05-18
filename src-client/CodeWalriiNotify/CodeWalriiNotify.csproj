@@ -67,6 +67,9 @@
     <Compile Include="gtk-gui\CodeWalriiNotify.BBCodeViewer.cs" />
     <Compile Include="BBCodeViewer.cs" />
     <Compile Include="BBCode\BBTag.cs" />
+    <Compile Include="BBCode\BBParser.cs" />
+    <Compile Include="BBCode\BBTextSnippet.cs" />
+    <Compile Include="BBCode\IBBElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -11,6 +11,10 @@ namespace CodeWalriiNotify
 		{
 			Build();
 
+
+			string bbcode = "hello world, lol this demo text [b]is[/b] so great! lets see [img]http://img.muessigb.net/demo.img[/img]";
+			//List<BBTag> tags = BBTag.FromBBCode();
+			List<IBBElement> elements = BBParser.ParseBBCode(bbcode);
 			//var ab = new CairoHTMLRenderer();
 		}
 

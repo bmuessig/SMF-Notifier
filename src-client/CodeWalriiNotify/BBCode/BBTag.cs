@@ -5,20 +5,24 @@ using System.Text.RegularExpressions;
 
 namespace CodeWalriiNotify
 {
-	public class BBTag
+	public class BBTag : IBBElement
 	{
 		public BBTag()
 		{
 			Name = "";
 			Content = "";
+			Index = -1;
+			Length = -1;
 			ForceEndTag = true;
 			Arguments = new Dictionary<string, object>();
 		}
 
-		public BBTag(string Name, Dictionary<string, object> Arguments, string Content = "", bool ForceEndTag = false)
+		public BBTag(string Name, Dictionary<string, object> Arguments, int Index, int Length, string Content = "", bool ForceEndTag = false)
 		{
 			this.Name = Name;
 			this.Arguments = Arguments;
+			this.Index = Index;
+			this.Length = Length;
 			this.Content = Content;
 			this.ForceEndTag = ForceEndTag;
 		}
@@ -35,6 +39,8 @@ namespace CodeWalriiNotify
 			if (tagResult.Success && tagResult.Groups.Count == 4) {
 				this.Name = tagResult.Groups[1].Value;
 				this.Content = tagResult.Groups[3].Value;
+				this.Index = tagResult.Index;
+				this.Length = tagResult.Length;
 
 				MatchCollection argumentResults = argumentRegex.Matches(tagResult.Groups[2].Value);
 
@@ -49,11 +55,12 @@ namespace CodeWalriiNotify
 				throw new ArgumentException("The BBCode is invalid!", "BBTagCode");
 		}
 
-		public static BBTag[] FromBBCode(string BBCode)
+		public static List<BBTag> FromBBCode(string BBCode)
 		{
 			var tags = new List<BBTag>();
 
-			var parserRegex = new Regex("\\[([A-Za-z0-9\\*#+-]+)(?:[ ]+?([^\\n\\r\\[\\]]*))?\\](?:([^]*)?(?:\\[\\/\\1\\]))?");
+			//var parserRegex = new Regex("\\[([A-Za-z0-9\\*#+-]+)(?:[ ]+?([^\\n\\r\\[\\]]*))?\\](?:([^]*)?(?:\\[\\/\\1\\]))?");
+			var parserRegex = new Regex("\\[([A-Za-z0-9\\*\\#\\+\\-]+)(?:[ ]+?([^\\n\\r\\x5d\\x5b]*))?\\](?:([^\\0]*)?(?:\\[\\/\\1\\]))?");
 			var argumentRegex = new Regex("([A-Za-z0-9]*)[ ]?=[ ]?((?:([\"'])[^\"']*\\3)|(?:[^\\n\\r= \\[\\]]+))");
 			MatchCollection tagResults = parserRegex.Matches(BBCode);
 
@@ -62,22 +69,26 @@ namespace CodeWalriiNotify
 					string name = tagResult.Groups[1].Value;
 					string content = tagResult.Groups[3].Value;
 					var arguments = new Dictionary<string, object>();
+					int index = tagResult.Index;
+					int length = tagResult.Length;
 
 					MatchCollection argumentResults = argumentRegex.Matches(tagResult.Groups[2].Value);
 
 					foreach (Match argumentResult in argumentResults) {
 						if (argumentResult.Success && argumentResult.Groups.Count == 4) {
 							string key = argumentResult.Groups[1].Value;
-							string value = argumentResult.Groups[2].Value.Replace(argumentResult.Groups[3].Value, "");
+							string value = argumentResult.Groups[2].Value;
+							if (argumentResult.Groups[3].Length > 0)
+								value = value.Replace(argumentResult.Groups[3].Value, "");
 							arguments.Add(key, value);
 						}
 					}
 
-					tags.Add(new BBTag(name, arguments, content));
+					tags.Add(new BBTag(name, arguments, index, length, content));
 				}
 			}
 
-			return tags.ToArray();
+			return tags;
 		}
 
 		public string Name {
@@ -96,6 +107,16 @@ namespace CodeWalriiNotify
 		}
 
 		public Dictionary<string, object> Arguments {
+			get;
+			set;
+		}
+
+		public int Index {
+			get;
+			set;
+		}
+
+		public int Length {
 			get;
 			set;
 		}

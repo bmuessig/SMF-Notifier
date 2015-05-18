@@ -10,6 +10,8 @@ namespace CodeWalriiNotify
 			: base(WindowType.Toplevel)
 		{
 			Build();
+
+			//var ab = new CairoHTMLRenderer();
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

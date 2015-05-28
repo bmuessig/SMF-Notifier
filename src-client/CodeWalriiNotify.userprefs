@@ -1,22 +1,23 @@
 ﻿<Properties StartupItem="CodeWalriiNotify\CodeWalriiNotify.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\BBCode\BBTag.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\MainWindow.cs">
     <Files>
-      <File FileName="CodeWalriiNotify\Program.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="17" Column="22" />
-      <File FileName="CodeWalriiNotify\PostMeta.cs" Line="61" Column="22" />
-      <File FileName="CodeWalriiNotify\PostWidget.cs" Line="23" Column="4" />
-      <File FileName="CodeWalriiNotify\DynamicJsonConverter.cs" Line="25" Column="4" />
-      <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="23" Column="1" />
-      <File FileName="CodeWalriiNotify\MessageBox.cs" Line="10" Column="34" />
-      <File FileName="CodeWalriiNotify\RecyclerView.cs" Line="17" Column="3" />
-      <File FileName="CodeWalriiNotify\CairoHTMLRenderer.cs" Line="10" Column="50" />
-      <File FileName="CodeWalriiNotify\BBCodeViewer.cs" Line="27" Column="4" />
-      <File FileName="CodeWalriiNotify\BBCode\BBTag.cs" Line="30" Column="4" />
+      <File FileName="CodeWalriiNotify\CairoHTMLRenderer.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\PostMeta.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\PostWidget.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\RecyclerView.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="15" Column="24" />
+      <File FileName="CodeWalriiNotify\BBCodeViewer.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\BBCode\BBParser.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\BBCode\BBTag.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\BBCode\BBTextSnippet.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\BBCode\IBBElement.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\MainWindow.cs" line="19" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

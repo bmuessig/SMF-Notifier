@@ -70,6 +70,7 @@
     <Compile Include="BBCode\BBParser.cs" />
     <Compile Include="BBCode\BBTextSnippet.cs" />
     <Compile Include="BBCode\IBBElement.cs" />
+    <Compile Include="SettingsProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

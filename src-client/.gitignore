@@ -1,4 +1,0 @@
-# GitIgnore for client side of CW-Post Notifier
-
-# Ignore debug builds
-CodeWalriiNotify/bin/[Dd]ebug/

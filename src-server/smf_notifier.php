@@ -7,8 +7,8 @@
 ob_start();
 
 // Constants to change
-define("BASE_URL_CW_FEED", "http://codewalr.us/index.php?action=.xml");
-define("TMP_DB_FILE", "walrus-api-notify.cache");
+define("BASE_FEED_URL", "http://codewalr.us/index.php?action=.xml");
+define("TMP_DB_FILE", "smf-notify-api.cache");
 define("CACHE_TIME", 40);
 define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
@@ -41,7 +41,7 @@ $exceptions = array();
 
 if(! $cached) {
 	$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
-	$rawInput = QueryFeed(BASE_URL_CW_FEED, $queryOpts);
+	$rawInput = QueryFeed(BASE_FEED_URL, $queryOpts);
 	file_put_contents(TMP_DB_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
 } else {
 	$rawInput = $cache;
@@ -62,7 +62,7 @@ if(isset($_GET['html_stripmode'])) {
 if($mxposts > CACHE_POSTS)
 	$mxposts = DEFAULT_MAX_POSTS;
 	
-$posts = UltraWalriiParser($rawInput, $mxposts, $htmllvl);
+$posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
 $json = json_encode(array(	"success"		=> true,
 							"exceptions"	=> $exceptions,
 							"cached"		=> $cached,
@@ -74,7 +74,7 @@ print(json_minify($json));
 
 print_gzipped_output();
 
-function UltraWalriiParser($rawXml, $maxPostCount, $htmlMode)
+function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 {
 	try {
 		$recentPosts = (new SimpleXMLElement($rawXml));

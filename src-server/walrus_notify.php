@@ -1,11 +1,23 @@
 <?php
+/* SMF Forum Feed parser 
+ * (c) 2015 Muessigb <muessigb@yahoo.de> (Muessigb.net)
+ * MIT License
+*/
+
 ob_start();
 
-// Constants
+// Constants to change
 define("BASE_URL_CW_FEED", "http://codewalr.us/index.php?action=.xml");
-define("TMP_DB_FILE", "muessigbnet_api-walrus.notify");
+define("TMP_DB_FILE", "walrus-api-notify.cache");
 define("CACHE_TIME", 40);
-define("CACHE_POSTS", 200);
+define("CACHE_POSTS", 50);
+define("DEFAULT_MAX_POSTS", 10);
+define("DEFAULT_STRIPHTML_MODE", "SIMPLIFY");
+
+// Static internal constants
+define("STRIPHTML_NONE", 0);
+define("STRIPHTML_SIMPLIFY", 1);
+define("STRIPHTML_ALL", 2);
 
 $cached = false;
 if(file_exists(TMP_DB_FILE)) {
@@ -25,18 +37,36 @@ if(file_exists(TMP_DB_FILE)) {
 	}
 }
 
+$exceptions = array();
+
 if(! $cached) {
-	$queryOpts = array("sa=recent", "limit" . CACHE_POSTS);
+	$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
 	$rawInput = QueryFeed(BASE_URL_CW_FEED, $queryOpts);
 	file_put_contents(TMP_DB_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
 } else {
 	$rawInput = $cache;
 }
 
-$posts = UltraWalriiParser($rawInput);
-$json = json_encode(array(	"success"	=> true,
-							"cached"	=> $cached,
-							"data"		=> $posts,
+$mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
+
+if(isset($_GET['html_stripmode'])) {
+	$htmllvl = ParseStripmode($_GET['html_stripmode'], false);
+	if($htmllvl === false) {
+		$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+		ThrowException($exceptions, "INVALID_ARGUMENT", "html_stripmode");
+	}
+} else {
+	$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+}
+
+if($mxposts > CACHE_POSTS)
+	$mxposts = DEFAULT_MAX_POSTS;
+	
+$posts = UltraWalriiParser($rawInput, $mxposts, $htmllvl);
+$json = json_encode(array(	"success"		=> true,
+							"exceptions"	=> $exceptions,
+							"cached"		=> $cached,
+							"data"			=> $posts,
 					));
 
 header('Content-Type: application/json');
@@ -44,20 +74,20 @@ print(json_minify($json));
 
 print_gzipped_output();
 
-function GetFeed() {
-
-}
-
-function UltraWalriiParser($rawXml)
+function UltraWalriiParser($rawXml, $maxPostCount, $htmlMode)
 {
 	try {
 		$recentPosts = (new SimpleXMLElement($rawXml));
 		$outputData = array();
+		$postCount = 0;
 		
 		foreach ($recentPosts->{'recent-post'} as $post) {
+			if($postCount >= $maxPostCount)
+				break;
+		
 			array_push($outputData,
-						array(	"post"		=> array(	"subject"	=> StripHtml(strval($post->subject)),
-														"body"		=> StripHtml(strval($post->body)),
+						array(	"post"		=> array(	"subject"	=> StripHtml(strval($post->subject), $htmlMode),
+														"body"		=> StripHtml(strval($post->body), $htmlMode),
 														"id"		=> intval($post->id),
 														"time"		=> ToUnixTime(strval($post->time)),
 														"link"		=> strval($post->link)
@@ -79,6 +109,8 @@ function UltraWalriiParser($rawXml)
 														"link"		=> strval($post->board->link)
 													)
 							));
+							
+			$postCount++;
 		}
 		
 		return $outputData;
@@ -93,7 +125,7 @@ function ToUnixTime($smfStr)
 	return strtotime(str_replace(" at ", ", ", $smfStr));
 }
 
-function StripHtml($str)
+function StripHtml($str, $mode)
 {
 	// Handle line breaks
 	$outStr = preg_replace("/<br \/>/", "\n", $str);
@@ -113,6 +145,32 @@ function QueryFeed($baseUrl, $opts)
 	$query = implode(";", $opts);
 	// Send request to the server and retrieve answer
 	return file_get_contents($baseUrl . (strlen($query)>0 ? (";" . $query) : ""));
+}
+
+function ParseStripmode($str, $def="simplify")
+{
+	$stripmodes = array("none", "simplify", "all");
+	$stripmodeindex = 0;
+	foreach ($stripmodes as $stripmode) {
+		if (stripos($str, $stripmode) !== false) {
+			return $stripmodeindex;
+		}
+		$stripmodeindex++;
+	}
+	return (is_string($def) ? ParseStripmode($def) : $def);
+}
+
+function ParseInt($str, $def=false)
+{
+	return (is_numeric($str) ? intval($str) : $def);
+}
+
+function ThrowException(&$stack, $type, $what="", $critical=false)
+{
+	array_push($stack, array(	"type"		=> $type,
+								"what"		=> $what,
+								"critical"	=> $critical
+				));
 }
 
 function print_gzipped_output() 

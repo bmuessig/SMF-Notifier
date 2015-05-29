@@ -26,7 +26,6 @@ namespace CodeWalriiNotify
 			var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
 
 			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
-			topicBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
 			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
 			topicLabel.ModifyFont(titleFont);
 			timeLabel.ModifyFg(Gtk.StateType.Normal, timeForecolor);
@@ -37,13 +36,15 @@ namespace CodeWalriiNotify
 			posterLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
 			posterLabel.ModifyFont(detailFont);
 
-			topicBox.Realized += delegate {
-				Window topicBoxWindow = topicBox.GdkWindow;
-				topicBoxWindow.Cursor = new Cursor(CursorType.Hand1);
+			headerBox.Realized += delegate {
+				headerBox.GdkWindow.Cursor = new Cursor(CursorType.Hand1);
 			};
-			topicBox.ButtonPressEvent += delegate {
+			headerBox.ButtonPressEvent += delegate {
 				var urlInfo = new ProcessStartInfo(URL);
 				Process.Start(urlInfo);
+			};
+			bodyBox.Realized += delegate {
+				bodyBox.GdkWindow.Cursor = new Cursor(CursorType.Arrow);
 			};
 
 			this.ShowAll();
@@ -98,7 +99,7 @@ namespace CodeWalriiNotify
 		public void UpdateBody()
 		{
 			Gtk.Requisition size = bodyRenderarea.SizeRequest();
-			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML(BodyHTML, (uint)size.Width, 0);
+			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML("<style>img{max-width:440px;}\na{text-decoration:none;}</style>" + BodyHTML, (uint)size.Width, 0);
 			bodyRenderarea.HeightRequest = bodyRenderarea.Pixbuf.Height + 20;
 		}
 	}

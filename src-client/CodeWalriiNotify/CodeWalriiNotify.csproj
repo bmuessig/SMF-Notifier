@@ -73,6 +73,7 @@
     <Compile Include="gtk-gui\CodeWalriiNotify.RecyclerView.cs" />
     <Compile Include="SettingsProvider.cs" />
     <Compile Include="HTMLRenderer.cs" />
+    <Compile Include="APIQueryMeta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

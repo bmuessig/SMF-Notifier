@@ -96,6 +96,7 @@
             <child>
               <widget class="Gtk.EventBox" id="headerBox">
                 <property name="MemberName" />
+                <property name="Events">Button1MotionMask</property>
                 <child>
                   <widget class="Gtk.Fixed" id="headerContainer">
                     <property name="MemberName" />
@@ -116,21 +117,13 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.EventBox" id="topicBox">
+                      <widget class="Gtk.Label" id="topicLabel">
                         <property name="MemberName" />
                         <property name="WidthRequest">430</property>
                         <property name="HeightRequest">30</property>
-                        <property name="Events">Button1MotionMask</property>
-                        <child>
-                          <widget class="Gtk.Label" id="topicLabel">
-                            <property name="MemberName" />
-                            <property name="WidthRequest">430</property>
-                            <property name="HeightRequest">30</property>
-                            <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Topic</property>
-                            <property name="Ellipsize">End</property>
-                          </widget>
-                        </child>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">Topic</property>
+                        <property name="Ellipsize">End</property>
                       </widget>
                       <packing>
                         <property name="X">10</property>
@@ -151,7 +144,7 @@
                 <child>
                   <widget class="Gtk.Image" id="bodyRenderarea">
                     <property name="MemberName" />
-                    <property name="WidthRequest">400</property>
+                    <property name="WidthRequest">440</property>
                     <property name="HeightRequest">100</property>
                     <property name="Xpad">10</property>
                     <property name="Ypad">5</property>

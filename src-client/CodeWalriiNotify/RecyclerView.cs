@@ -5,21 +5,30 @@ using Gtk;
 namespace CodeWalriiNotify
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class RecyclerView : Gtk.Bin
+	public partial class RecyclerView : Bin
 	{
-		private Stack<Widget> widgets;
+		List<Widget> widgets;
 
 		public RecyclerView()
 		{
-			widgets = new Stack<Widget>();
+			widgets = new List<Widget>();
 			this.Build();
 		}
 
-		public void InsertTop(Widget Widget)
+		public void InsertFirst(Widget Widget)
 		{
 			ContainerView.Add(Widget);
-			widgets.Push(Widget);
+			widgets.Add(Widget);
 			ContainerView.ShowAll();
+		}
+
+		public void RemoveLast()
+		{
+			if (widgets.Count > 0) {
+				Widget wg = widgets[widgets.Count - 1];
+				ContainerView.Remove(wg);
+				widgets.Remove(wg);
+			}
 		}
 
 		public void Clear()
@@ -28,6 +37,12 @@ namespace CodeWalriiNotify
 				ContainerView.Remove(wg);
 			}
 			widgets.Clear();
+		}
+
+		public int Count {
+			get {
+				return widgets.Count;
+			}
 		}
 	}
 }

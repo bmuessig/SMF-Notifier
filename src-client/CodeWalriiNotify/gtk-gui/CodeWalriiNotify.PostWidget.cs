@@ -14,8 +14,6 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Label timeLabel;
 		
-		private global::Gtk.EventBox topicBox;
-		
 		private global::Gtk.Label topicLabel;
 		
 		private global::Gtk.EventBox bodyBox;
@@ -43,6 +41,7 @@ namespace CodeWalriiNotify
 			this.vLayoutBox.Spacing = 6;
 			// Container child vLayoutBox.Gtk.Box+BoxChild
 			this.headerBox = new global::Gtk.EventBox ();
+			this.headerBox.Events = ((global::Gdk.EventMask)(32));
 			this.headerBox.Name = "headerBox";
 			// Container child headerBox.Gtk.Container+ContainerChild
 			this.headerContainer = new global::Gtk.Fixed ();
@@ -62,12 +61,6 @@ namespace CodeWalriiNotify
 			w1.X = 150;
 			w1.Y = 53;
 			// Container child headerContainer.Gtk.Fixed+FixedChild
-			this.topicBox = new global::Gtk.EventBox ();
-			this.topicBox.WidthRequest = 430;
-			this.topicBox.HeightRequest = 30;
-			this.topicBox.Events = ((global::Gdk.EventMask)(32));
-			this.topicBox.Name = "topicBox";
-			// Container child topicBox.Gtk.Container+ContainerChild
 			this.topicLabel = new global::Gtk.Label ();
 			this.topicLabel.WidthRequest = 430;
 			this.topicLabel.HeightRequest = 30;
@@ -75,21 +68,20 @@ namespace CodeWalriiNotify
 			this.topicLabel.Xalign = 0F;
 			this.topicLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Topic");
 			this.topicLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
-			this.topicBox.Add (this.topicLabel);
-			this.headerContainer.Add (this.topicBox);
-			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.topicBox]));
-			w3.X = 10;
-			w3.Y = 7;
+			this.headerContainer.Add (this.topicLabel);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.topicLabel]));
+			w2.X = 10;
+			w2.Y = 7;
 			this.headerBox.Add (this.headerContainer);
 			this.vLayoutBox.Add (this.headerBox);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
-			w5.Position = 0;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
+			w4.Position = 0;
 			// Container child vLayoutBox.Gtk.Box+BoxChild
 			this.bodyBox = new global::Gtk.EventBox ();
 			this.bodyBox.Name = "bodyBox";
 			// Container child bodyBox.Gtk.Container+ContainerChild
 			this.bodyRenderarea = new global::Gtk.Image ();
-			this.bodyRenderarea.WidthRequest = 400;
+			this.bodyRenderarea.WidthRequest = 440;
 			this.bodyRenderarea.HeightRequest = 100;
 			this.bodyRenderarea.Name = "bodyRenderarea";
 			this.bodyRenderarea.Xpad = 10;
@@ -98,8 +90,8 @@ namespace CodeWalriiNotify
 			this.bodyRenderarea.Yalign = 0F;
 			this.bodyBox.Add (this.bodyRenderarea);
 			this.vLayoutBox.Add (this.bodyBox);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
-			w7.Position = 1;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
+			w6.Position = 1;
 			// Container child vLayoutBox.Gtk.Box+BoxChild
 			this.footerBox = new global::Gtk.EventBox ();
 			this.footerBox.Name = "footerBox";
@@ -116,15 +108,15 @@ namespace CodeWalriiNotify
 			this.posterLabel.Xalign = 1F;
 			this.posterLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
 			this.footerContainer.Add (this.posterLabel);
-			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.footerContainer [this.posterLabel]));
-			w8.X = 150;
-			w8.Y = 2;
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.footerContainer [this.posterLabel]));
+			w7.X = 150;
+			w7.Y = 2;
 			this.footerBox.Add (this.footerContainer);
 			this.vLayoutBox.Add (this.footerBox);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
-			w10.Position = 2;
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
+			w9.Position = 2;
+			w9.Expand = false;
+			w9.Fill = false;
 			this.mainBox.Add (this.vLayoutBox);
 			this.Add (this.mainBox);
 			if ((this.Child != null)) {

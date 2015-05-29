@@ -6,6 +6,8 @@ namespace CodeWalriiNotify
 {
 	public partial class MainWindow: Window
 	{
+		private uint lastTimeStamp;
+
 		public MainWindow()
 			: base(WindowType.Toplevel)
 		{
@@ -33,7 +35,7 @@ namespace CodeWalriiNotify
 				pw.Poster = post.Poster;
 				pw.Time = post.Time.ToString();
 				pw.URL = post.Link;
-				mainRecyclerview.InsertTop(pw);
+				mainRecyclerview.InsertFirst(pw);
 			}
 		}
 

@@ -42,6 +42,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Cairo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net40-client\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer.WinForms">
+      <HintPath>..\packages\HtmlRenderer.Mono.1.5.0.6\lib\net40-client\HtmlRenderer.WinForms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -63,17 +71,11 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="RecyclerView.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.RecyclerView.cs" />
-    <Compile Include="CairoHTMLRenderer.cs" />
-    <Compile Include="gtk-gui\CodeWalriiNotify.BBCodeViewer.cs" />
-    <Compile Include="BBCodeViewer.cs" />
-    <Compile Include="BBCode\BBTag.cs" />
-    <Compile Include="BBCode\BBParser.cs" />
-    <Compile Include="BBCode\BBTextSnippet.cs" />
-    <Compile Include="BBCode\IBBElement.cs" />
     <Compile Include="SettingsProvider.cs" />
+    <Compile Include="HTMLRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="BBCode\" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

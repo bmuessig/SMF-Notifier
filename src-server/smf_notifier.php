@@ -8,7 +8,8 @@ ob_start();
 
 // Constants to change
 define("BASE_FEED_URL", "http://codewalr.us/index.php?action=.xml");
-define("TMP_DB_FILE", "smf-notify-api.cache");
+define("TMP_CACHE_FILE", "smf-notify-api.cache");
+define("TMP_INFO_FILE", "smf-notify-api.info");
 define("CACHE_TIME", 40);
 define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
@@ -20,9 +21,10 @@ define("STRIPHTML_SIMPLIFY", 1);
 define("STRIPHTML_ALL", 2);
 
 $cached = false;
-if(file_exists(TMP_DB_FILE)) {
+$cache = "";
+if(file_exists(TMP_CACHE_FILE)) {
 	try {
-		$cacheRawObj = file_get_contents(TMP_DB_FILE);
+		$cacheRawObj = file_get_contents(TMP_CACHE_FILE);
 		if(isJson($cacheRawObj)) {
 			$cacheObj = json_decode($cacheRawObj);
 			if( isset($cacheObj->timestamp) && isset($cacheObj->data) ) {
@@ -42,9 +44,36 @@ $exceptions = array();
 if(! $cached) {
 	$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
 	$rawInput = QueryFeed(BASE_FEED_URL, $queryOpts);
-	file_put_contents(TMP_DB_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
+	file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
 } else {
 	$rawInput = $cache;
+}
+
+// Check if it the information has changed (e.g. edits, new posts)
+if(file_exists(TMP_INFO_FILE)) {
+	$rawInfoInput = file_get_contents(TMP_INFO_FILE);
+	$infoObj = json_decode($rawInfoInput);
+	$changed = intval($infoObj->changed);
+	$lastHash = strval($infoObj->hash);
+} else {
+	$latestVersion = false;
+}
+
+if(!$cached) {
+	$currentHash = md5($rawInput);
+	if(file_exists(TMP_INFO_FILE)) { // file does exist and is loaded
+		if(strcmp(md5($rawInput), $lastHash) == 0) // hash does match
+			$latestVersion = true;
+		else
+			$latestVersion = false;
+	} else
+		$latestVersion = false;
+} else
+	$latestVersion = true;
+
+if(! $latestVersion) {
+	$changed = time();
+	file_put_contents(TMP_INFO_FILE, json_encode(array("changed" => $changed, "hash" => $currentHash)));
 }
 
 $mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
@@ -66,6 +95,8 @@ $posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
 $json = json_encode(array(	"success"		=> true,
 							"exceptions"	=> $exceptions,
 							"cached"		=> $cached,
+							"timestamp"		=> time(),
+							"changed"		=> $changed,
 							"data"			=> $posts,
 					));
 

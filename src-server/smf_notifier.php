@@ -7,10 +7,10 @@
 ob_start();
 
 // Constants to change
-define("BASE_FEED_URL", "http://codewalr.us/index.php?action=.xml");  // Codewalr.us
-//define("BASE_FEED_URL", "http://www.omnimaga.org/index.php?action=.xml"); // Omnimaga
-define("TMP_CACHE_FILE", "smf-notify-api.cache");
-define("TMP_INFO_FILE", "smf-notify-api.info");
+define("BASE_SITE_URL", "http://codewalr.us/index.php");  // Codewalr.us
+//define("BASE_SITE_URL", "http://www.omnimaga.org/index.php"); // Omnimaga
+define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_FEED_URL) . ".db");
+define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_FEED_URL) . ".db");
 define("CACHE_TIME", 40);
 define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
@@ -45,8 +45,9 @@ try {
 	}
 
 	if(! $cached) {
+		$queryUrl = BASE_SITE_URL . "?action=.xml";
 		$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
-		$rawInput = QueryFeed(BASE_FEED_URL, $queryOpts);
+		$rawInput = QueryFeed($queryUrl, $queryOpts);
 		file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
 	} else {
 		$rawInput = $cache;

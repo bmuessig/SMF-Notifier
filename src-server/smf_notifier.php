@@ -7,7 +7,8 @@
 ob_start();
 
 // Constants to change
-define("BASE_FEED_URL", "http://codewalr.us/index.php?action=.xml");
+define("BASE_FEED_URL", "http://codewalr.us/index.php?action=.xml");  // Codewalr.us
+//define("BASE_FEED_URL", "http://www.omnimaga.org/index.php?action=.xml"); // Omnimaga
 define("TMP_CACHE_FILE", "smf-notify-api.cache");
 define("TMP_INFO_FILE", "smf-notify-api.info");
 define("CACHE_TIME", 40);
@@ -20,89 +21,106 @@ define("STRIPHTML_NONE", 0);
 define("STRIPHTML_SIMPLIFY", 1);
 define("STRIPHTML_ALL", 2);
 
-$cached = false;
-$cache = "";
-if(file_exists(TMP_CACHE_FILE)) {
-	try {
-		$cacheRawObj = file_get_contents(TMP_CACHE_FILE);
-		if(isJson($cacheRawObj)) {
-			$cacheObj = json_decode($cacheRawObj);
-			if( isset($cacheObj->timestamp) && isset($cacheObj->data) ) {
-				if( time() < (intval($cacheObj->timestamp) + CACHE_TIME) ) {
-					$cache = strval($cacheObj->data);
-					$cached = true;
+$exceptions = array();
+$success = true;
+
+try {
+	$cached = false;
+	$cache = "";
+	if(file_exists(TMP_CACHE_FILE)) {
+		try {
+			$cacheRawObj = file_get_contents(TMP_CACHE_FILE);
+			if(isJson($cacheRawObj)) {
+				$cacheObj = json_decode($cacheRawObj);
+				if( isset($cacheObj->timestamp) && isset($cacheObj->data) ) {
+					if( time() < (intval($cacheObj->timestamp) + CACHE_TIME) ) {
+						$cache = strval($cacheObj->data);
+						$cached = true;
+					}
 				}
 			}
+		} catch (Exception $ex) {
+			$cacheJson = false;
 		}
-	} catch (Exception $ex) {
-		$cacheJson = false;
 	}
-}
 
-$exceptions = array();
+	if(! $cached) {
+		$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
+		$rawInput = QueryFeed(BASE_FEED_URL, $queryOpts);
+		file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
+	} else {
+		$rawInput = $cache;
+	}
 
-if(! $cached) {
-	$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
-	$rawInput = QueryFeed(BASE_FEED_URL, $queryOpts);
-	file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
-} else {
-	$rawInput = $cache;
-}
+	// Check if it the information has changed (e.g. edits, new posts)
+	if(file_exists(TMP_INFO_FILE)) {
+		$rawInfoInput = file_get_contents(TMP_INFO_FILE);
+		$infoObj = json_decode($rawInfoInput);
+		$changed = intval($infoObj->changed);
+		$lastHash = strval($infoObj->hash);
+	} else {
+		$latestVersion = false;
+	}
 
-// Check if it the information has changed (e.g. edits, new posts)
-if(file_exists(TMP_INFO_FILE)) {
-	$rawInfoInput = file_get_contents(TMP_INFO_FILE);
-	$infoObj = json_decode($rawInfoInput);
-	$changed = intval($infoObj->changed);
-	$lastHash = strval($infoObj->hash);
-} else {
-	$latestVersion = false;
-}
-
-if(!$cached) {
-	$currentHash = md5($rawInput);
-	if(file_exists(TMP_INFO_FILE)) { // file does exist and is loaded
-		if(strcmp(md5($rawInput), $lastHash) == 0) // hash does match
-			$latestVersion = true;
-		else
+	if(!$cached) {
+		$currentHash = md5($rawInput);
+		if(file_exists(TMP_INFO_FILE)) { // file does exist and is loaded
+			if(strcmp(md5($rawInput), $lastHash) == 0) // hash does match
+				$latestVersion = true;
+			else
+				$latestVersion = false;
+		} else
 			$latestVersion = false;
 	} else
-		$latestVersion = false;
-} else
-	$latestVersion = true;
+		$latestVersion = true;
 
-if(! $latestVersion) {
-	$changed = time();
-	file_put_contents(TMP_INFO_FILE, json_encode(array("changed" => $changed, "hash" => $currentHash)));
-}
-
-$mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
-
-if(isset($_GET['html_stripmode'])) {
-	$htmllvl = ParseStripmode($_GET['html_stripmode'], false);
-	if($htmllvl === false) {
-		$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
-		ThrowException($exceptions, "INVALID_ARGUMENT", "html_stripmode");
+	if(! $latestVersion) {
+		$changed = time();
+		file_put_contents(TMP_INFO_FILE, json_encode(array("changed" => $changed, "hash" => $currentHash)));
 	}
-} else {
-	$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+
+	$mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
+
+	if(isset($_GET['html_stripmode'])) {
+		$htmllvl = ParseStripmode($_GET['html_stripmode'], false);
+		if($htmllvl === false) {
+			$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+			ThrowException($exceptions, "INVALID_ARGUMENT", "html_stripmode");
+		}
+	} else {
+		$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+	}
+
+	if($mxposts > CACHE_POSTS)
+		$mxposts = DEFAULT_MAX_POSTS;
+		
+	$posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
+
+} catch (Exception $ex) {
+	ThrowException($exceptions, "PROGRAM_EXCEPTION", print_r($ex, true));
+	$success = false;
 }
 
-if($mxposts > CACHE_POSTS)
-	$mxposts = DEFAULT_MAX_POSTS;
-	
-$posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
-$json = json_encode(array(	"success"		=> true,
-							"exceptions"	=> $exceptions,
-							"cached"		=> $cached,
-							"timestamp"		=> time(),
-							"changed"		=> $changed,
-							"data"			=> $posts,
-					));
+if($success) {
+	$json = json_encode(array(		"success"		=> true,
+									"exceptions"	=> $exceptions,
+									"cached"		=> $cached,
+									"timestamp"		=> time(),
+									"changed"		=> $changed,
+									"data"			=> $posts,
+							));
+} else {
+	$json = json_encode(array(		"success"		=> false,
+									"exceptions"	=> $exceptions,
+									"cached"		=> null,
+									"timestamp"		=> time(),
+									"changed"		=> null,
+									"data"			=> null,
+							));
+}
 
 header('Content-Type: application/json');
 print(json_minify($json));
-
 print_gzipped_output();
 
 function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)

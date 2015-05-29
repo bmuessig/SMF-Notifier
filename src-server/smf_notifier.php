@@ -127,14 +127,55 @@ function ToUnixTime($smfStr)
 
 function StripHtml($str, $mode)
 {
-	// Handle line breaks
-	$outStr = preg_replace("/<br \/>/", "\n", $str);
-	// Handle smileys
-	$outStr = preg_replace("/<img src=\"Smileys\/[^\n\"\=]*\" alt=\"([^\n\"\=]*)\" title=\"[^\n\"\=]*\" class=\"smiley\" \/>/", "$1", $outStr);
-	// Strip all remaining Html tags
-	$outStr = preg_replace("/<(\/)?[^\n<>]*( \/)?>/", "", $outStr);
-	// Replace html entitys
-	$outStr = html_entity_decode($outStr, (ENT_QUOTES | ENT_HTML401));
+	$outStr = $str;
+	
+	// If needed do something with the most common tags
+	if($mode > STRIPHTML_NONE) {
+		// Handle line breaks
+		$outStr = preg_replace("/<br \/>/", "\n", $outStr);
+		// Handle smileys
+		$outStr = preg_replace("/<img src=\"Smileys\/[^\n\"\=]*\" alt=\"([^\n\"\=]*)\" title=\"[^\n\"\=]*\" class=\"smiley\" \/>/", "$1", $outStr);
+	}
+	
+	// If needed, simplyfiy and finalize the output and leave some tags intact
+	if($mode == STRIPHTML_SIMPLIFY) {
+		// Handle quotes
+		$outStr = preg_replace("/<div class=\"quoteheader\"><div class=\"topslice_quote\">([\w\W]*?)<\/div><\/div><blockquote class=\"bbc_standard_quote\">/", "[span background=\"#FFFFFF\"]$1\n", $outStr);
+		$outStr = preg_replace("/<\/blockquote><div class=\"quotefooter\"><div class=\"botslice_quote\"><\/div><\/div>/", "[/span]\n", $outStr);
+		// Handle bold text
+		$outStr = preg_replace("/<strong>/", "[b]", $outStr);
+		$outStr = preg_replace("/<\/strong>/", "[/b]", $outStr);
+		// Handle italic text
+		$outStr = preg_replace("/<em>/", "[i]", $outStr);
+		$outStr = preg_replace("/<\/em>/", "[/i]", $outStr);
+		// Handle italic text
+		$outStr = preg_replace("/<del>/", "[s]", $outStr);
+		$outStr = preg_replace("/<\/del>/", "[/s]", $outStr);
+		
+		// Delete all remaining tags
+		$outStr = preg_replace("/<[^<>]*>/", "", $outStr);
+		
+		// Convert all special tags to pango markup
+		$outStr = preg_replace("/\[([^\[\]]*)\]/", "<$1>", $outStr);
+		
+		// Replace html entitys
+		$outStr = html_entity_decode($outStr, (ENT_QUOTES | ENT_HTML401));
+		
+		$outStr = str_replace("&", "&amp;", $outStr);
+	}
+
+	// Finalize the output if allowed
+	if($mode == STRIPHTML_ALL) {
+		// Delete all tags
+		$outStr = preg_replace("/<[^<>]*>/", "", $outStr);
+		// Replace html entitys
+		$outStr = html_entity_decode($outStr, (ENT_QUOTES | ENT_HTML401));
+	}
+	
+	if($mode == STRIPHTML_NONE) {
+		// Fix smilies
+		$outStr = preg_replace("/<img src=\"(Smileys\/cwsmileys\/[^\n\r\"]*?)\" ([^<>\n\r]*?)>/", "<img src=\"http://codewalr.us/$1\" $2>", $outStr);
+	}
 	
 	return $outStr;
 }

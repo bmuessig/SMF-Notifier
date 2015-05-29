@@ -93,6 +93,11 @@ namespace CodeWalriiNotify
 			set;
 		}
 
+		public static Gdk.Color FooterBackcolor {
+			get;
+			set;
+		}
+
 		public static string TitleFont {
 			get;
 			set;
@@ -107,18 +112,34 @@ namespace CodeWalriiNotify
 			get;
 			set;
 		}
+
+		public static bool AntiAlias {
+			get;
+			set;
+		}
+
+		public static string CustomCss {
+			get;
+			set;
+		}
+
+		public static string BodyFormat {
+			get;
+			set;
+		}
 			
 		/*
-		var headerBackcolor = new Color(110, 180, 137);
-		var timeForecolor = new Color(216, 216, 216);
-		var authorForecolor = new Color(198, 198, 198);
-		var titleForecolor = new Color(255, 255, 255);
-		var bodyBackcolor = new Color(250, 250, 250);
-		var bodyForecolor = new Color(0, 0, 0);
+			var headerBackcolor = new Color(110, 180, 137);
+			var timeForecolor = new Color(216, 216, 216);
+			var titleForecolor = new Color(255, 255, 255);
+			var bodyBackcolor = new Color(250, 250, 250);
+			var bodyForecolor = new Color(0, 0, 0);
+			var footerBackcolor = new Color(250, 250, 250);
+			var authorForecolor = new Color(198, 198, 198);
 
-		var titleFont = Pango.FontDescription.FromString("Tahoma 15.6");
-		var detailFont = Pango.FontDescription.FromString("Tahoma 10.5");
-		var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
+			var titleFont = Pango.FontDescription.FromString("Tahoma 15.6");
+			var detailFont = Pango.FontDescription.FromString("Tahoma 10.5");
+			var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
 		*/
 	}
 }

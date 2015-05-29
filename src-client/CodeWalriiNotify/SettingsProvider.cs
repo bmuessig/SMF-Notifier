@@ -13,7 +13,6 @@ namespace CodeWalriiNotify
 			FromFile("config.json");
 		}
 
-
 		public static void FromFile(string Path, bool DefaultOnError = true)
 		{
 			string rawSettingsJson;

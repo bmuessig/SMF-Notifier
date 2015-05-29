@@ -8,3 +8,7 @@ C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNoti
 C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.csprojResolveAssemblyReference.cache
 C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.exe
 C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\obj\x86\Release\CodeWalriiNotify.pdb
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\bin\Release\HtmlRenderer.dll
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\bin\Release\HtmlRenderer.WinForms.dll
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\bin\Release\HtmlRenderer.pdb
+C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\bin\Release\HtmlRenderer.WinForms.pdb

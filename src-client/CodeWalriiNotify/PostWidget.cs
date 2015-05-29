@@ -1,5 +1,6 @@
 ﻿using System;
 using Gdk;
+using System.Diagnostics;
 
 namespace CodeWalriiNotify
 {
@@ -25,6 +26,7 @@ namespace CodeWalriiNotify
 			var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
 
 			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
+			topicBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
 			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
 			topicLabel.ModifyFont(titleFont);
 			timeLabel.ModifyFg(Gtk.StateType.Normal, timeForecolor);
@@ -34,6 +36,15 @@ namespace CodeWalriiNotify
 			footerBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
 			posterLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
 			posterLabel.ModifyFont(detailFont);
+
+			topicBox.Realized += delegate {
+				Window topicBoxWindow = topicBox.GdkWindow;
+				topicBoxWindow.Cursor = new Cursor(CursorType.Hand1);
+			};
+			topicBox.ButtonPressEvent += delegate {
+				var urlInfo = new ProcessStartInfo(URL);
+				Process.Start(urlInfo);
+			};
 
 			this.ShowAll();
 		}
@@ -77,6 +88,11 @@ namespace CodeWalriiNotify
 			set {
 				timeLabel.Text = value;
 			}
+		}
+
+		public String URL {
+			get;
+			set;
 		}
 
 		public void UpdateBody()

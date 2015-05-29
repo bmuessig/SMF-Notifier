@@ -15,6 +15,8 @@ namespace CodeWalriiNotify
 
 		public DateTime Time { get; set; }
 
+		public String Link { get; set; }
+
 		public String FormatTime(String Format)
 		{
 			return Time.ToString();
@@ -26,14 +28,16 @@ namespace CodeWalriiNotify
 			Poster = "";
 			Body = "";
 			Time = DateTime.Now;
+			Link = "";
 		}
 
-		public PostMeta(String Subject, String Poster, String Body, DateTime Time)
+		public PostMeta(String Subject, String Poster, String Body, DateTime Time, String Link)
 		{
 			this.Subject = Subject;
 			this.Poster = Poster;
 			this.Body = Body;
 			this.Time = Time;
+			this.Link = Link;
 		}
 
 		/// <summary>
@@ -58,7 +62,7 @@ namespace CodeWalriiNotify
 					dynamic starterFields = postObj.starter;
 					dynamic boardFields = postObj.board;
 
-					var post = new PostMeta((string)postFields.subject, (string)posterFields.name, (string)postFields.body, UnixTimeStampToDateTime((ulong)postFields.time));
+					var post = new PostMeta((string)postFields.subject, (string)posterFields.name, (string)postFields.body, UnixTimeStampToDateTime((ulong)postFields.time), (string)postFields.link);
 					posts.Add(post);
 				}
 

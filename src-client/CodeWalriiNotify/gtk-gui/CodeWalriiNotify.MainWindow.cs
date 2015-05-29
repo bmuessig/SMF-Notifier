@@ -4,61 +4,79 @@ namespace CodeWalriiNotify
 {
 	public partial class MainWindow
 	{
+		private global::Gtk.UIManager UIManager;
+		
+		private global::Gtk.Action MenuAction;
+		
+		private global::Gtk.Action refreshAction;
+		
+		private global::Gtk.Action preferencesAction;
+		
+		private global::Gtk.Action quitAction;
+		
 		private global::Gtk.VBox vbox1;
 		
-		private global::Gtk.Fixed fixed2;
+		private global::Gtk.MenuBar menubar1;
 		
-		private global::Gtk.Button refreshButton;
-		
-		private global::CodeWalriiNotify.RecyclerView recyclerview1;
+		private global::CodeWalriiNotify.RecyclerView mainRecyclerview;
 
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget CodeWalriiNotify.MainWindow
+			this.UIManager = new global::Gtk.UIManager ();
+			global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
+			this.MenuAction = new global::Gtk.Action ("MenuAction", global::Mono.Unix.Catalog.GetString ("Menu"), null, null);
+			this.MenuAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Menu");
+			w1.Add (this.MenuAction, null);
+			this.refreshAction = new global::Gtk.Action ("refreshAction", global::Mono.Unix.Catalog.GetString ("_Refresh"), null, "gtk-refresh");
+			this.refreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Refresh");
+			w1.Add (this.refreshAction, "F5");
+			this.preferencesAction = new global::Gtk.Action ("preferencesAction", global::Mono.Unix.Catalog.GetString ("_Settings"), null, "gtk-preferences");
+			this.preferencesAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Settings");
+			w1.Add (this.preferencesAction, "<Primary>s");
+			this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Quit"), null, "gtk-quit");
+			this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Quit");
+			w1.Add (this.quitAction, null);
+			this.UIManager.InsertActionGroup (w1, 0);
+			this.AddAccelGroup (this.UIManager.AccelGroup);
+			this.WidthRequest = 480;
+			this.HeightRequest = 540;
 			this.Name = "CodeWalriiNotify.MainWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
+			this.Title = global::Mono.Unix.Catalog.GetString ("CodeWalr.us Notifier");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Resizable = false;
+			this.AllowGrow = false;
 			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.fixed2 = new global::Gtk.Fixed ();
-			this.fixed2.HeightRequest = 30;
-			this.fixed2.Name = "fixed2";
-			this.fixed2.HasWindow = false;
-			// Container child fixed2.Gtk.Fixed+FixedChild
-			this.refreshButton = new global::Gtk.Button ();
-			this.refreshButton.CanFocus = true;
-			this.refreshButton.Name = "refreshButton";
-			this.refreshButton.UseUnderline = true;
-			this.refreshButton.Label = global::Mono.Unix.Catalog.GetString ("Refresh");
-			this.fixed2.Add (this.refreshButton);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed2 [this.refreshButton]));
-			w1.X = 3;
-			w1.Y = 3;
-			this.vbox1.Add (this.fixed2);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.fixed2]));
+			this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
+			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
+			this.menubar1.Name = "menubar1";
+			this.vbox1.Add (this.menubar1);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.menubar1]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.recyclerview1 = new global::CodeWalriiNotify.RecyclerView ();
-			this.recyclerview1.HeightRequest = 500;
-			this.recyclerview1.Events = ((global::Gdk.EventMask)(256));
-			this.recyclerview1.Name = "recyclerview1";
-			this.vbox1.Add (this.recyclerview1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.recyclerview1]));
+			this.mainRecyclerview = new global::CodeWalriiNotify.RecyclerView ();
+			this.mainRecyclerview.HeightRequest = 500;
+			this.mainRecyclerview.Events = ((global::Gdk.EventMask)(256));
+			this.mainRecyclerview.Name = "mainRecyclerview";
+			this.vbox1.Add (this.mainRecyclerview);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.mainRecyclerview]));
 			w3.Position = 1;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 487;
-			this.DefaultHeight = 536;
+			this.DefaultWidth = 500;
+			this.DefaultHeight = 580;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-			this.refreshButton.Clicked += new global::System.EventHandler (this.OnRefreshButtonClicked);
+			this.refreshAction.Activated += new global::System.EventHandler (this.OnRefreshActionActivated);
+			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 		}
 	}
 }

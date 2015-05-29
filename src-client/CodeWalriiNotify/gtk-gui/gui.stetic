@@ -8,34 +8,59 @@
     <widget-library name="../bin/Debug/CodeWalriiNotify.exe" internal="true" />
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </import>
-  <widget class="Gtk.Window" id="CodeWalriiNotify.MainWindow" design-size="487 536">
+  <widget class="Gtk.Window" id="CodeWalriiNotify.MainWindow" design-size="500 580">
+    <action-group name="Default">
+      <action id="MenuAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Menu</property>
+        <property name="ShortLabel" translatable="yes">Menu</property>
+      </action>
+      <action id="refreshAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">F5</property>
+        <property name="Label" translatable="yes">_Refresh</property>
+        <property name="ShortLabel" translatable="yes">Refresh</property>
+        <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshActionActivated" />
+      </action>
+      <action id="preferencesAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;s</property>
+        <property name="Label" translatable="yes">_Settings</property>
+        <property name="ShortLabel" translatable="yes">Settings</property>
+        <property name="StockId">gtk-preferences</property>
+      </action>
+      <action id="quitAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Quit</property>
+        <property name="ShortLabel" translatable="yes">Quit</property>
+        <property name="StockId">gtk-quit</property>
+        <signal name="Activated" handler="OnQuitActionActivated" />
+      </action>
+    </action-group>
     <property name="MemberName" />
-    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="WidthRequest">480</property>
+    <property name="HeightRequest">540</property>
+    <property name="Title" translatable="yes">CodeWalr.us Notifier</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Fixed" id="fixed2">
+          <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
-            <property name="HeightRequest">30</property>
-            <property name="HasWindow">False</property>
-            <child>
-              <widget class="Gtk.Button" id="refreshButton">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">Refresh</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnRefreshButtonClicked" />
-              </widget>
-              <packing>
-                <property name="X">3</property>
-                <property name="Y">3</property>
-              </packing>
-            </child>
+            <node name="menubar1" type="Menubar">
+              <node type="Menu" action="MenuAction">
+                <node type="Menuitem" action="refreshAction" />
+                <node type="Menuitem" action="preferencesAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="quitAction" />
+              </node>
+            </node>
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -45,14 +70,14 @@
           </packing>
         </child>
         <child>
-          <widget class="CodeWalriiNotify.RecyclerView" id="recyclerview1">
+          <widget class="CodeWalriiNotify.RecyclerView" id="mainRecyclerview">
             <property name="MemberName" />
             <property name="HeightRequest">500</property>
             <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
       </widget>
@@ -78,20 +103,6 @@
                     <property name="HeightRequest">75</property>
                     <property name="HasWindow">False</property>
                     <child>
-                      <widget class="Gtk.Label" id="topicLabel">
-                        <property name="MemberName" />
-                        <property name="WidthRequest">430</property>
-                        <property name="HeightRequest">30</property>
-                        <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes">Topic</property>
-                        <property name="Ellipsize">End</property>
-                      </widget>
-                      <packing>
-                        <property name="X">9</property>
-                        <property name="Y">7</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="Gtk.Label" id="timeLabel">
                         <property name="MemberName" />
                         <property name="WidthRequest">300</property>
@@ -100,8 +111,30 @@
                         <property name="LabelProp" translatable="yes">Time</property>
                       </widget>
                       <packing>
-                        <property name="X">146</property>
+                        <property name="X">150</property>
                         <property name="Y">53</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.EventBox" id="topicBox">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">430</property>
+                        <property name="HeightRequest">30</property>
+                        <property name="Events">Button1MotionMask</property>
+                        <child>
+                          <widget class="Gtk.Label" id="topicLabel">
+                            <property name="MemberName" />
+                            <property name="WidthRequest">430</property>
+                            <property name="HeightRequest">30</property>
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Topic</property>
+                            <property name="Ellipsize">End</property>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="X">10</property>
+                        <property name="Y">7</property>
                       </packing>
                     </child>
                   </widget>
@@ -120,7 +153,7 @@
                     <property name="MemberName" />
                     <property name="WidthRequest">400</property>
                     <property name="HeightRequest">100</property>
-                    <property name="Xpad">5</property>
+                    <property name="Xpad">10</property>
                     <property name="Ypad">5</property>
                     <property name="Xalign">0</property>
                     <property name="Yalign">0</property>
@@ -149,7 +182,7 @@
                         <property name="LabelProp" translatable="yes">Poster</property>
                       </widget>
                       <packing>
-                        <property name="X">152</property>
+                        <property name="X">150</property>
                         <property name="Y">2</property>
                       </packing>
                     </child>
@@ -193,15 +226,6 @@
             </child>
           </widget>
         </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="CodeWalriiNotify.BBCodeViewer" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <widget class="Gtk.Image" id="Canvas">
-        <property name="MemberName" />
       </widget>
     </child>
   </widget>

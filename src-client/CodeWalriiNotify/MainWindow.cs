@@ -18,18 +18,13 @@ namespace CodeWalriiNotify
 			a.RetVal = true;
 		}
 
-		protected void OnRefreshButtonClicked(object sender, EventArgs e)
-		{
-			RefreshPosts();
-		}
-
 		protected void RefreshPosts()
 		{
 			var fdr = new FeedRetriever("http://api.muessigb.net/smf_notifier.php");
 			String js = fdr.RetrieveData("?html_stripmode=none");
 			List<PostMeta> posts = PostMeta.FromJSON(js);
 
-			recyclerview1.Clear();
+			mainRecyclerview.Clear();
 
 			foreach (PostMeta post in posts) {
 				var pw = new PostWidget();
@@ -37,8 +32,20 @@ namespace CodeWalriiNotify
 				pw.Body = post.Body;
 				pw.Poster = post.Poster;
 				pw.Time = post.Time.ToString();
-				recyclerview1.InsertTop(pw);
+				pw.URL = post.Link;
+				mainRecyclerview.InsertTop(pw);
 			}
+		}
+
+		protected void OnRefreshActionActivated(object sender, EventArgs e)
+		{
+			RefreshPosts();
+		}
+
+		protected void OnQuitActionActivated(object sender, EventArgs e)
+		{
+			this.Destroy();
+			Environment.Exit(0);
 		}
 	}
 }

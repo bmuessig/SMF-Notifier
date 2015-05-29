@@ -21,7 +21,6 @@ namespace CodeWalriiNotify
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();
-			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.fixed2 = new global::Gtk.Fixed ();

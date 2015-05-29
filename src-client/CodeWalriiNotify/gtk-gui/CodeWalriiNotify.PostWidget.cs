@@ -18,9 +18,11 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.EventBox bodyBox;
 		
-		private global::Gtk.Fixed bodyContainer;
+		private global::Gtk.Image bodyRenderarea;
 		
-		private global::Gtk.Label bodyMarkup;
+		private global::Gtk.EventBox footerBox;
+		
+		private global::Gtk.Fixed footerContainer;
 		
 		private global::Gtk.Label posterLabel;
 
@@ -77,42 +79,43 @@ namespace CodeWalriiNotify
 			this.bodyBox = new global::Gtk.EventBox ();
 			this.bodyBox.Name = "bodyBox";
 			// Container child bodyBox.Gtk.Container+ContainerChild
-			this.bodyContainer = new global::Gtk.Fixed ();
-			this.bodyContainer.WidthRequest = 200;
-			this.bodyContainer.HeightRequest = 200;
-			this.bodyContainer.Name = "bodyContainer";
-			this.bodyContainer.HasWindow = false;
-			// Container child bodyContainer.Gtk.Fixed+FixedChild
-			this.bodyMarkup = new global::Gtk.Label ();
-			this.bodyMarkup.WidthRequest = 430;
-			this.bodyMarkup.HeightRequest = 150;
-			this.bodyMarkup.Name = "bodyMarkup";
-			this.bodyMarkup.Xalign = 0F;
-			this.bodyMarkup.Yalign = 0F;
-			this.bodyMarkup.LabelProp = "BodyMarkup\n\nSo <u>this</u> <i>is</i> some <a href=\"http://codewalr.us/\">working</" +
-			"a> <b>markup</b>!";
-			this.bodyMarkup.UseMarkup = true;
-			this.bodyMarkup.Wrap = true;
-			this.bodyMarkup.Ellipsize = ((global::Pango.EllipsizeMode)(3));
-			this.bodyContainer.Add (this.bodyMarkup);
-			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.bodyMarkup]));
-			w5.X = 10;
-			w5.Y = 11;
-			// Container child bodyContainer.Gtk.Fixed+FixedChild
+			this.bodyRenderarea = new global::Gtk.Image ();
+			this.bodyRenderarea.WidthRequest = 400;
+			this.bodyRenderarea.HeightRequest = 100;
+			this.bodyRenderarea.Name = "bodyRenderarea";
+			this.bodyRenderarea.Xpad = 5;
+			this.bodyRenderarea.Ypad = 5;
+			this.bodyRenderarea.Xalign = 0F;
+			this.bodyRenderarea.Yalign = 0F;
+			this.bodyBox.Add (this.bodyRenderarea);
+			this.vLayoutBox.Add (this.bodyBox);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
+			w6.Position = 1;
+			// Container child vLayoutBox.Gtk.Box+BoxChild
+			this.footerBox = new global::Gtk.EventBox ();
+			this.footerBox.Name = "footerBox";
+			// Container child footerBox.Gtk.Container+ContainerChild
+			this.footerContainer = new global::Gtk.Fixed ();
+			this.footerContainer.HeightRequest = 20;
+			this.footerContainer.Name = "footerContainer";
+			this.footerContainer.HasWindow = false;
+			// Container child footerContainer.Gtk.Fixed+FixedChild
 			this.posterLabel = new global::Gtk.Label ();
 			this.posterLabel.WidthRequest = 300;
 			this.posterLabel.HeightRequest = 15;
 			this.posterLabel.Name = "posterLabel";
 			this.posterLabel.Xalign = 1F;
 			this.posterLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
-			this.bodyContainer.Add (this.posterLabel);
-			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.bodyContainer [this.posterLabel]));
-			w6.X = 145;
-			w6.Y = 177;
-			this.bodyBox.Add (this.bodyContainer);
-			this.vLayoutBox.Add (this.bodyBox);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.bodyBox]));
-			w8.Position = 1;
+			this.footerContainer.Add (this.posterLabel);
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.footerContainer [this.posterLabel]));
+			w7.X = 152;
+			w7.Y = 2;
+			this.footerBox.Add (this.footerContainer);
+			this.vLayoutBox.Add (this.footerBox);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
+			w9.Position = 2;
+			w9.Expand = false;
+			w9.Fill = false;
 			this.mainBox.Add (this.vLayoutBox);
 			this.Add (this.mainBox);
 			if ((this.Child != null)) {

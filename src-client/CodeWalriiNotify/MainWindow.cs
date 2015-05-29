@@ -10,12 +10,6 @@ namespace CodeWalriiNotify
 			: base(WindowType.Toplevel)
 		{
 			Build();
-
-
-			const string bbcode = "hello world, lol this demo text [i][b]is[/b][/i] so great! lets see [img]http://img.muessigb.net/demo.img[/img]";
-			//List<BBTag> tags = BBTag.FromBBCode();
-			List<IBBElement> elements = BBParser.ParseBBCode(bbcode);
-			//var ab = new CairoHTMLRenderer();
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -31,8 +25,8 @@ namespace CodeWalriiNotify
 
 		protected void RefreshPosts()
 		{
-			var fdr = new FeedRetriever("http://api.muessigb.net/walrus_notify.php");
-			String js = fdr.RetrieveData("");
+			var fdr = new FeedRetriever("http://api.muessigb.net/smf_notifier.php");
+			String js = fdr.RetrieveData("?html_stripmode=none");
 			List<PostMeta> posts = PostMeta.FromJSON(js);
 
 			recyclerview1.Clear();

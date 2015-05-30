@@ -90,6 +90,8 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Button cancelButton;
 		
+		private global::Gtk.Button defaultsButton;
+		
 		private global::Gtk.Button okButton;
 
 		protected virtual void Build ()
@@ -569,6 +571,17 @@ namespace CodeWalriiNotify
 			w47.Expand = false;
 			w47.Fill = false;
 			// Container child dialogActionArea.Gtk.ButtonBox+ButtonBoxChild
+			this.defaultsButton = new global::Gtk.Button ();
+			this.defaultsButton.CanFocus = true;
+			this.defaultsButton.Name = "defaultsButton";
+			this.defaultsButton.UseUnderline = true;
+			this.defaultsButton.Label = global::Mono.Unix.Catalog.GetString ("Load defaults");
+			this.AddActionWidget (this.defaultsButton, 0);
+			global::Gtk.ButtonBox.ButtonBoxChild w48 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w46 [this.defaultsButton]));
+			w48.Position = 1;
+			w48.Expand = false;
+			w48.Fill = false;
+			// Container child dialogActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.okButton = new global::Gtk.Button ();
 			this.okButton.CanDefault = true;
 			this.okButton.CanFocus = true;
@@ -577,10 +590,10 @@ namespace CodeWalriiNotify
 			this.okButton.UseUnderline = true;
 			this.okButton.Label = "gtk-ok";
 			this.AddActionWidget (this.okButton, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w48 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w46 [this.okButton]));
-			w48.Position = 1;
-			w48.Expand = false;
-			w48.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w49 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w46 [this.okButton]));
+			w49.Position = 2;
+			w49.Expand = false;
+			w49.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
@@ -588,6 +601,8 @@ namespace CodeWalriiNotify
 			this.DefaultHeight = 314;
 			this.Show ();
 			this.cancelButton.Clicked += new global::System.EventHandler (this.OnCancelButtonClicked);
+			this.defaultsButton.Clicked += new global::System.EventHandler (this.OnDefaultsButtonClicked);
+			this.okButton.Clicked += new global::System.EventHandler (this.OnOkButtonClicked);
 		}
 	}
 }

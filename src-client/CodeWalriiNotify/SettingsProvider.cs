@@ -12,8 +12,9 @@ namespace CodeWalriiNotify
 
 		static SettingsProvider()
 		{
+			CurrentFilename = "settings.json";
 			javaScriptSerializer = new JavaScriptSerializer();
-			FromFile("config.json");
+			FromFile(CurrentFilename);
 		}
 
 		public static void FromFile(string Path, bool DefaultOnError = true)
@@ -39,7 +40,17 @@ namespace CodeWalriiNotify
 			File.WriteAllText(Path, JsonPrettify.FormatJson(javaScriptSerializer.Serialize(CurrentSettings)));
 		}
 
+		public static void SetDefaults()
+		{
+			CurrentSettings = new SettingsData();
+		}
+
 		public static SettingsData CurrentSettings {
+			get;
+			private set;
+		}
+
+		public static string CurrentFilename {
 			get;
 			private set;
 		}

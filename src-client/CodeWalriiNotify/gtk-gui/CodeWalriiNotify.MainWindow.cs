@@ -77,6 +77,7 @@ namespace CodeWalriiNotify
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.refreshAction.Activated += new global::System.EventHandler (this.OnRefreshActionActivated);
+			this.preferencesAction.Activated += new global::System.EventHandler (this.OnPreferencesActionActivated);
 			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 		}
 	}

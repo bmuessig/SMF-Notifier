@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Dynamic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
 	public static class SettingsProvider
 	{
-		static JavaScriptSerializer jsonDecoder;
-
 		static SettingsProvider()
 		{
-			FromFile("config.json");
+
+			//FromFile("config.json");
+			RestoreDefaults();
 		}
 
 		public static void FromFile(string Path, bool DefaultOnError = true)
@@ -20,16 +23,33 @@ namespace CodeWalriiNotify
 			if (!File.Exists(Path)) {
 				if (!DefaultOnError)
 					throw new FileNotFoundException("The JSON file couldn't be found and defaulting is disabled!", Path);
-				else
-					rawSettingsJson = ""; // default json settings
+				else {
+					RestoreDefaults();
+					return;
+				}
 			} else
 				rawSettingsJson = File.ReadAllText(Path);
-			
-			jsonDecoder = new JavaScriptSerializer();
-			jsonDecoder.RegisterConverters(new[] { new DynamicJsonConverter() });
-			dynamic jsonObj = jsonDecoder.Deserialize(rawSettingsJson, typeof(object));
 
+			dynamic settings = JObject.Parse(rawSettingsJson);
 
+			FeedURL = (string)settings.feed_url;
+			ApplicationTitle = (string)settings.app_title;
+		}
+
+		public static void RestoreDefaults()
+		{
+			FeedURL = "http://api.muessigb.net/smf_notifier.php";
+			ApplicationTitle = "Sample";
+		}
+
+		public static void ToFile(string Path)
+		{
+			dynamic settings = new ExpandoObject();
+
+			settings.feed_url = FeedURL;
+			settings.app_title = FeedURL;
+
+			File.WriteAllText(Path, JsonConvert.SerializeObject(settings));
 		}
 
 		public static string FeedURL {

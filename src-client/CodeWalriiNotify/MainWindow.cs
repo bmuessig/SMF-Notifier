@@ -6,12 +6,16 @@ namespace CodeWalriiNotify
 {
 	public partial class MainWindow: Window
 	{
-		private uint lastTimeStamp;
+		NotifierCore notifier;
 
 		public MainWindow()
 			: base(WindowType.Toplevel)
 		{
 			Build();
+
+			notifier = new NotifierCore(mainRecyclerview);
+
+			SettingsProvider.ToFile("lol.json");
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -20,28 +24,9 @@ namespace CodeWalriiNotify
 			a.RetVal = true;
 		}
 
-		protected void RefreshPosts()
-		{
-			var fdr = new FeedRetriever("http://api.muessigb.net/smf_notifier.php");
-			String js = fdr.RetrieveData("?html_stripmode=none");
-			List<PostMeta> posts = PostMeta.FromJSON(js);
-
-			mainRecyclerview.Clear();
-
-			foreach (PostMeta post in posts) {
-				var pw = new PostWidget();
-				pw.Topic = post.Subject;
-				pw.Body = post.Body;
-				pw.Poster = post.Poster;
-				pw.Time = post.Time.ToString();
-				pw.URL = post.Link;
-				mainRecyclerview.InsertFirst(pw);
-			}
-		}
-
 		protected void OnRefreshActionActivated(object sender, EventArgs e)
 		{
-			RefreshPosts();
+			notifier.ForceRefresh();
 		}
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)

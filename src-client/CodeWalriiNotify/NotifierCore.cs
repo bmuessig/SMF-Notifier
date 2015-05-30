@@ -20,7 +20,7 @@ namespace CodeWalriiNotify
 
 		protected void RefreshPosts()
 		{
-			var fdr = new FeedRetriever(SettingsProvider.FeedURL);
+			var fdr = new FeedRetriever(SettingsProvider.CurrentSettings.FeedURL);
 			String js = fdr.RetrieveData("?html_stripmode=none");
 			List<PostMeta> posts = PostMeta.FromJSON(js);
 

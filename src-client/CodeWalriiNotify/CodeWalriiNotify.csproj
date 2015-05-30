@@ -74,15 +74,11 @@
     <Compile Include="HTMLRenderer.cs" />
     <Compile Include="APIQueryMeta.cs" />
     <Compile Include="NotifierCore.cs" />
-    <Compile Include="Json Converters\DictionaryExtensions.cs" />
-    <Compile Include="Json Converters\DynamicJsonConverter.cs" />
-    <Compile Include="Json Converters\ExpandoJsonConverter.cs" />
+    <Compile Include="SettingsData.cs" />
+    <Compile Include="DynamicJsonConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Json Converters\" />
   </ItemGroup>
 </Project>

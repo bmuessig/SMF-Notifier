@@ -12,8 +12,11 @@ namespace CodeWalriiNotify
 			: base(WindowType.Toplevel)
 		{
 			Build();
+			this.Title = "Loading...";
+
 
 			notifier = new NotifierCore(mainRecyclerview);
+			this.Title = SettingsProvider.CurrentSettings.ApplicationTitle;
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

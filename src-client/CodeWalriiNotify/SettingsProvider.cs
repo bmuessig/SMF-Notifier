@@ -9,9 +9,12 @@ namespace CodeWalriiNotify
 {
 	public static class SettingsProvider
 	{
+		static readonly JavaScriptSerializer javaScriptSerializer;
+
 		static SettingsProvider()
 		{
-
+			javaScriptSerializer = new JavaScriptSerializer();
+			javaScriptSerializer.RegisterConverters(new JavaScriptConverter[] { new ExpandoJsonConverter() });
 			//FromFile("config.json");
 			RestoreDefaults();
 		}
@@ -30,7 +33,7 @@ namespace CodeWalriiNotify
 			} else
 				rawSettingsJson = File.ReadAllText(Path);
 
-			dynamic settings = JObject.Parse(rawSettingsJson);
+			dynamic settings = new object();//JObject.Parse(rawSettingsJson);
 
 			FeedURL = (string)settings.feed_url;
 			ApplicationTitle = (string)settings.app_title;
@@ -49,7 +52,7 @@ namespace CodeWalriiNotify
 			settings.feed_url = FeedURL;
 			settings.app_title = FeedURL;
 
-			File.WriteAllText(Path, JsonConvert.SerializeObject(settings));
+			File.WriteAllText(Path, javaScriptSerializer.Serialize(settings));
 		}
 
 		public static string FeedURL {

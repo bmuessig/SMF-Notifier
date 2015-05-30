@@ -21,11 +21,15 @@ namespace CodeWalriiNotify
 
 		public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
 		{
-			throw new NotImplementedException();
+			var result = new Dictionary<string, object>();
+			var dictionary = obj as IDictionary<string, object>;
+			foreach (var item in dictionary)
+				result.Add(item.Key, item.Value);
+			return result;
 		}
 
 		public override IEnumerable<Type> SupportedTypes {
-			get { return new ReadOnlyCollection<Type>(new List<Type>(new[] { typeof(object) })); }
+			get { return new ReadOnlyCollection<Type>(new List<Type>(new[] { typeof(object), typeof(ExpandoObject) })); }
 		}
 
 		#region Nested type: DynamicJsonObject

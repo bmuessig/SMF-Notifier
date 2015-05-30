@@ -35,5 +35,11 @@ namespace CodeWalriiNotify
 			this.Destroy();
 			Environment.Exit(0);
 		}
+
+		protected void OnPreferencesActionActivated(object sender, EventArgs e)
+		{
+			var dialog = new SettingsDialog();
+			dialog.Show();
+		}
 	}
 }

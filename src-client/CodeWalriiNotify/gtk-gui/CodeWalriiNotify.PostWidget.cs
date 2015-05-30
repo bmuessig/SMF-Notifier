@@ -84,7 +84,7 @@ namespace CodeWalriiNotify
 			this.bodyRenderarea.WidthRequest = 440;
 			this.bodyRenderarea.HeightRequest = 100;
 			this.bodyRenderarea.Name = "bodyRenderarea";
-			this.bodyRenderarea.Xpad = 10;
+			this.bodyRenderarea.Xpad = 5;
 			this.bodyRenderarea.Ypad = 5;
 			this.bodyRenderarea.Xalign = 0F;
 			this.bodyRenderarea.Yalign = 0F;

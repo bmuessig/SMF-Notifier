@@ -55,11 +55,6 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public Color BodyForecolor {
-			get;
-			set;
-		}
-
 		public Color BodyBackcolor {
 			get;
 			set;
@@ -80,17 +75,7 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public string BodyFont {
-			get;
-			set;
-		}
-
-		public bool AntiAlias {
-			get;
-			set;
-		}
-
-		public string CustomCss {
+		public bool BodyUseAntiAlias {
 			get;
 			set;
 		}
@@ -103,21 +88,21 @@ namespace CodeWalriiNotify
 		public SettingsData()
 		{
 			FeedURL = "http://api.muessigb.net/smf_notifier.php";
-			ApplicationTitle = "Sample";
+			ApplicationTitle = "CodeWalr.us Post Notifier";
 			QueryInterval = 50;
 			MaximumPosts = 10;
 			AudioNotify = false;
 			VisualNotify = true;
+			BodyUseAntiAlias = true;
 			HeaderBackcolor = new Color(110, 180, 137);
 			TimestampForecolor = new Color(216, 216, 216);
 			TitleForecolor = new Color(255, 255, 255);
 			BodyBackcolor = new Color(250, 250, 250);
-			BodyForecolor = new Color(0, 0, 0);
 			FooterBackcolor = new Color(250, 250, 250);
 			AuthorForecolor = new Color(198, 198, 198);
 			TitleFont = "Tahoma 15.6";
 			DetailFont = "Tahoma 10.5";
-			BodyFont = "Tahoma 13.6";
+			BodyFormat = "<html><head><style>img{max-width:440px;}\na{text-decoration:none;}</style></head><body><post></body></html>";
 		}
 	}
 }

@@ -13,17 +13,15 @@ namespace CodeWalriiNotify
 		{
 			this.Build();
 
-			var headerBackcolor = new Color(110, 180, 137);
-			var timeForecolor = new Color(216, 216, 216);
-			var titleForecolor = new Color(255, 255, 255);
-			var bodyBackcolor = new Color(250, 250, 250);
-			var bodyForecolor = new Color(0, 0, 0);
-			var footerBackcolor = new Color(250, 250, 250);
-			var authorForecolor = new Color(198, 198, 198);
+			var headerBackcolor = SettingsProvider.CurrentSettings.HeaderBackcolor;
+			var timeForecolor = SettingsProvider.CurrentSettings.TimestampForecolor;
+			var titleForecolor = SettingsProvider.CurrentSettings.TitleForecolor;
+			var bodyBackcolor = SettingsProvider.CurrentSettings.BodyBackcolor;
+			var footerBackcolor = SettingsProvider.CurrentSettings.FooterBackcolor;
+			var authorForecolor = SettingsProvider.CurrentSettings.AuthorForecolor;
 
-			var titleFont = Pango.FontDescription.FromString("Tahoma 15.6");
-			var detailFont = Pango.FontDescription.FromString("Tahoma 10.5");
-			var bodyFont = Pango.FontDescription.FromString("Tahoma 13.6");
+			var titleFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.TitleFont);
+			var detailFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.DetailFont);
 
 			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
 			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
@@ -99,7 +97,12 @@ namespace CodeWalriiNotify
 		public void UpdateBody()
 		{
 			Gtk.Requisition size = bodyRenderarea.SizeRequest();
-			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML("<style>img{max-width:440px;}\na{text-decoration:none;}</style>" + BodyHTML, (uint)size.Width, 0);
+			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML(
+				SettingsProvider.CurrentSettings.BodyFormat.Replace("<post>", BodyHTML),
+				(uint)size.Width,
+				0,
+				SettingsProvider.CurrentSettings.BodyUseAntiAlias
+			);
 			bodyRenderarea.HeightRequest = bodyRenderarea.Pixbuf.Height + 20;
 		}
 	}

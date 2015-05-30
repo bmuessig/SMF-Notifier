@@ -146,7 +146,7 @@
                     <property name="MemberName" />
                     <property name="WidthRequest">440</property>
                     <property name="HeightRequest">100</property>
-                    <property name="Xpad">10</property>
+                    <property name="Xpad">5</property>
                     <property name="Ypad">5</property>
                     <property name="Xalign">0</property>
                     <property name="Yalign">0</property>

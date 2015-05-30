@@ -76,6 +76,7 @@
     <Compile Include="NotifierCore.cs" />
     <Compile Include="SettingsData.cs" />
     <Compile Include="DynamicJsonConverter.cs" />
+    <Compile Include="JsonPrettify.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

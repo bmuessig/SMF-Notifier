@@ -3,14 +3,16 @@ using Gtk;
 
 namespace CodeWalriiNotify
 {
-	public class MessageBox
+	public static class MessageBox
 	{
-		public static void Show(String message, MessageType type = MessageType.Info, Window self = null)
+		public static void Show(string Message, string Title = "", MessageType Type = MessageType.Info, ButtonsType Buttons = ButtonsType.Ok, ResponseHandler Callback = null, Window Self = null)
 		{
-			var md = new MessageDialog(self, DialogFlags.DestroyWithParent, type, ButtonsType.Ok, message);
+			var md = new MessageDialog(Self, DialogFlags.DestroyWithParent, Type, Buttons, Message);
+			md.Title = Title;
+			if (Callback != null)
+				md.Response += Callback;
 			md.Run();
 			md.Destroy();
 		}
 	}
 }
-

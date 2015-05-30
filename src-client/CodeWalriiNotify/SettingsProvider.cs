@@ -36,7 +36,7 @@ namespace CodeWalriiNotify
 
 		public static void ToFile(string Path)
 		{
-			File.WriteAllText(Path, javaScriptSerializer.Serialize(CurrentSettings));
+			File.WriteAllText(Path, JsonPrettify.FormatJson(javaScriptSerializer.Serialize(CurrentSettings)));
 		}
 
 		public static SettingsData CurrentSettings {

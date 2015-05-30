@@ -15,6 +15,7 @@ namespace CodeWalriiNotify
 
 			notifier = new NotifierCore(mainRecyclerview);
 
+			// temporarily save it - to be removed later
 			SettingsProvider.ToFile("lol.json");
 		}
 

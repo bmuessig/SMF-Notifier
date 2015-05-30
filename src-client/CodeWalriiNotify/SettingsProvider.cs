@@ -2,8 +2,6 @@
 using System.IO;
 using System.Web.Script.Serialization;
 using System.Dynamic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
@@ -33,7 +31,7 @@ namespace CodeWalriiNotify
 			} else
 				rawSettingsJson = File.ReadAllText(Path);
 
-			dynamic settings = new object();//JObject.Parse(rawSettingsJson);
+			dynamic settings = javaScriptSerializer.Deserialize(rawSettingsJson, typeof(ExpandoObject));
 
 			FeedURL = (string)settings.feed_url;
 			ApplicationTitle = (string)settings.app_title;

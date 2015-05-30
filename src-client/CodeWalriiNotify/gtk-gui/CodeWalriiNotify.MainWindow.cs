@@ -43,7 +43,7 @@ namespace CodeWalriiNotify
 			this.WidthRequest = 480;
 			this.HeightRequest = 540;
 			this.Name = "CodeWalriiNotify.MainWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString ("CodeWalr.us Notifier");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Notifier");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Resizable = false;
 			this.AllowGrow = false;

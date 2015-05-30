@@ -35,6 +35,11 @@ namespace CodeWalriiNotify
 			set;
 		}
 
+		public string IconFile {
+			get;
+			set;
+		}
+
 		public bool VisualNotify {
 			get;
 			set;
@@ -98,6 +103,7 @@ namespace CodeWalriiNotify
 			MaximumPosts = 10;
 			AudioNotify = false;
 			AudioFile = "";
+			IconFile = "walrii.gif";
 			VisualNotify = true;
 			BodyUseAntiAlias = true;
 			HeaderBackcolor = new Color(110, 180, 137);

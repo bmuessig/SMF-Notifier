@@ -6,7 +6,7 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <widget-library name="../bin/Release/CodeWalriiNotify.exe" internal="true" />
+    <widget-library name="../bin/Debug/CodeWalriiNotify.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="CodeWalriiNotify.MainWindow" design-size="500 580">
     <action-group name="Default">
@@ -42,7 +42,7 @@
     <property name="MemberName" />
     <property name="WidthRequest">480</property>
     <property name="HeightRequest">540</property>
-    <property name="Title" translatable="yes">CodeWalr.us Notifier</property>
+    <property name="Title" translatable="yes">Notifier</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Resizable">False</property>
     <property name="AllowGrow">False</property>
@@ -226,6 +226,7 @@
   <widget class="Gtk.Dialog" id="CodeWalriiNotify.SettingsDialog" design-size="503 314">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Settings</property>
+    <property name="Icon">stock:gtk-preferences Dnd</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">3</property>
     <property name="HelpButton">False</property>
@@ -252,20 +253,20 @@
                     <child>
                       <widget class="Gtk.Table" id="notifierTable">
                         <property name="MemberName" />
-                        <property name="NRows">7</property>
+                        <property name="NRows">8</property>
                         <property name="NColumns">2</property>
                         <property name="RowSpacing">6</property>
                         <property name="ColumnSpacing">6</property>
                         <property name="BorderWidth">6</property>
                         <child>
-                          <widget class="Gtk.Label" id="audioFileFcLbl">
+                          <widget class="Gtk.FileChooserButton" id="audioFileSel">
                             <property name="MemberName" />
-                            <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Audio File</property>
                           </widget>
                           <packing>
                             <property name="TopAttach">6</property>
                             <property name="BottomAttach">7</property>
+                            <property name="LeftAttach">1</property>
+                            <property name="RightAttach">2</property>
                             <property name="AutoSize">False</property>
                             <property name="YOptions">Fill</property>
                             <property name="XExpand">True</property>
@@ -277,14 +278,14 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.FileChooserButton" id="audioFileSel">
+                          <widget class="Gtk.Label" id="audioFileSelLbl">
                             <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Audio File</property>
                           </widget>
                           <packing>
                             <property name="TopAttach">6</property>
                             <property name="BottomAttach">7</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
                             <property name="AutoSize">False</property>
                             <property name="YOptions">Fill</property>
                             <property name="XExpand">True</property>
@@ -391,6 +392,44 @@
                             <property name="XOptions">Fill</property>
                             <property name="YOptions">Fill</property>
                             <property name="XExpand">False</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.FileChooserButton" id="iconFileSel">
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">7</property>
+                            <property name="BottomAttach">8</property>
+                            <property name="LeftAttach">1</property>
+                            <property name="RightAttach">2</property>
+                            <property name="AutoSize">False</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">True</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="iconFileSelLbl">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Icon File</property>
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">7</property>
+                            <property name="BottomAttach">8</property>
+                            <property name="AutoSize">False</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">True</property>
                             <property name="XFill">True</property>
                             <property name="XShrink">False</property>
                             <property name="YExpand">False</property>

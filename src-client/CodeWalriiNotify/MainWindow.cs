@@ -12,11 +12,21 @@ namespace CodeWalriiNotify
 			: base(WindowType.Toplevel)
 		{
 			Build();
+
+			this.Icon = Stetic.IconLoader.LoadIcon(this, "gtk-execute", IconSize.Dnd);
 			this.Title = "Loading...";
 
+			while (Application.EventsPending())
+				Application.RunIteration();
+
+			string iconFileName = SettingsProvider.CurrentSettings.IconFile;
+			if (System.IO.File.Exists(iconFileName))
+				this.Icon = new Gdk.Pixbuf(iconFileName);
 
 			notifier = new NotifierCore(mainRecyclerview);
-			this.Title = SettingsProvider.CurrentSettings.FeedTitle;
+
+			string feedTitle = SettingsProvider.CurrentSettings.FeedTitle;
+			this.Title = feedTitle + (feedTitle.Length > 0 ? " " : "") + "Post Notifier";
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

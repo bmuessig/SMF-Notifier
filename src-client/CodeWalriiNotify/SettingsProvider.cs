@@ -32,7 +32,15 @@ namespace CodeWalriiNotify
 			} else
 				rawSettingsJson = File.ReadAllText(Path);
 
-			CurrentSettings = (SettingsData)javaScriptSerializer.Deserialize(rawSettingsJson, typeof(SettingsData));
+			try {
+				CurrentSettings = (SettingsData)javaScriptSerializer.Deserialize(rawSettingsJson, typeof(SettingsData));
+			} catch (Exception ex) {
+				if (DefaultOnError) {
+					CurrentSettings = new SettingsData();
+					ToFile(Path);
+				} else
+					throw ex;
+			}
 		}
 
 		public static void ToFile(string Path)

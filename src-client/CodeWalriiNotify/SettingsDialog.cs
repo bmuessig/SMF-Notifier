@@ -16,6 +16,7 @@ namespace CodeWalriiNotify
 			// General
 			feedUrlTxt.Text = CurrentSettings.FeedURL;
 			feedTitleTxt.Text = CurrentSettings.FeedTitle;
+			iconFileSel.SetFilename(CurrentSettings.IconFile);
 
 			// Query
 			queryIntervalDec.Value = CurrentSettings.QueryInterval;
@@ -48,6 +49,7 @@ namespace CodeWalriiNotify
 			// General
 			CurrentSettings.FeedURL = feedUrlTxt.Text;
 			CurrentSettings.FeedTitle = feedTitleTxt.Text;
+			CurrentSettings.IconFile = iconFileSel.Filename;
 
 			// Query
 			CurrentSettings.QueryInterval = (uint)queryIntervalDec.Value;

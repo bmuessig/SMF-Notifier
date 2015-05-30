@@ -42,6 +42,7 @@ namespace CodeWalriiNotify
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)
 		{
+			notifier.Shutdown();
 			this.Destroy();
 			Environment.Exit(0);
 		}

@@ -13,12 +13,12 @@ namespace CodeWalriiNotify
 			postsView = PostsView;
 		}
 
-		public void ForceRefresh()
+		public void Shutdown()
 		{
-			RefreshPosts();
+			
 		}
 
-		protected void RefreshPosts()
+		public void ForceRefresh()
 		{
 			var fdr = new FeedRetriever(SettingsProvider.CurrentSettings.FeedURL);
 			String js = fdr.RetrieveData("?html_stripmode=none");

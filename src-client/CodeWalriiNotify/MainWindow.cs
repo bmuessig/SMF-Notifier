@@ -16,7 +16,7 @@ namespace CodeWalriiNotify
 
 
 			notifier = new NotifierCore(mainRecyclerview);
-			this.Title = SettingsProvider.CurrentSettings.ApplicationTitle;
+			this.Title = SettingsProvider.CurrentSettings.FeedTitle;
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

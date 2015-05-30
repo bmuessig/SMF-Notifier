@@ -10,7 +10,7 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public string ApplicationTitle {
+		public string FeedTitle {
 			get;
 			set;
 		}
@@ -26,6 +26,11 @@ namespace CodeWalriiNotify
 		}
 
 		public bool AudioNotify {
+			get;
+			set;
+		}
+
+		public string AudioFile {
 			get;
 			set;
 		}
@@ -88,10 +93,11 @@ namespace CodeWalriiNotify
 		public SettingsData()
 		{
 			FeedURL = "http://api.muessigb.net/smf_notifier.php";
-			ApplicationTitle = "CodeWalr.us Post Notifier";
+			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;
 			AudioNotify = false;
+			AudioFile = "";
 			VisualNotify = true;
 			BodyUseAntiAlias = true;
 			HeaderBackcolor = new Color(110, 180, 137);
@@ -100,8 +106,8 @@ namespace CodeWalriiNotify
 			BodyBackcolor = new Color(250, 250, 250);
 			FooterBackcolor = new Color(250, 250, 250);
 			AuthorForecolor = new Color(198, 198, 198);
-			TitleFont = "Tahoma 15.6";
-			DetailFont = "Tahoma 10.5";
+			TitleFont = "Tahoma 16";
+			DetailFont = "Tahoma 11";
 			BodyFormat = "<html><head><style>img{max-width:440px;}\na{text-decoration:none;}</style></head><body><post></body></html>";
 		}
 	}

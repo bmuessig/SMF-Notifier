@@ -47,13 +47,13 @@
     <property name="AllowGrow">False</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <widget class="Gtk.VBox" id="vbox1">
+      <widget class="Gtk.VBox" id="horizontalSplit">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.MenuBar" id="menubar1">
+          <widget class="Gtk.MenuBar" id="menuBar">
             <property name="MemberName" />
-            <node name="menubar1" type="Menubar">
+            <node name="menuBar" type="Menubar">
               <node type="Menu" action="MenuAction">
                 <node type="Menuitem" action="refreshAction" />
                 <node type="Menuitem" action="preferencesAction" />

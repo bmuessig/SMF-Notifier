@@ -14,9 +14,9 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Action quitAction;
 		
-		private global::Gtk.VBox vbox1;
+		private global::Gtk.VBox horizontalSplit;
 		
-		private global::Gtk.MenuBar menubar1;
+		private global::Gtk.MenuBar menuBar;
 		
 		private global::CodeWalriiNotify.RecyclerView mainRecyclerview;
 
@@ -48,26 +48,27 @@ namespace CodeWalriiNotify
 			this.Resizable = false;
 			this.AllowGrow = false;
 			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
-			this.vbox1 = new global::Gtk.VBox ();
-			this.vbox1.Spacing = 6;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
-			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
-			this.menubar1.Name = "menubar1";
-			this.vbox1.Add (this.menubar1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.menubar1]));
+			this.horizontalSplit = new global::Gtk.VBox ();
+			this.horizontalSplit.Name = "horizontalSplit";
+			this.horizontalSplit.Spacing = 6;
+			// Container child horizontalSplit.Gtk.Box+BoxChild
+			this.UIManager.AddUiFromString (@"<ui><menubar name='menuBar'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
+			this.menuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menuBar")));
+			this.menuBar.Name = "menuBar";
+			this.horizontalSplit.Add (this.menuBar);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.horizontalSplit [this.menuBar]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
-			// Container child vbox1.Gtk.Box+BoxChild
+			// Container child horizontalSplit.Gtk.Box+BoxChild
 			this.mainRecyclerview = new global::CodeWalriiNotify.RecyclerView ();
 			this.mainRecyclerview.HeightRequest = 500;
 			this.mainRecyclerview.Events = ((global::Gdk.EventMask)(256));
 			this.mainRecyclerview.Name = "mainRecyclerview";
-			this.vbox1.Add (this.mainRecyclerview);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.mainRecyclerview]));
+			this.horizontalSplit.Add (this.mainRecyclerview);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.horizontalSplit [this.mainRecyclerview]));
 			w3.Position = 1;
-			this.Add (this.vbox1);
+			this.Add (this.horizontalSplit);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

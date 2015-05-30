@@ -13,8 +13,7 @@ namespace CodeWalriiNotify
 		{
 			javaScriptSerializer = new JavaScriptSerializer();
 			javaScriptSerializer.RegisterConverters(new JavaScriptConverter[] { new ExpandoJsonConverter() });
-			//FromFile("config.json");
-			RestoreDefaults();
+			FromFile("config.json");
 		}
 
 		public static void FromFile(string Path, bool DefaultOnError = true)
@@ -26,6 +25,7 @@ namespace CodeWalriiNotify
 					throw new FileNotFoundException("The JSON file couldn't be found and defaulting is disabled!", Path);
 				else {
 					RestoreDefaults();
+					ToFile(Path);
 					return;
 				}
 			} else

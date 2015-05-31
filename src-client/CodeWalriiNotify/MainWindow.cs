@@ -23,10 +23,13 @@ namespace CodeWalriiNotify
 			if (System.IO.File.Exists(iconFileName))
 				this.Icon = new Gdk.Pixbuf(iconFileName);
 
-			notifier = new NotifierCore(mainRecyclerview);
+			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings);
 
 			string feedTitle = SettingsProvider.CurrentSettings.FeedTitle;
 			this.Title = feedTitle + (feedTitle.Length > 0 ? " " : "") + "Post Notifier";
+
+			notifier.Run();
+			//notifier.ForceRefresh();
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

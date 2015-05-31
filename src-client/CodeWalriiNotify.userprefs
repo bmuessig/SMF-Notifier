@@ -1,14 +1,13 @@
 ﻿<Properties StartupItem="CodeWalriiNotify\CodeWalriiNotify.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\NotifierCore.cs">
     <Files>
       <File FileName="CodeWalriiNotify\PostMeta.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\PostWidget.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\RecyclerView.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\MainWindow.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\SettingsProvider.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\NotifierCore.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\JsonPrettify.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\NotifierCore.cs" Line="34" Column="38" />
       <File FileName="CodeWalriiNotify\SettingsData.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\SettingsDialog.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\Program.cs" Line="12" Column="25" />
@@ -16,7 +15,9 @@
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\NotifierCore.cs" line="34" column="38" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

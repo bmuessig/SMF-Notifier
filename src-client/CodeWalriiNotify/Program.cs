@@ -13,7 +13,7 @@ namespace CodeWalriiNotify
 			if (Environment.OSVersion.VersionString.ToLower().Contains("windows")) {
 				// Set everything up for GTK on Windows
 				if (!WindowsTools.CheckWindowsGtk())
-					return;
+					return; // Die if we don't have the sufficient libraries
 			}
 
 			// Initialize the application

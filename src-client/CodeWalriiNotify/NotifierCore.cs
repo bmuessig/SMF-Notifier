@@ -5,7 +5,7 @@ namespace CodeWalriiNotify
 {
 	public class NotifierCore
 	{
-		private uint lastTimeStamp;
+		//private uint lastTimeStamp;
 		private RecyclerView postsView;
 
 		public NotifierCore(RecyclerView PostsView)

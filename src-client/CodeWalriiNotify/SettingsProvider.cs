@@ -1,19 +1,18 @@
 ﻿using System;
 using System.IO;
-using System.Web.Script.Serialization;
+
+//using System.Web.Script.Serialization;
 using System.Dynamic;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CodeWalriiNotify
 {
 	public static class SettingsProvider
 	{
-		static readonly JavaScriptSerializer javaScriptSerializer;
-
 		static SettingsProvider()
 		{
 			CurrentFilename = "settings.json";
-			javaScriptSerializer = new JavaScriptSerializer();
 			FromFile(CurrentFilename);
 		}
 
@@ -33,7 +32,7 @@ namespace CodeWalriiNotify
 				rawSettingsJson = File.ReadAllText(Path);
 
 			try {
-				CurrentSettings = (SettingsData)javaScriptSerializer.Deserialize(rawSettingsJson, typeof(SettingsData));
+				CurrentSettings = (SettingsData)JsonConvert.DeserializeObject(rawSettingsJson, typeof(SettingsData));
 			} catch (Exception ex) {
 				if (DefaultOnError) {
 					CurrentSettings = new SettingsData();
@@ -45,7 +44,7 @@ namespace CodeWalriiNotify
 
 		public static void ToFile(string Path)
 		{
-			File.WriteAllText(Path, JsonPrettify.FormatJson(javaScriptSerializer.Serialize(CurrentSettings)));
+			File.WriteAllText(Path, JsonConvert.SerializeObject(CurrentSettings, Formatting.Indented));
 		}
 
 		public static void SetDefaults()

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
+
+//using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
@@ -47,13 +49,10 @@ namespace CodeWalriiNotify
 		public static List<PostMeta> FromJSON(String json)
 		{
 			var posts = new List<PostMeta>();
-			var serializer = new JavaScriptSerializer();
-
-			serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
-			dynamic jsonObj = serializer.Deserialize(json, typeof(object));
+			dynamic jsonObj = JObject.Parse(json);
 
 			if ((bool)jsonObj.success) {
-				List<object> data = jsonObj.data;
+				dynamic data = jsonObj.data;
 				foreach (dynamic postObj in data) {
 					dynamic postFields = postObj.post;
 					dynamic posterFields = postObj.poster;

@@ -32,9 +32,16 @@ namespace CodeWalriiNotify
 			notifier.ForceRefresh();
 		}
 
+		public void Shutdown()
+		{
+			notifier.Shutdown();
+			this.Destroy();
+			Application.Quit();
+		}
+
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 		{
-			Application.Quit();
+			Shutdown();
 			a.RetVal = true;
 		}
 
@@ -45,14 +52,12 @@ namespace CodeWalriiNotify
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)
 		{
-			notifier.Shutdown();
-			this.Destroy();
-			Environment.Exit(0);
+			Shutdown();
 		}
 
 		protected void OnPreferencesActionActivated(object sender, EventArgs e)
 		{
-			var dialog = new SettingsDialog();
+			var dialog = new SettingsDialog(this);
 			dialog.Show();
 		}
 	}

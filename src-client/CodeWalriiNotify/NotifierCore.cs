@@ -12,7 +12,6 @@ namespace CodeWalriiNotify
 		private SettingsData settings;
 		private BackgroundWorker asyncThread;
 
-		private bool timerRunning;
 		private ulong lastChanged;
 
 		public NotifierCore(Window MainWindow, RecyclerView PostsView, SettingsData Settings)
@@ -26,21 +25,23 @@ namespace CodeWalriiNotify
 			asyncThread.RunWorkerCompleted += AsyncThread_RunWorkerCompleted;
 
 			lastChanged = 0;
-			timerRunning = false;
+			TimerRunning = false;
 		}
+
+		public bool TimerRunning { get; private set; }
 
 		protected void RunTimer()
 		{
-			timerRunning = true;
+			TimerRunning = true;
 			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
 				DoRefreshAsync();
-				return timerRunning;
+				return TimerRunning;
 			}));
 		}
 
 		protected void StopTimer()
 		{
-			timerRunning = false;
+			TimerRunning = false;
 		}
 
 		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

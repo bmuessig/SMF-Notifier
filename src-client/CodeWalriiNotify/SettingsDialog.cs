@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace CodeWalriiNotify
 {
 	public partial class SettingsDialog : Gtk.Dialog
 	{
-		public SettingsDialog()
+		MainWindow winMain;
+
+		public SettingsDialog(MainWindow MainWindow)
 		{
 			this.Build();
 
+			winMain = MainWindow;
 			ReadSettings(SettingsProvider.CurrentSettings);
 		}
 
@@ -81,7 +86,17 @@ namespace CodeWalriiNotify
 		{
 			WriteSettings(SettingsProvider.CurrentSettings);
 			SettingsProvider.ToFile(SettingsProvider.CurrentFilename);
-			this.Destroy();
+			MessageBox.Show(
+				"The Notifier needs to be restarted in order to apply the new Settings.",
+				"Restart required",
+				Gtk.MessageType.Info,
+				Gtk.ButtonsType.Ok,
+				new Gtk.ResponseHandler(delegate(object o, Gtk.ResponseArgs args) {
+					this.Destroy();
+					winMain.Shutdown();
+					Process.Start(Assembly.GetExecutingAssembly().Location);
+				})
+			);
 		}
 
 		protected void OnCancelButtonClicked(object sender, EventArgs e)

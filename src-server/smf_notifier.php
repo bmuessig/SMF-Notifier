@@ -1,14 +1,13 @@
 <?php
-/* SMF Forum Feed parser 
+/* SMF Feed Parser API
  * (c) 2015 Muessigb <muessigb@yahoo.de> (Muessigb.net)
  * MIT License
 */
 
-ob_start();
 
-// Constants to change
-define("BASE_SITE_URL", "http://codewalr.us/index.php");  // Codewalr.us
-//define("BASE_SITE_URL", "http://www.omnimaga.org/index.php"); // Omnimaga
+/* CHANGE YOUR SETTINGS BELOW */
+
+define("BASE_SITE_URL", "http://codewalr.us/index.php");
 define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_SITE_URL) . ".db");
 define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
@@ -17,16 +16,19 @@ define("DEFAULT_MAX_POSTS", 10);
 define("DEFAULT_STRIPHTML_MODE", "NONE");
 
 
+
 /* DO NOT CHANGE ANYTHING BELOW THIS LINE! */
 
 // Static internal constants
 define("API_VERSION_MAJOR", 04);
 define("API_VERSION_MINOR", 1506);
-define("API_VERSION_REV", ord('a'));
+define("API_VERSION_REV", ord('b'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
 define("STRIPHTML_ALL", 1);
+
+ob_start();
 
 	if(isset($_GET['query'])) {
 		$exceptions = array();

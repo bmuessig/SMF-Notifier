@@ -25,12 +25,22 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public bool AudioNotify {
+		public bool AudioNotifyEnable {
 			get;
 			set;
 		}
 
-		public string AudioFile {
+		public bool AudioNotifyUseCustomAudio {
+			get;
+			set;
+		}
+
+		public string AudioNotifyFile {
+			get;
+			set;
+		}
+
+		public bool UseCustomIcon {
 			get;
 			set;
 		}
@@ -40,7 +50,27 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public bool VisualNotify {
+		public bool VisualNotifyEnable {
+			get;
+			set;
+		}
+
+		public float VisualNotifyVerticalAlignment {
+			get;
+			set;
+		}
+
+		public bool VisualNotifyDoAnimate {
+			get;
+			set;
+		}
+
+		public uint VisualNotifyAnimationInterval {
+			get;
+			set;
+		}
+
+		public uint VisualNotifyTimeout {
 			get;
 			set;
 		}
@@ -101,10 +131,16 @@ namespace CodeWalriiNotify
 			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;
-			AudioNotify = false;
-			AudioFile = "";
+			AudioNotifyEnable = false;
+			AudioNotifyUseCustomAudio = false;
+			AudioNotifyFile = "";
+			UseCustomIcon = true;
 			IconFile = "walrii.gif";
-			VisualNotify = true;
+			VisualNotifyEnable = true;
+			VisualNotifyVerticalAlignment = 1.0f;
+			VisualNotifyDoAnimate = true;
+			VisualNotifyAnimationInterval = 10;
+			VisualNotifyTimeout = 10;
 			BodyUseAntiAlias = true;
 			HeaderBackcolor = new Color(110, 180, 137);
 			TimestampForecolor = new Color(216, 216, 216);

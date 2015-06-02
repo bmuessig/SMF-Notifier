@@ -58,6 +58,12 @@
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\..\..\..\Pictures\Bell.png">
+      <LogicalName>Bell.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chime.wav">
+      <LogicalName>Chime.wav</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -83,6 +89,9 @@
     <Compile Include="WindowsTools.cs" />
     <Compile Include="APIException.cs" />
     <Compile Include="APIMeta.cs" />
+    <Compile Include="NotificationWindow.cs" />
+    <Compile Include="gtk-gui\CodeWalriiNotify.NotificationWindow.cs" />
+    <Compile Include="Notificator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -18,6 +18,14 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Label audioNotifyCbLbl;
 		
+		private global::Gtk.CheckButton customAudioCb;
+		
+		private global::Gtk.Label customAudioCbLbl;
+		
+		private global::Gtk.CheckButton customIconCb;
+		
+		private global::Gtk.Label customIconCbLbl;
+		
 		private global::Gtk.Entry feedTitleTxt;
 		
 		private global::Gtk.Label feedUrlTxLbl;
@@ -38,11 +46,27 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Label serverNameTxLbl;
 		
-		private global::Gtk.CheckButton visualNotifyCb;
+		private global::Gtk.CheckButton visualNotifyAnimationCb;
 		
-		private global::Gtk.Label visualNotifyCbLbl;
+		private global::Gtk.Label visualNotifyAnimationCbLbl;
 		
-		private global::Gtk.Label label1;
+		private global::Gtk.SpinButton visualNotifyAnimationIntervalDec;
+		
+		private global::Gtk.Label visualNotifyAnimationSpeedDecLbl;
+		
+		private global::Gtk.CheckButton visualNotifyEnabledCb;
+		
+		private global::Gtk.Label visualNotifyEnabledCbLbl;
+		
+		private global::Gtk.SpinButton visualNotifyTimeoutDec;
+		
+		private global::Gtk.Label visualNotifyTimeoutDecLbl;
+		
+		private global::Gtk.HScale visualNotifyVerticalAlignmentSlide;
+		
+		private global::Gtk.Label visualNotifyVerticalAlignmentSlideLbl;
+		
+		private global::Gtk.Label generalSettingsLbl;
 		
 		private global::Gtk.ScrolledWindow styleScroll;
 		
@@ -90,7 +114,7 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.FontButton titleFontBtn;
 		
-		private global::Gtk.Label label2;
+		private global::Gtk.Label styleSettingsLbl;
 		
 		private global::Gtk.Button cancelButton;
 		
@@ -126,7 +150,7 @@ namespace CodeWalriiNotify
 			global::Gtk.Viewport w2 = new global::Gtk.Viewport ();
 			w2.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport1.Gtk.Container+ContainerChild
-			this.notifierTable = new global::Gtk.Table (((uint)(8)), ((uint)(2)), false);
+			this.notifierTable = new global::Gtk.Table (((uint)(14)), ((uint)(2)), false);
 			this.notifierTable.Name = "notifierTable";
 			this.notifierTable.RowSpacing = ((uint)(6));
 			this.notifierTable.ColumnSpacing = ((uint)(6));
@@ -136,8 +160,8 @@ namespace CodeWalriiNotify
 			this.audioFileSel.Name = "audioFileSel";
 			this.notifierTable.Add (this.audioFileSel);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioFileSel]));
-			w3.TopAttach = ((uint)(6));
-			w3.BottomAttach = ((uint)(7));
+			w3.TopAttach = ((uint)(11));
+			w3.BottomAttach = ((uint)(12));
 			w3.LeftAttach = ((uint)(1));
 			w3.RightAttach = ((uint)(2));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
@@ -148,8 +172,8 @@ namespace CodeWalriiNotify
 			this.audioFileSelLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio File");
 			this.notifierTable.Add (this.audioFileSelLbl);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioFileSelLbl]));
-			w4.TopAttach = ((uint)(6));
-			w4.BottomAttach = ((uint)(7));
+			w4.TopAttach = ((uint)(11));
+			w4.BottomAttach = ((uint)(12));
 			w4.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.audioNotifyCb = new global::Gtk.CheckButton ();
@@ -159,8 +183,8 @@ namespace CodeWalriiNotify
 			this.audioNotifyCb.DrawIndicator = true;
 			this.notifierTable.Add (this.audioNotifyCb);
 			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCb]));
-			w5.TopAttach = ((uint)(5));
-			w5.BottomAttach = ((uint)(6));
+			w5.TopAttach = ((uint)(9));
+			w5.BottomAttach = ((uint)(10));
 			w5.LeftAttach = ((uint)(1));
 			w5.RightAttach = ((uint)(2));
 			w5.XOptions = ((global::Gtk.AttachOptions)(1));
@@ -172,9 +196,57 @@ namespace CodeWalriiNotify
 			this.audioNotifyCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Notify");
 			this.notifierTable.Add (this.audioNotifyCbLbl);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCbLbl]));
-			w6.TopAttach = ((uint)(5));
-			w6.BottomAttach = ((uint)(6));
+			w6.TopAttach = ((uint)(9));
+			w6.BottomAttach = ((uint)(10));
 			w6.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.customAudioCb = new global::Gtk.CheckButton ();
+			this.customAudioCb.CanFocus = true;
+			this.customAudioCb.Name = "customAudioCb";
+			this.customAudioCb.Label = "";
+			this.customAudioCb.DrawIndicator = true;
+			this.notifierTable.Add (this.customAudioCb);
+			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customAudioCb]));
+			w7.TopAttach = ((uint)(10));
+			w7.BottomAttach = ((uint)(11));
+			w7.LeftAttach = ((uint)(1));
+			w7.RightAttach = ((uint)(2));
+			w7.XOptions = ((global::Gtk.AttachOptions)(1));
+			w7.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.customAudioCbLbl = new global::Gtk.Label ();
+			this.customAudioCbLbl.Name = "customAudioCbLbl";
+			this.customAudioCbLbl.Xalign = 0F;
+			this.customAudioCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Use Custom Audio");
+			this.notifierTable.Add (this.customAudioCbLbl);
+			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customAudioCbLbl]));
+			w8.TopAttach = ((uint)(10));
+			w8.BottomAttach = ((uint)(11));
+			w8.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.customIconCb = new global::Gtk.CheckButton ();
+			this.customIconCb.CanFocus = true;
+			this.customIconCb.Name = "customIconCb";
+			this.customIconCb.Label = "";
+			this.customIconCb.DrawIndicator = true;
+			this.notifierTable.Add (this.customIconCb);
+			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customIconCb]));
+			w9.TopAttach = ((uint)(12));
+			w9.BottomAttach = ((uint)(13));
+			w9.LeftAttach = ((uint)(1));
+			w9.RightAttach = ((uint)(2));
+			w9.XOptions = ((global::Gtk.AttachOptions)(1));
+			w9.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.customIconCbLbl = new global::Gtk.Label ();
+			this.customIconCbLbl.Name = "customIconCbLbl";
+			this.customIconCbLbl.Xalign = 0F;
+			this.customIconCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Use Custom Icon");
+			this.notifierTable.Add (this.customIconCbLbl);
+			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customIconCbLbl]));
+			w10.TopAttach = ((uint)(12));
+			w10.BottomAttach = ((uint)(13));
+			w10.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.feedTitleTxt = new global::Gtk.Entry ();
 			this.feedTitleTxt.CanFocus = true;
@@ -182,20 +254,20 @@ namespace CodeWalriiNotify
 			this.feedTitleTxt.IsEditable = true;
 			this.feedTitleTxt.InvisibleChar = '●';
 			this.notifierTable.Add (this.feedTitleTxt);
-			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedTitleTxt]));
-			w7.TopAttach = ((uint)(1));
-			w7.BottomAttach = ((uint)(2));
-			w7.LeftAttach = ((uint)(1));
-			w7.RightAttach = ((uint)(2));
-			w7.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedTitleTxt]));
+			w11.TopAttach = ((uint)(1));
+			w11.BottomAttach = ((uint)(2));
+			w11.LeftAttach = ((uint)(1));
+			w11.RightAttach = ((uint)(2));
+			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.feedUrlTxLbl = new global::Gtk.Label ();
 			this.feedUrlTxLbl.Name = "feedUrlTxLbl";
 			this.feedUrlTxLbl.Xalign = 0F;
 			this.feedUrlTxLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Feed URL");
 			this.notifierTable.Add (this.feedUrlTxLbl);
-			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedUrlTxLbl]));
-			w8.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedUrlTxLbl]));
+			w12.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.feedUrlTxt = new global::Gtk.Entry ();
 			this.feedUrlTxt.CanFocus = true;
@@ -203,41 +275,41 @@ namespace CodeWalriiNotify
 			this.feedUrlTxt.IsEditable = true;
 			this.feedUrlTxt.InvisibleChar = '●';
 			this.notifierTable.Add (this.feedUrlTxt);
-			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedUrlTxt]));
-			w9.LeftAttach = ((uint)(1));
-			w9.RightAttach = ((uint)(2));
-			w9.XOptions = ((global::Gtk.AttachOptions)(4));
-			w9.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.feedUrlTxt]));
+			w13.LeftAttach = ((uint)(1));
+			w13.RightAttach = ((uint)(2));
+			w13.XOptions = ((global::Gtk.AttachOptions)(4));
+			w13.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.iconFileSel = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Select a File"), ((global::Gtk.FileChooserAction)(0)));
 			this.iconFileSel.Name = "iconFileSel";
 			this.notifierTable.Add (this.iconFileSel);
-			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.iconFileSel]));
-			w10.TopAttach = ((uint)(7));
-			w10.BottomAttach = ((uint)(8));
-			w10.LeftAttach = ((uint)(1));
-			w10.RightAttach = ((uint)(2));
-			w10.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.iconFileSel]));
+			w14.TopAttach = ((uint)(13));
+			w14.BottomAttach = ((uint)(14));
+			w14.LeftAttach = ((uint)(1));
+			w14.RightAttach = ((uint)(2));
+			w14.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.iconFileSelLbl = new global::Gtk.Label ();
 			this.iconFileSelLbl.Name = "iconFileSelLbl";
 			this.iconFileSelLbl.Xalign = 0F;
 			this.iconFileSelLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Icon File");
 			this.notifierTable.Add (this.iconFileSelLbl);
-			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.iconFileSelLbl]));
-			w11.TopAttach = ((uint)(7));
-			w11.BottomAttach = ((uint)(8));
-			w11.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.iconFileSelLbl]));
+			w15.TopAttach = ((uint)(13));
+			w15.BottomAttach = ((uint)(14));
+			w15.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.maxPostsDcLbl = new global::Gtk.Label ();
 			this.maxPostsDcLbl.Name = "maxPostsDcLbl";
 			this.maxPostsDcLbl.Xalign = 0F;
 			this.maxPostsDcLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Maximum Posts");
 			this.notifierTable.Add (this.maxPostsDcLbl);
-			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.maxPostsDcLbl]));
-			w12.TopAttach = ((uint)(3));
-			w12.BottomAttach = ((uint)(4));
-			w12.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.maxPostsDcLbl]));
+			w16.TopAttach = ((uint)(3));
+			w16.BottomAttach = ((uint)(4));
+			w16.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.maxPostsDec = new global::Gtk.SpinButton (1D, 100D, 1D);
 			this.maxPostsDec.CanFocus = true;
@@ -247,22 +319,22 @@ namespace CodeWalriiNotify
 			this.maxPostsDec.Numeric = true;
 			this.maxPostsDec.Value = 1D;
 			this.notifierTable.Add (this.maxPostsDec);
-			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.maxPostsDec]));
-			w13.TopAttach = ((uint)(3));
-			w13.BottomAttach = ((uint)(4));
-			w13.LeftAttach = ((uint)(1));
-			w13.RightAttach = ((uint)(2));
-			w13.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.maxPostsDec]));
+			w17.TopAttach = ((uint)(3));
+			w17.BottomAttach = ((uint)(4));
+			w17.LeftAttach = ((uint)(1));
+			w17.RightAttach = ((uint)(2));
+			w17.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.queryIntervalDcLbl = new global::Gtk.Label ();
 			this.queryIntervalDcLbl.Name = "queryIntervalDcLbl";
 			this.queryIntervalDcLbl.Xalign = 0F;
 			this.queryIntervalDcLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Query Interval (sec)");
 			this.notifierTable.Add (this.queryIntervalDcLbl);
-			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.queryIntervalDcLbl]));
-			w14.TopAttach = ((uint)(2));
-			w14.BottomAttach = ((uint)(3));
-			w14.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.queryIntervalDcLbl]));
+			w18.TopAttach = ((uint)(2));
+			w18.BottomAttach = ((uint)(3));
+			w18.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.queryIntervalDec = new global::Gtk.SpinButton (10D, 10000000000D, 1D);
 			this.queryIntervalDec.CanFocus = true;
@@ -272,55 +344,159 @@ namespace CodeWalriiNotify
 			this.queryIntervalDec.Numeric = true;
 			this.queryIntervalDec.Value = 10D;
 			this.notifierTable.Add (this.queryIntervalDec);
-			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.queryIntervalDec]));
-			w15.TopAttach = ((uint)(2));
-			w15.BottomAttach = ((uint)(3));
-			w15.LeftAttach = ((uint)(1));
-			w15.RightAttach = ((uint)(2));
-			w15.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.queryIntervalDec]));
+			w19.TopAttach = ((uint)(2));
+			w19.BottomAttach = ((uint)(3));
+			w19.LeftAttach = ((uint)(1));
+			w19.RightAttach = ((uint)(2));
+			w19.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.serverNameTxLbl = new global::Gtk.Label ();
 			this.serverNameTxLbl.Name = "serverNameTxLbl";
 			this.serverNameTxLbl.Xalign = 0F;
 			this.serverNameTxLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Feed Title");
 			this.notifierTable.Add (this.serverNameTxLbl);
-			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.serverNameTxLbl]));
-			w16.TopAttach = ((uint)(1));
-			w16.BottomAttach = ((uint)(2));
-			w16.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.serverNameTxLbl]));
+			w20.TopAttach = ((uint)(1));
+			w20.BottomAttach = ((uint)(2));
+			w20.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.visualNotifyCb = new global::Gtk.CheckButton ();
-			this.visualNotifyCb.CanFocus = true;
-			this.visualNotifyCb.Name = "visualNotifyCb";
-			this.visualNotifyCb.Label = "";
-			this.visualNotifyCb.DrawIndicator = true;
-			this.notifierTable.Add (this.visualNotifyCb);
-			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyCb]));
-			w17.TopAttach = ((uint)(4));
-			w17.BottomAttach = ((uint)(5));
-			w17.LeftAttach = ((uint)(1));
-			w17.RightAttach = ((uint)(2));
-			w17.XOptions = ((global::Gtk.AttachOptions)(1));
-			w17.YOptions = ((global::Gtk.AttachOptions)(4));
+			this.visualNotifyAnimationCb = new global::Gtk.CheckButton ();
+			this.visualNotifyAnimationCb.CanFocus = true;
+			this.visualNotifyAnimationCb.Name = "visualNotifyAnimationCb";
+			this.visualNotifyAnimationCb.Label = "";
+			this.visualNotifyAnimationCb.DrawIndicator = true;
+			this.visualNotifyAnimationCb.UseUnderline = true;
+			this.notifierTable.Add (this.visualNotifyAnimationCb);
+			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyAnimationCb]));
+			w21.TopAttach = ((uint)(6));
+			w21.BottomAttach = ((uint)(7));
+			w21.LeftAttach = ((uint)(1));
+			w21.RightAttach = ((uint)(2));
+			w21.XOptions = ((global::Gtk.AttachOptions)(1));
+			w21.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.visualNotifyCbLbl = new global::Gtk.Label ();
-			this.visualNotifyCbLbl.Name = "visualNotifyCbLbl";
-			this.visualNotifyCbLbl.Xalign = 0F;
-			this.visualNotifyCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify");
-			this.notifierTable.Add (this.visualNotifyCbLbl);
-			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyCbLbl]));
-			w18.TopAttach = ((uint)(4));
-			w18.BottomAttach = ((uint)(5));
-			w18.YOptions = ((global::Gtk.AttachOptions)(4));
+			this.visualNotifyAnimationCbLbl = new global::Gtk.Label ();
+			this.visualNotifyAnimationCbLbl.Name = "visualNotifyAnimationCbLbl";
+			this.visualNotifyAnimationCbLbl.Xalign = 0F;
+			this.visualNotifyAnimationCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify Do Animation");
+			this.notifierTable.Add (this.visualNotifyAnimationCbLbl);
+			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyAnimationCbLbl]));
+			w22.TopAttach = ((uint)(6));
+			w22.BottomAttach = ((uint)(7));
+			w22.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyAnimationIntervalDec = new global::Gtk.SpinButton (1D, 1000D, 1D);
+			this.visualNotifyAnimationIntervalDec.CanFocus = true;
+			this.visualNotifyAnimationIntervalDec.Name = "visualNotifyAnimationIntervalDec";
+			this.visualNotifyAnimationIntervalDec.Adjustment.PageIncrement = 10D;
+			this.visualNotifyAnimationIntervalDec.ClimbRate = 1D;
+			this.visualNotifyAnimationIntervalDec.Numeric = true;
+			this.visualNotifyAnimationIntervalDec.Value = 10D;
+			this.notifierTable.Add (this.visualNotifyAnimationIntervalDec);
+			global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyAnimationIntervalDec]));
+			w23.TopAttach = ((uint)(7));
+			w23.BottomAttach = ((uint)(8));
+			w23.LeftAttach = ((uint)(1));
+			w23.RightAttach = ((uint)(2));
+			w23.XOptions = ((global::Gtk.AttachOptions)(4));
+			w23.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyAnimationSpeedDecLbl = new global::Gtk.Label ();
+			this.visualNotifyAnimationSpeedDecLbl.Name = "visualNotifyAnimationSpeedDecLbl";
+			this.visualNotifyAnimationSpeedDecLbl.Xalign = 0F;
+			this.visualNotifyAnimationSpeedDecLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify Animation Interval (msec)");
+			this.notifierTable.Add (this.visualNotifyAnimationSpeedDecLbl);
+			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyAnimationSpeedDecLbl]));
+			w24.TopAttach = ((uint)(7));
+			w24.BottomAttach = ((uint)(8));
+			w24.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyEnabledCb = new global::Gtk.CheckButton ();
+			this.visualNotifyEnabledCb.CanFocus = true;
+			this.visualNotifyEnabledCb.Name = "visualNotifyEnabledCb";
+			this.visualNotifyEnabledCb.Label = "";
+			this.visualNotifyEnabledCb.DrawIndicator = true;
+			this.visualNotifyEnabledCb.FocusOnClick = false;
+			this.notifierTable.Add (this.visualNotifyEnabledCb);
+			global::Gtk.Table.TableChild w25 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyEnabledCb]));
+			w25.TopAttach = ((uint)(4));
+			w25.BottomAttach = ((uint)(5));
+			w25.LeftAttach = ((uint)(1));
+			w25.RightAttach = ((uint)(2));
+			w25.XOptions = ((global::Gtk.AttachOptions)(1));
+			w25.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyEnabledCbLbl = new global::Gtk.Label ();
+			this.visualNotifyEnabledCbLbl.Name = "visualNotifyEnabledCbLbl";
+			this.visualNotifyEnabledCbLbl.Xalign = 0F;
+			this.visualNotifyEnabledCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify Enabled");
+			this.notifierTable.Add (this.visualNotifyEnabledCbLbl);
+			global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyEnabledCbLbl]));
+			w26.TopAttach = ((uint)(4));
+			w26.BottomAttach = ((uint)(5));
+			w26.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyTimeoutDec = new global::Gtk.SpinButton (1D, 1000D, 1D);
+			this.visualNotifyTimeoutDec.CanFocus = true;
+			this.visualNotifyTimeoutDec.Name = "visualNotifyTimeoutDec";
+			this.visualNotifyTimeoutDec.Adjustment.PageIncrement = 10D;
+			this.visualNotifyTimeoutDec.ClimbRate = 1D;
+			this.visualNotifyTimeoutDec.Numeric = true;
+			this.visualNotifyTimeoutDec.Value = 1D;
+			this.notifierTable.Add (this.visualNotifyTimeoutDec);
+			global::Gtk.Table.TableChild w27 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyTimeoutDec]));
+			w27.TopAttach = ((uint)(8));
+			w27.BottomAttach = ((uint)(9));
+			w27.LeftAttach = ((uint)(1));
+			w27.RightAttach = ((uint)(2));
+			w27.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyTimeoutDecLbl = new global::Gtk.Label ();
+			this.visualNotifyTimeoutDecLbl.Name = "visualNotifyTimeoutDecLbl";
+			this.visualNotifyTimeoutDecLbl.Xalign = 0F;
+			this.visualNotifyTimeoutDecLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify Timeout (sec)");
+			this.notifierTable.Add (this.visualNotifyTimeoutDecLbl);
+			global::Gtk.Table.TableChild w28 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyTimeoutDecLbl]));
+			w28.TopAttach = ((uint)(8));
+			w28.BottomAttach = ((uint)(9));
+			w28.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyVerticalAlignmentSlide = new global::Gtk.HScale (null);
+			this.visualNotifyVerticalAlignmentSlide.CanFocus = true;
+			this.visualNotifyVerticalAlignmentSlide.Name = "visualNotifyVerticalAlignmentSlide";
+			this.visualNotifyVerticalAlignmentSlide.Adjustment.Upper = 1D;
+			this.visualNotifyVerticalAlignmentSlide.Adjustment.PageIncrement = 0.1D;
+			this.visualNotifyVerticalAlignmentSlide.Adjustment.StepIncrement = 0.01D;
+			this.visualNotifyVerticalAlignmentSlide.DrawValue = true;
+			this.visualNotifyVerticalAlignmentSlide.Digits = 2;
+			this.visualNotifyVerticalAlignmentSlide.ValuePos = ((global::Gtk.PositionType)(2));
+			this.notifierTable.Add (this.visualNotifyVerticalAlignmentSlide);
+			global::Gtk.Table.TableChild w29 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyVerticalAlignmentSlide]));
+			w29.TopAttach = ((uint)(5));
+			w29.BottomAttach = ((uint)(6));
+			w29.LeftAttach = ((uint)(1));
+			w29.RightAttach = ((uint)(2));
+			w29.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child notifierTable.Gtk.Table+TableChild
+			this.visualNotifyVerticalAlignmentSlideLbl = new global::Gtk.Label ();
+			this.visualNotifyVerticalAlignmentSlideLbl.Name = "visualNotifyVerticalAlignmentSlideLbl";
+			this.visualNotifyVerticalAlignmentSlideLbl.Xalign = 0F;
+			this.visualNotifyVerticalAlignmentSlideLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Visual Notify Vertical Alignment");
+			this.notifierTable.Add (this.visualNotifyVerticalAlignmentSlideLbl);
+			global::Gtk.Table.TableChild w30 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.visualNotifyVerticalAlignmentSlideLbl]));
+			w30.TopAttach = ((uint)(5));
+			w30.BottomAttach = ((uint)(6));
+			w30.YOptions = ((global::Gtk.AttachOptions)(4));
 			w2.Add (this.notifierTable);
 			this.notifierScroll.Add (w2);
 			this.tabControl.Add (this.notifierScroll);
 			// Notebook tab
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Notifier Settings");
-			this.tabControl.SetTabLabel (this.notifierScroll, this.label1);
-			this.label1.ShowAll ();
+			this.generalSettingsLbl = new global::Gtk.Label ();
+			this.generalSettingsLbl.Name = "generalSettingsLbl";
+			this.generalSettingsLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("General Settings");
+			this.tabControl.SetTabLabel (this.notifierScroll, this.generalSettingsLbl);
+			this.generalSettingsLbl.ShowAll ();
 			// Container child tabControl.Gtk.Notebook+NotebookChild
 			this.styleScroll = new global::Gtk.ScrolledWindow ();
 			this.styleScroll.CanFocus = true;
@@ -329,8 +505,8 @@ namespace CodeWalriiNotify
 			this.styleScroll.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
 			this.styleScroll.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child styleScroll.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w22 = new global::Gtk.Viewport ();
-			w22.ShadowType = ((global::Gtk.ShadowType)(0));
+			global::Gtk.Viewport w34 = new global::Gtk.Viewport ();
+			w34.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.styleTable = new global::Gtk.Table (((uint)(10)), ((uint)(2)), false);
 			this.styleTable.Name = "styleTable";
@@ -343,23 +519,23 @@ namespace CodeWalriiNotify
 			this.authorFgClLbl.Xalign = 0F;
 			this.authorFgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Author Forecolor");
 			this.styleTable.Add (this.authorFgClLbl);
-			global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.styleTable [this.authorFgClLbl]));
-			w23.TopAttach = ((uint)(5));
-			w23.BottomAttach = ((uint)(6));
-			w23.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w35 = ((global::Gtk.Table.TableChild)(this.styleTable [this.authorFgClLbl]));
+			w35.TopAttach = ((uint)(5));
+			w35.BottomAttach = ((uint)(6));
+			w35.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.authorFgColorBtn = new global::Gtk.ColorButton ();
 			this.authorFgColorBtn.CanFocus = true;
 			this.authorFgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.authorFgColorBtn.Name = "authorFgColorBtn";
 			this.styleTable.Add (this.authorFgColorBtn);
-			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.styleTable [this.authorFgColorBtn]));
-			w24.TopAttach = ((uint)(5));
-			w24.BottomAttach = ((uint)(6));
-			w24.LeftAttach = ((uint)(1));
-			w24.RightAttach = ((uint)(2));
-			w24.XOptions = ((global::Gtk.AttachOptions)(1));
-			w24.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.styleTable [this.authorFgColorBtn]));
+			w36.TopAttach = ((uint)(5));
+			w36.BottomAttach = ((uint)(6));
+			w36.LeftAttach = ((uint)(1));
+			w36.RightAttach = ((uint)(2));
+			w36.XOptions = ((global::Gtk.AttachOptions)(1));
+			w36.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyAntiAliasCb = new global::Gtk.CheckButton ();
 			this.bodyAntiAliasCb.CanFocus = true;
@@ -367,46 +543,46 @@ namespace CodeWalriiNotify
 			this.bodyAntiAliasCb.Label = "";
 			this.bodyAntiAliasCb.DrawIndicator = true;
 			this.styleTable.Add (this.bodyAntiAliasCb);
-			global::Gtk.Table.TableChild w25 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyAntiAliasCb]));
-			w25.TopAttach = ((uint)(9));
-			w25.BottomAttach = ((uint)(10));
-			w25.LeftAttach = ((uint)(1));
-			w25.RightAttach = ((uint)(2));
-			w25.XOptions = ((global::Gtk.AttachOptions)(1));
-			w25.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyAntiAliasCb]));
+			w37.TopAttach = ((uint)(9));
+			w37.BottomAttach = ((uint)(10));
+			w37.LeftAttach = ((uint)(1));
+			w37.RightAttach = ((uint)(2));
+			w37.XOptions = ((global::Gtk.AttachOptions)(1));
+			w37.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyAntiAliasCbLbl = new global::Gtk.Label ();
 			this.bodyAntiAliasCbLbl.Name = "bodyAntiAliasCbLbl";
 			this.bodyAntiAliasCbLbl.Xalign = 0F;
 			this.bodyAntiAliasCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Body Use Anti Alias");
 			this.styleTable.Add (this.bodyAntiAliasCbLbl);
-			global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyAntiAliasCbLbl]));
-			w26.TopAttach = ((uint)(9));
-			w26.BottomAttach = ((uint)(10));
-			w26.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyAntiAliasCbLbl]));
+			w38.TopAttach = ((uint)(9));
+			w38.BottomAttach = ((uint)(10));
+			w38.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyBgClLbl = new global::Gtk.Label ();
 			this.bodyBgClLbl.Name = "bodyBgClLbl";
 			this.bodyBgClLbl.Xalign = 0F;
 			this.bodyBgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Body Backcolor");
 			this.styleTable.Add (this.bodyBgClLbl);
-			global::Gtk.Table.TableChild w27 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyBgClLbl]));
-			w27.TopAttach = ((uint)(3));
-			w27.BottomAttach = ((uint)(4));
-			w27.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyBgClLbl]));
+			w39.TopAttach = ((uint)(3));
+			w39.BottomAttach = ((uint)(4));
+			w39.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyBgColorBtn = new global::Gtk.ColorButton ();
 			this.bodyBgColorBtn.CanFocus = true;
 			this.bodyBgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.bodyBgColorBtn.Name = "bodyBgColorBtn";
 			this.styleTable.Add (this.bodyBgColorBtn);
-			global::Gtk.Table.TableChild w28 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyBgColorBtn]));
-			w28.TopAttach = ((uint)(3));
-			w28.BottomAttach = ((uint)(4));
-			w28.LeftAttach = ((uint)(1));
-			w28.RightAttach = ((uint)(2));
-			w28.XOptions = ((global::Gtk.AttachOptions)(1));
-			w28.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyBgColorBtn]));
+			w40.TopAttach = ((uint)(3));
+			w40.BottomAttach = ((uint)(4));
+			w40.LeftAttach = ((uint)(1));
+			w40.RightAttach = ((uint)(2));
+			w40.XOptions = ((global::Gtk.AttachOptions)(1));
+			w40.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyFormatScroll = new global::Gtk.ScrolledWindow ();
 			this.bodyFormatScroll.Name = "bodyFormatScroll";
@@ -417,172 +593,172 @@ namespace CodeWalriiNotify
 			this.bodyFormatTxt.Name = "bodyFormatTxt";
 			this.bodyFormatScroll.Add (this.bodyFormatTxt);
 			this.styleTable.Add (this.bodyFormatScroll);
-			global::Gtk.Table.TableChild w30 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyFormatScroll]));
-			w30.TopAttach = ((uint)(8));
-			w30.BottomAttach = ((uint)(9));
-			w30.LeftAttach = ((uint)(1));
-			w30.RightAttach = ((uint)(2));
-			w30.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyFormatScroll]));
+			w42.TopAttach = ((uint)(8));
+			w42.BottomAttach = ((uint)(9));
+			w42.LeftAttach = ((uint)(1));
+			w42.RightAttach = ((uint)(2));
+			w42.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.bodyFormatTxLbl = new global::Gtk.Label ();
 			this.bodyFormatTxLbl.Name = "bodyFormatTxLbl";
 			this.bodyFormatTxLbl.Xalign = 0F;
 			this.bodyFormatTxLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Body Format");
 			this.styleTable.Add (this.bodyFormatTxLbl);
-			global::Gtk.Table.TableChild w31 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyFormatTxLbl]));
-			w31.TopAttach = ((uint)(8));
-			w31.BottomAttach = ((uint)(9));
-			w31.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.styleTable [this.bodyFormatTxLbl]));
+			w43.TopAttach = ((uint)(8));
+			w43.BottomAttach = ((uint)(9));
+			w43.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.detailFnLbl = new global::Gtk.Label ();
 			this.detailFnLbl.Name = "detailFnLbl";
 			this.detailFnLbl.Xalign = 0F;
 			this.detailFnLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Detail Font");
 			this.styleTable.Add (this.detailFnLbl);
-			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.styleTable [this.detailFnLbl]));
-			w32.TopAttach = ((uint)(7));
-			w32.BottomAttach = ((uint)(8));
-			w32.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.styleTable [this.detailFnLbl]));
+			w44.TopAttach = ((uint)(7));
+			w44.BottomAttach = ((uint)(8));
+			w44.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.detailFontBtn = new global::Gtk.FontButton ();
 			this.detailFontBtn.CanFocus = true;
 			this.detailFontBtn.Name = "detailFontBtn";
 			this.styleTable.Add (this.detailFontBtn);
-			global::Gtk.Table.TableChild w33 = ((global::Gtk.Table.TableChild)(this.styleTable [this.detailFontBtn]));
-			w33.TopAttach = ((uint)(7));
-			w33.BottomAttach = ((uint)(8));
-			w33.LeftAttach = ((uint)(1));
-			w33.RightAttach = ((uint)(2));
-			w33.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w45 = ((global::Gtk.Table.TableChild)(this.styleTable [this.detailFontBtn]));
+			w45.TopAttach = ((uint)(7));
+			w45.BottomAttach = ((uint)(8));
+			w45.LeftAttach = ((uint)(1));
+			w45.RightAttach = ((uint)(2));
+			w45.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.footerBgClLbl = new global::Gtk.Label ();
 			this.footerBgClLbl.Name = "footerBgClLbl";
 			this.footerBgClLbl.Xalign = 0F;
 			this.footerBgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Footer Backcolor");
 			this.styleTable.Add (this.footerBgClLbl);
-			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.styleTable [this.footerBgClLbl]));
-			w34.TopAttach = ((uint)(4));
-			w34.BottomAttach = ((uint)(5));
-			w34.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w46 = ((global::Gtk.Table.TableChild)(this.styleTable [this.footerBgClLbl]));
+			w46.TopAttach = ((uint)(4));
+			w46.BottomAttach = ((uint)(5));
+			w46.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.footerBgColorBtn = new global::Gtk.ColorButton ();
 			this.footerBgColorBtn.CanFocus = true;
 			this.footerBgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.footerBgColorBtn.Name = "footerBgColorBtn";
 			this.styleTable.Add (this.footerBgColorBtn);
-			global::Gtk.Table.TableChild w35 = ((global::Gtk.Table.TableChild)(this.styleTable [this.footerBgColorBtn]));
-			w35.TopAttach = ((uint)(4));
-			w35.BottomAttach = ((uint)(5));
-			w35.LeftAttach = ((uint)(1));
-			w35.RightAttach = ((uint)(2));
-			w35.XOptions = ((global::Gtk.AttachOptions)(1));
-			w35.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w47 = ((global::Gtk.Table.TableChild)(this.styleTable [this.footerBgColorBtn]));
+			w47.TopAttach = ((uint)(4));
+			w47.BottomAttach = ((uint)(5));
+			w47.LeftAttach = ((uint)(1));
+			w47.RightAttach = ((uint)(2));
+			w47.XOptions = ((global::Gtk.AttachOptions)(1));
+			w47.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.headerBgClLbl = new global::Gtk.Label ();
 			this.headerBgClLbl.Name = "headerBgClLbl";
 			this.headerBgClLbl.Xalign = 0F;
 			this.headerBgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Header Backcolor");
 			this.styleTable.Add (this.headerBgClLbl);
-			global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.styleTable [this.headerBgClLbl]));
-			w36.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w48 = ((global::Gtk.Table.TableChild)(this.styleTable [this.headerBgClLbl]));
+			w48.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.headerBgColorBtn = new global::Gtk.ColorButton ();
 			this.headerBgColorBtn.CanFocus = true;
 			this.headerBgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.headerBgColorBtn.Name = "headerBgColorBtn";
 			this.styleTable.Add (this.headerBgColorBtn);
-			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.styleTable [this.headerBgColorBtn]));
-			w37.LeftAttach = ((uint)(1));
-			w37.RightAttach = ((uint)(2));
-			w37.XOptions = ((global::Gtk.AttachOptions)(1));
-			w37.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w49 = ((global::Gtk.Table.TableChild)(this.styleTable [this.headerBgColorBtn]));
+			w49.LeftAttach = ((uint)(1));
+			w49.RightAttach = ((uint)(2));
+			w49.XOptions = ((global::Gtk.AttachOptions)(1));
+			w49.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.timeFgClLbl = new global::Gtk.Label ();
 			this.timeFgClLbl.Name = "timeFgClLbl";
 			this.timeFgClLbl.Xalign = 0F;
 			this.timeFgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Timestamp Forecolor");
 			this.styleTable.Add (this.timeFgClLbl);
-			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.styleTable [this.timeFgClLbl]));
-			w38.TopAttach = ((uint)(1));
-			w38.BottomAttach = ((uint)(2));
-			w38.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.styleTable [this.timeFgClLbl]));
+			w50.TopAttach = ((uint)(1));
+			w50.BottomAttach = ((uint)(2));
+			w50.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.timeFgColorBtn = new global::Gtk.ColorButton ();
 			this.timeFgColorBtn.CanFocus = true;
 			this.timeFgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.timeFgColorBtn.Name = "timeFgColorBtn";
 			this.styleTable.Add (this.timeFgColorBtn);
-			global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.styleTable [this.timeFgColorBtn]));
-			w39.TopAttach = ((uint)(1));
-			w39.BottomAttach = ((uint)(2));
-			w39.LeftAttach = ((uint)(1));
-			w39.RightAttach = ((uint)(2));
-			w39.XOptions = ((global::Gtk.AttachOptions)(0));
-			w39.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w51 = ((global::Gtk.Table.TableChild)(this.styleTable [this.timeFgColorBtn]));
+			w51.TopAttach = ((uint)(1));
+			w51.BottomAttach = ((uint)(2));
+			w51.LeftAttach = ((uint)(1));
+			w51.RightAttach = ((uint)(2));
+			w51.XOptions = ((global::Gtk.AttachOptions)(0));
+			w51.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.titleFgClLbl = new global::Gtk.Label ();
 			this.titleFgClLbl.Name = "titleFgClLbl";
 			this.titleFgClLbl.Xalign = 0F;
 			this.titleFgClLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Title Forecolor");
 			this.styleTable.Add (this.titleFgClLbl);
-			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFgClLbl]));
-			w40.TopAttach = ((uint)(2));
-			w40.BottomAttach = ((uint)(3));
-			w40.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w52 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFgClLbl]));
+			w52.TopAttach = ((uint)(2));
+			w52.BottomAttach = ((uint)(3));
+			w52.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.titleFgColorBtn = new global::Gtk.ColorButton ();
 			this.titleFgColorBtn.CanFocus = true;
 			this.titleFgColorBtn.Events = ((global::Gdk.EventMask)(784));
 			this.titleFgColorBtn.Name = "titleFgColorBtn";
 			this.styleTable.Add (this.titleFgColorBtn);
-			global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFgColorBtn]));
-			w41.TopAttach = ((uint)(2));
-			w41.BottomAttach = ((uint)(3));
-			w41.LeftAttach = ((uint)(1));
-			w41.RightAttach = ((uint)(2));
-			w41.XOptions = ((global::Gtk.AttachOptions)(1));
-			w41.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w53 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFgColorBtn]));
+			w53.TopAttach = ((uint)(2));
+			w53.BottomAttach = ((uint)(3));
+			w53.LeftAttach = ((uint)(1));
+			w53.RightAttach = ((uint)(2));
+			w53.XOptions = ((global::Gtk.AttachOptions)(1));
+			w53.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.titleFnLbl = new global::Gtk.Label ();
 			this.titleFnLbl.Name = "titleFnLbl";
 			this.titleFnLbl.Xalign = 0F;
 			this.titleFnLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Title Font");
 			this.styleTable.Add (this.titleFnLbl);
-			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFnLbl]));
-			w42.TopAttach = ((uint)(6));
-			w42.BottomAttach = ((uint)(7));
-			w42.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w54 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFnLbl]));
+			w54.TopAttach = ((uint)(6));
+			w54.BottomAttach = ((uint)(7));
+			w54.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child styleTable.Gtk.Table+TableChild
 			this.titleFontBtn = new global::Gtk.FontButton ();
 			this.titleFontBtn.CanFocus = true;
 			this.titleFontBtn.Name = "titleFontBtn";
 			this.styleTable.Add (this.titleFontBtn);
-			global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFontBtn]));
-			w43.TopAttach = ((uint)(6));
-			w43.BottomAttach = ((uint)(7));
-			w43.LeftAttach = ((uint)(1));
-			w43.RightAttach = ((uint)(2));
-			w43.YOptions = ((global::Gtk.AttachOptions)(4));
-			w22.Add (this.styleTable);
-			this.styleScroll.Add (w22);
+			global::Gtk.Table.TableChild w55 = ((global::Gtk.Table.TableChild)(this.styleTable [this.titleFontBtn]));
+			w55.TopAttach = ((uint)(6));
+			w55.BottomAttach = ((uint)(7));
+			w55.LeftAttach = ((uint)(1));
+			w55.RightAttach = ((uint)(2));
+			w55.YOptions = ((global::Gtk.AttachOptions)(4));
+			w34.Add (this.styleTable);
+			this.styleScroll.Add (w34);
 			this.tabControl.Add (this.styleScroll);
-			global::Gtk.Notebook.NotebookChild w46 = ((global::Gtk.Notebook.NotebookChild)(this.tabControl [this.styleScroll]));
-			w46.Position = 1;
+			global::Gtk.Notebook.NotebookChild w58 = ((global::Gtk.Notebook.NotebookChild)(this.tabControl [this.styleScroll]));
+			w58.Position = 1;
 			// Notebook tab
-			this.label2 = new global::Gtk.Label ();
-			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Style Settings");
-			this.tabControl.SetTabLabel (this.styleScroll, this.label2);
-			this.label2.ShowAll ();
+			this.styleSettingsLbl = new global::Gtk.Label ();
+			this.styleSettingsLbl.Name = "styleSettingsLbl";
+			this.styleSettingsLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Style Settings");
+			this.tabControl.SetTabLabel (this.styleScroll, this.styleSettingsLbl);
+			this.styleSettingsLbl.ShowAll ();
 			w1.Add (this.tabControl);
-			global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(w1 [this.tabControl]));
-			w47.Position = 0;
+			global::Gtk.Box.BoxChild w59 = ((global::Gtk.Box.BoxChild)(w1 [this.tabControl]));
+			w59.Position = 0;
 			// Internal child CodeWalriiNotify.SettingsDialog.ActionArea
-			global::Gtk.HButtonBox w48 = this.ActionArea;
-			w48.Name = "dialogActionArea";
-			w48.Spacing = 10;
-			w48.BorderWidth = ((uint)(5));
-			w48.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w60 = this.ActionArea;
+			w60.Name = "dialogActionArea";
+			w60.Spacing = 10;
+			w60.BorderWidth = ((uint)(5));
+			w60.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialogActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.cancelButton = new global::Gtk.Button ();
 			this.cancelButton.CanDefault = true;
@@ -592,9 +768,9 @@ namespace CodeWalriiNotify
 			this.cancelButton.UseUnderline = true;
 			this.cancelButton.Label = "gtk-cancel";
 			this.AddActionWidget (this.cancelButton, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w49 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w48 [this.cancelButton]));
-			w49.Expand = false;
-			w49.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w61 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w60 [this.cancelButton]));
+			w61.Expand = false;
+			w61.Fill = false;
 			// Container child dialogActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.defaultsButton = new global::Gtk.Button ();
 			this.defaultsButton.CanFocus = true;
@@ -602,10 +778,10 @@ namespace CodeWalriiNotify
 			this.defaultsButton.UseUnderline = true;
 			this.defaultsButton.Label = global::Mono.Unix.Catalog.GetString ("Load defaults");
 			this.AddActionWidget (this.defaultsButton, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w50 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w48 [this.defaultsButton]));
-			w50.Position = 1;
-			w50.Expand = false;
-			w50.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w62 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w60 [this.defaultsButton]));
+			w62.Position = 1;
+			w62.Expand = false;
+			w62.Fill = false;
 			// Container child dialogActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.okButton = new global::Gtk.Button ();
 			this.okButton.CanDefault = true;
@@ -615,10 +791,10 @@ namespace CodeWalriiNotify
 			this.okButton.UseUnderline = true;
 			this.okButton.Label = "gtk-ok";
 			this.AddActionWidget (this.okButton, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w51 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w48 [this.okButton]));
-			w51.Position = 2;
-			w51.Expand = false;
-			w51.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w63 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w60 [this.okButton]));
+			w63.Position = 2;
+			w63.Expand = false;
+			w63.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

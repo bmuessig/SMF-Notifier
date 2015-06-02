@@ -15,30 +15,49 @@ namespace CodeWalriiNotify
 			FromFile(CurrentFilename);
 		}
 
-		public static void FromFile(string Path, bool DefaultOnError = true)
+		public static bool FromFile(string Path, bool DefaultOnError = true)
 		{
 			string rawSettingsJson;
+			var defaultConfig = new SettingsData();
+			bool errorEncountered = false;
 
 			if (!File.Exists(Path)) {
 				if (!DefaultOnError)
-					throw new FileNotFoundException("The JSON file couldn't be found and defaulting is disabled!", Path);
+					throw new FileNotFoundException("The JSON file couldn't be found!", Path);
 				else {
-					CurrentSettings = new SettingsData();
+					CurrentSettings = defaultConfig;
 					ToFile(Path);
-					return;
+					return false;
 				}
 			} else
 				rawSettingsJson = File.ReadAllText(Path);
 
 			try {
 				CurrentSettings = (SettingsData)JsonConvert.DeserializeObject(rawSettingsJson, typeof(SettingsData));
+				CurrentFilename = Path;
+				if (!File.Exists(CurrentSettings.IconFile)) {
+					if (DefaultOnError) {
+						CurrentSettings.UseCustomIcon = false;
+					} else
+						throw new FileNotFoundException("The Icon file couldn't be found!", CurrentSettings.IconFile);
+					errorEncountered = true;
+				}
+				if (!File.Exists(CurrentSettings.AudioNotifyFile) && CurrentSettings.AudioNotifyEnable) {
+					if (DefaultOnError) {
+						CurrentSettings.AudioNotifyUseCustomAudio = false;
+					} else
+						throw new FileNotFoundException("The Audio file couldn't be found!", CurrentSettings.AudioNotifyFile);
+					errorEncountered = true;
+				}
 			} catch (Exception ex) {
 				if (DefaultOnError) {
 					CurrentSettings = new SettingsData();
 					ToFile(Path);
+					errorEncountered = true;
 				} else
 					throw ex;
 			}
+			return !errorEncountered;
 		}
 
 		public static void ToFile(string Path)

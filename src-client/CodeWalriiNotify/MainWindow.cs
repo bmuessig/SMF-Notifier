@@ -1,12 +1,15 @@
 ﻿using System;
 using Gtk;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace CodeWalriiNotify
 {
 	public partial class MainWindow: Window
 	{
 		NotifierCore notifier;
+
+		Notificator nfc;
 
 		public MainWindow()
 			: base(WindowType.Toplevel)
@@ -20,8 +23,7 @@ namespace CodeWalriiNotify
 				Application.RunIteration();
 
 			string iconFileName = SettingsProvider.CurrentSettings.IconFile;
-			if (System.IO.File.Exists(iconFileName))
-				this.Icon = new Gdk.Pixbuf(iconFileName);
+			this.Icon = SettingsProvider.CurrentSettings.UseCustomIcon ? new Gdk.Pixbuf(iconFileName) : Gdk.Pixbuf.LoadFromResource("Bell.png");
 
 			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings);
 
@@ -30,6 +32,9 @@ namespace CodeWalriiNotify
 
 			notifier.Run();
 			notifier.ForceRefresh();
+
+			nfc = new Notificator(SettingsProvider.CurrentSettings, this);
+			nfc.NewPost(new PostMeta("Sample Subject", "Muessigb", "Lol lol loll lllolll", DateTime.Now, "http://google.de/"));
 		}
 
 		public void Shutdown()
@@ -48,6 +53,7 @@ namespace CodeWalriiNotify
 		protected void OnRefreshActionActivated(object sender, EventArgs e)
 		{
 			notifier.ForceRefresh();
+			this.Hide();
 		}
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)

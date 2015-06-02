@@ -81,6 +81,7 @@
     <Compile Include="SettingsDialog.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.SettingsDialog.cs" />
     <Compile Include="WindowsTools.cs" />
+    <Compile Include="APIException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

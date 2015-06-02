@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-//using System.Web.Script.Serialization;
-using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
@@ -40,46 +36,6 @@ namespace CodeWalriiNotify
 			this.Time = Time;
 			this.Link = Link;
 		}
-
-		/// <summary>
-		/// Retrieves the PostMeta objects from a JSON-String
-		/// </summary>
-		/// <returns>A list of the PostMeta elements</returns>
-		/// <param name="json">JSON API response string</param>
-		public static List<PostMeta> FromJSON(String json)
-		{
-			var posts = new List<PostMeta>();
-			dynamic jsonObj = JObject.Parse(json);
-
-			if ((bool)jsonObj.success) {
-				dynamic data = jsonObj.data;
-				foreach (dynamic postObj in data) {
-					dynamic postFields = postObj.post;
-					dynamic posterFields = postObj.poster;
-					dynamic topicFields = postObj.topic;
-					dynamic starterFields = postObj.starter;
-					dynamic boardFields = postObj.board;
-
-					var post = new PostMeta((string)postFields.subject, (string)posterFields.name, (string)postFields.body, UnixTimeStampToDateTime((ulong)postFields.time), (string)postFields.link);
-					posts.Add(post);
-				}
-
-			} else {
-				// API ERROR!
-				return null;
-			}
-
-			return posts;
-		}
-
-		public static DateTime UnixTimeStampToDateTime(ulong unixTimeStamp)
-		{
-			// Unix timestamp is seconds past epoch
-			System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-			dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-			return dtDateTime;
-		}
-
 	}
 }
 

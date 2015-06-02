@@ -7,12 +7,13 @@ namespace CodeWalriiNotify
 {
 	public class NotifierCore
 	{
-		//private uint lastTimeStamp;
 		private Window mainWindow;
 		private RecyclerView postsView;
 		private SettingsData settings;
 		private BackgroundWorker asyncThread;
+
 		private bool timerRunning;
+		private ulong lastChanged;
 
 		public NotifierCore(Window MainWindow, RecyclerView PostsView, SettingsData Settings)
 		{
@@ -23,10 +24,14 @@ namespace CodeWalriiNotify
 			asyncThread = new BackgroundWorker();
 			asyncThread.DoWork += AsyncThread_DoWork;
 			asyncThread.RunWorkerCompleted += AsyncThread_RunWorkerCompleted;
+
+			lastChanged = 0;
+			timerRunning = false;
 		}
 
 		protected void RunTimer()
 		{
+			timerRunning = true;
 			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
 				DoRefreshAsync();
 				return timerRunning;
@@ -41,7 +46,11 @@ namespace CodeWalriiNotify
 		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
 			Gtk.Application.Invoke(delegate {
-				ThreadSafeSync(e.Result);
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Almost done, hold on!)";
+				if (ThreadSafeSync((RefreshResult)e.Result))
+					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
+				else
+					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
 			});
 		}
 
@@ -75,17 +84,17 @@ namespace CodeWalriiNotify
 			DoRefreshAsync();
 		}
 
-		protected void ThreadSafeSync(object result)
+		protected bool ThreadSafeSync(RefreshResult Result)
 		{
-			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Almost done, hold on!)";
-			if (result.GetType() == typeof(List<Widget>)) {
-				List <Widget> widgets = ((List<Widget>)result);
-				postsView.Clear();
-				foreach (Widget widget in widgets)
-					postsView.InsertFirst(widget);
-				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
-			} else
-				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
+			if (Result.Success) {
+				if (Result.Refresh) {
+					postsView.Clear();
+					foreach (Widget widget in Result.Widgets)
+						postsView.InsertFirst(widget);
+				}
+				return true;
+			}
+			return false;
 		}
 
 		protected void DoRefreshAsync()
@@ -99,32 +108,75 @@ namespace CodeWalriiNotify
 		protected void DoRefreshSync()
 		{
 			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Synchronized; this can take a while!)";
-			AsyncThread_RunWorkerCompleted(null, new RunWorkerCompletedEventArgs(DoRefresh(settings), null, false));
-			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
+			if (ThreadSafeSync(DoRefresh(settings)))
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
+			else
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
 		}
 
-		protected object DoRefresh(SettingsData Settings)
+		protected RefreshResult DoRefresh(SettingsData Settings)
 		{
 			try {
 				var fdr = new FeedRetriever(Settings.FeedURL);
 				String js = fdr.RetrieveData("?html_stripmode=none");
-				List<PostMeta> posts = PostMeta.FromJSON(js);
 
-				var widgets = new List<Widget>();
+				var query = new APIQueryMeta(js);
 
-				foreach (PostMeta post in posts) {
-					var pw = new PostWidget();
-					pw.Topic = post.Subject;
-					pw.Body = post.Body;
-					pw.Poster = post.Poster;
-					pw.Time = post.Time.ToString();
-					pw.URL = post.Link;
-					widgets.Add(pw);
-				}
+				if (query.Success) {
+					if (query.Changed > lastChanged) {
+						var widgets = new List<Widget>();
 
-				return widgets;
+						foreach (PostMeta post in query.Posts) {
+							var pw = new PostWidget();
+							pw.Topic = post.Subject;
+							pw.Body = post.Body;
+							pw.Poster = post.Poster;
+							pw.Time = post.Time.ToString();
+							pw.URL = post.Link;
+							widgets.Add(pw);
+						}
+
+						lastChanged = query.Changed;
+
+						return new RefreshResult(widgets);
+					} else
+						return new RefreshResult(true);
+				} else
+					return new RefreshResult(false);
 			} catch (Exception ex) {
-				return ex;
+				return new RefreshResult(ex);
+			}
+		}
+
+		protected struct RefreshResult
+		{
+			public bool Success;
+			public bool Refresh;
+			public Exception Exception;
+			public List<Widget> Widgets;
+
+			public RefreshResult(bool Success)
+			{
+				this.Success = Success;
+				this.Refresh = false;
+				Exception = null;
+				Widgets = null;
+			}
+
+			public RefreshResult(Exception Exception)
+			{
+				Success = false;
+				Refresh = false;
+				this.Exception = Exception;
+				Widgets = null;
+			}
+
+			public RefreshResult(List<Widget> Widgets)
+			{
+				Success = true;
+				Refresh = Widgets != null;
+				this.Widgets = Widgets;
+				Exception = null;
 			}
 		}
 	}

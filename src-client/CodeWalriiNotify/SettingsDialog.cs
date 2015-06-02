@@ -87,11 +87,11 @@ namespace CodeWalriiNotify
 			WriteSettings(SettingsProvider.CurrentSettings);
 			SettingsProvider.ToFile(SettingsProvider.CurrentFilename);
 			MessageBox.Show(
-				"The Notifier needs to be restarted in order to apply the new Settings.",
-				"Restart required",
+				"The notifier needs to be restarted in order to apply the new settings.",
+				"Configuration change requires restart",
 				Gtk.MessageType.Info,
 				Gtk.ButtonsType.Ok,
-				new Gtk.ResponseHandler(delegate(object o, Gtk.ResponseArgs args) {
+				new Gtk.ResponseHandler((o, args) => {
 					this.Destroy();
 					winMain.Shutdown();
 					Process.Start(Assembly.GetExecutingAssembly().Location);

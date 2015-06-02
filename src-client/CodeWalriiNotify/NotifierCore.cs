@@ -119,7 +119,7 @@ namespace CodeWalriiNotify
 		{
 			try {
 				var fdr = new FeedRetriever(Settings.FeedURL);
-				String js = fdr.RetrieveData("?html_stripmode=none");
+				String js = fdr.RetrieveData("?query"); // We need to tell the API that we want to request data
 
 				var query = new APIQueryMeta(js);
 

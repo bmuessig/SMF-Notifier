@@ -9,8 +9,8 @@ ob_start();
 // Constants to change
 define("BASE_SITE_URL", "http://codewalr.us/index.php");  // Codewalr.us
 //define("BASE_SITE_URL", "http://www.omnimaga.org/index.php"); // Omnimaga
-define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_FEED_URL) . ".db");
-define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_FEED_URL) . ".db");
+define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_SITE_URL) . ".db");
+define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
 define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
@@ -136,25 +136,25 @@ function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 				break;
 		
 			array_push($outputData,
-						array(	"post"		=> array(	"subject"	=> StripHtml(strval($post->subject), $htmlMode),
+						array(	"post"		=> array(	"subject"	=> StripHtmlEntities(strval($post->subject)),
 														"body"		=> StripHtml(strval($post->body), $htmlMode),
 														"id"		=> intval($post->id),
 														"time"		=> ToUnixTime(strval($post->time)),
 														"link"		=> strval($post->link)
 												),
-								"poster"	=> array(	"name"	=> strval($post->poster->name),
+								"poster"	=> array(	"name"	=> StripHtmlEntities(strval($post->poster->name)),
 														"id"	=> intval($post->poster->id),
 														"link"	=> strval($post->poster->link)
 													),
-								"topic"		=> array(	"subject"	=> strval($post->topic->subject),
+								"topic"		=> array(	"subject"	=> StripHtmlEntities(strval($post->topic->subject)),
 														"id"		=> intval($post->topic->id),
 														"link"		=> strval($post->topic->link)
 													),
-								"starter"	=> array(	"name"		=> strval($post->starter->name),
+								"starter"	=> array(	"name"		=> StripHtmlEntities(strval($post->starter->name)),
 														"id"		=> intval($post->starter->id),
 														"link"		=> strval($post->starter->link)
 													),
-								"board"		=> array(	"name"		=> strval($post->board->name),
+								"board"		=> array(	"name"		=> StripHtmlEntities(strval($post->board->name)),
 														"id"		=> intval($post->board->id),
 														"link"		=> strval($post->board->link)
 													)
@@ -173,6 +173,11 @@ function ToUnixTime($smfStr)
 {
 	// Convert to unix time
 	return strtotime(str_replace(" at ", ", ", $smfStr));
+}
+
+function StripHtmlEntities($str)
+{
+	return html_entity_decode($str, (ENT_QUOTES | ENT_HTML401));
 }
 
 function StripHtml($str, $mode)
@@ -209,7 +214,7 @@ function StripHtml($str, $mode)
 		$outStr = preg_replace("/\[([^\[\]]*)\]/", "<$1>", $outStr);
 		
 		// Replace html entitys
-		$outStr = html_entity_decode($outStr, (ENT_QUOTES | ENT_HTML401));
+		$outStr = StripHtmlEntities($outStr);
 		
 		$outStr = str_replace("&", "&amp;", $outStr);
 	}
@@ -219,7 +224,7 @@ function StripHtml($str, $mode)
 		// Delete all tags
 		$outStr = preg_replace("/<[^<>]*>/", "", $outStr);
 		// Replace html entitys
-		$outStr = html_entity_decode($outStr, (ENT_QUOTES | ENT_HTML401));
+		$outStr = StripHtmlEntities($outStr);
 	}
 	
 	if($mode == STRIPHTML_NONE) {

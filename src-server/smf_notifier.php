@@ -14,110 +14,128 @@ define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
 define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
-define("DEFAULT_STRIPHTML_MODE", "SIMPLIFY");
+define("DEFAULT_STRIPHTML_MODE", "NONE");
+
+
+/* DO NOT CHANGE ANYTHING BELOW THIS LINE! */
 
 // Static internal constants
+define("API_VERSION_MAJOR", 04);
+define("API_VERSION_MINOR", 1506);
+define("API_VERSION_REV", ord('a'));
+
+// Internal Constants
 define("STRIPHTML_NONE", 0);
-define("STRIPHTML_SIMPLIFY", 1);
-define("STRIPHTML_ALL", 2);
+define("STRIPHTML_ALL", 1);
 
-$exceptions = array();
-$success = true;
+	if(isset($_GET['query'])) {
+		$exceptions = array();
+		$success = true;
 
-try {
-	$cached = false;
-	$cache = "";
-	if(file_exists(TMP_CACHE_FILE)) {
 		try {
-			$cacheRawObj = file_get_contents(TMP_CACHE_FILE);
-			if(isJson($cacheRawObj)) {
-				$cacheObj = json_decode($cacheRawObj);
-				if( isset($cacheObj->timestamp) && isset($cacheObj->data) ) {
-					if( time() < (intval($cacheObj->timestamp) + CACHE_TIME) ) {
-						$cache = strval($cacheObj->data);
-						$cached = true;
+			$cached = false;
+			$cache = "";
+			if(file_exists(TMP_CACHE_FILE)) {
+				try {
+					$cacheRawObj = file_get_contents(TMP_CACHE_FILE);
+					if(isJson($cacheRawObj)) {
+						$cacheObj = json_decode($cacheRawObj);
+						if( isset($cacheObj->timestamp) && isset($cacheObj->data) ) {
+							if( time() < (intval($cacheObj->timestamp) + CACHE_TIME) ) {
+								$cache = strval($cacheObj->data);
+								$cached = true;
+							}
+						}
 					}
+				} catch (Exception $ex) {
+					$cacheJson = false;
 				}
 			}
-		} catch (Exception $ex) {
-			$cacheJson = false;
-		}
-	}
 
-	if(! $cached) {
-		$queryUrl = BASE_SITE_URL . "?action=.xml";
-		$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
-		$rawInput = QueryFeed($queryUrl, $queryOpts);
-		file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
-	} else {
-		$rawInput = $cache;
-	}
+			if(! $cached) {
+				$queryUrl = BASE_SITE_URL . "?action=.xml";
+				$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
+				$rawInput = QueryFeed($queryUrl, $queryOpts);
+				file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
+			} else {
+				$rawInput = $cache;
+			}
 
-	// Check if it the information has changed (e.g. edits, new posts)
-	if(file_exists(TMP_INFO_FILE)) {
-		$rawInfoInput = file_get_contents(TMP_INFO_FILE);
-		$infoObj = json_decode($rawInfoInput);
-		$changed = intval($infoObj->changed);
-		$lastHash = strval($infoObj->hash);
-	} else {
-		$latestVersion = false;
-	}
-
-	if(!$cached) {
-		$currentHash = md5($rawInput);
-		if(file_exists(TMP_INFO_FILE)) { // file does exist and is loaded
-			if(strcmp(md5($rawInput), $lastHash) == 0) // hash does match
-				$latestVersion = true;
-			else
+			// Check if it the information has changed (e.g. edits, new posts)
+			if(file_exists(TMP_INFO_FILE)) {
+				$rawInfoInput = file_get_contents(TMP_INFO_FILE);
+				$infoObj = json_decode($rawInfoInput);
+				$changed = intval($infoObj->changed);
+				$lastHash = strval($infoObj->hash);
+			} else {
 				$latestVersion = false;
-		} else
-			$latestVersion = false;
-	} else
-		$latestVersion = true;
+			}
 
-	if(! $latestVersion) {
-		$changed = time();
-		file_put_contents(TMP_INFO_FILE, json_encode(array("changed" => $changed, "hash" => $currentHash)));
+			if(!$cached) {
+				$currentHash = md5($rawInput);
+				if(file_exists(TMP_INFO_FILE)) { // file does exist and is loaded
+					if(strcmp(md5($rawInput), $lastHash) == 0) // hash does match
+						$latestVersion = true;
+					else
+						$latestVersion = false;
+				} else
+					$latestVersion = false;
+			} else
+				$latestVersion = true;
+
+			if(! $latestVersion) {
+				$changed = time();
+				file_put_contents(TMP_INFO_FILE, json_encode(array("changed" => $changed, "hash" => $currentHash)));
+			}
+
+			$mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
+
+			if(isset($_GET['html_stripmode'])) {
+				$htmllvl = ParseStripmode($_GET['html_stripmode'], false);
+				if($htmllvl === false) {
+					$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+					ThrowException($exceptions, "INVALID_ARGUMENT", "html_stripmode");
+				}
+			} else {
+				$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+			}
+
+			if($mxposts > CACHE_POSTS)
+				$mxposts = DEFAULT_MAX_POSTS;
+				
+			$posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
+
+	} catch (Exception $ex) {
+		ThrowException($exceptions, "PROGRAM_EXCEPTION", print_r($ex, true));
+		$success = false;
 	}
 
-	$mxposts = (isset($_GET['max_posts']) ? ParseInt($_GET['max_posts'], DEFAULT_MAX_POSTS) : DEFAULT_MAX_POSTS);
-
-	if(isset($_GET['html_stripmode'])) {
-		$htmllvl = ParseStripmode($_GET['html_stripmode'], false);
-		if($htmllvl === false) {
-			$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
-			ThrowException($exceptions, "INVALID_ARGUMENT", "html_stripmode");
-		}
+	if($success) {
+		$json = json_encode(array(		"success"		=> true,
+										"exceptions"	=> $exceptions,
+										"cached"		=> $cached,
+										"timestamp"		=> time(),
+										"changed"		=> $changed,
+										"data"			=> $posts,
+								));
 	} else {
-		$htmllvl = ParseStripmode(DEFAULT_STRIPHTML_MODE);
+		$json = json_encode(array(		"success"		=> false,
+										"exceptions"	=> $exceptions,
+										"cached"		=> null,
+										"timestamp"		=> time(),
+										"changed"		=> null,
+										"data"			=> null,
+								));
 	}
-
-	if($mxposts > CACHE_POSTS)
-		$mxposts = DEFAULT_MAX_POSTS;
-		
-	$posts = UltraSMFParser($rawInput, $mxposts, $htmllvl);
-
-} catch (Exception $ex) {
-	ThrowException($exceptions, "PROGRAM_EXCEPTION", print_r($ex, true));
-	$success = false;
-}
-
-if($success) {
-	$json = json_encode(array(		"success"		=> true,
-									"exceptions"	=> $exceptions,
-									"cached"		=> $cached,
-									"timestamp"		=> time(),
-									"changed"		=> $changed,
-									"data"			=> $posts,
-							));
 } else {
-	$json = json_encode(array(		"success"		=> false,
-									"exceptions"	=> $exceptions,
-									"cached"		=> null,
-									"timestamp"		=> time(),
-									"changed"		=> null,
-									"data"			=> null,
-							));
+	$json = json_encode(array(	"whoami"		=> "SMF Notifier Query API",
+								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
+								"cache_ttl" 	=> CACHE_TIME,
+								"cache_posts"	=> CACHE_POSTS,
+								"defaults"		=> array(	"max_posts"			=> DEFAULT_MAX_POSTS,
+															"html_stripmode" 	=> DEFAULT_STRIPHTML_MODE
+														)
+						));
 }
 
 header('Content-Type: application/json');
@@ -192,33 +210,6 @@ function StripHtml($str, $mode)
 		$outStr = preg_replace("/<img src=\"Smileys\/[^\n\"\=]*\" alt=\"([^\n\"\=]*)\" title=\"[^\n\"\=]*\" class=\"smiley\" \/>/", "$1", $outStr);
 	}
 	
-	// If needed, simplyfiy and finalize the output and leave some tags intact
-	if($mode == STRIPHTML_SIMPLIFY) {
-		// Handle quotes
-		$outStr = preg_replace("/<div class=\"quoteheader\"><div class=\"topslice_quote\">([\w\W]*?)<\/div><\/div><blockquote class=\"bbc_standard_quote\">/", "[span background=\"#FFFFFF\"]$1\n", $outStr);
-		$outStr = preg_replace("/<\/blockquote><div class=\"quotefooter\"><div class=\"botslice_quote\"><\/div><\/div>/", "[/span]\n", $outStr);
-		// Handle bold text
-		$outStr = preg_replace("/<strong>/", "[b]", $outStr);
-		$outStr = preg_replace("/<\/strong>/", "[/b]", $outStr);
-		// Handle italic text
-		$outStr = preg_replace("/<em>/", "[i]", $outStr);
-		$outStr = preg_replace("/<\/em>/", "[/i]", $outStr);
-		// Handle italic text
-		$outStr = preg_replace("/<del>/", "[s]", $outStr);
-		$outStr = preg_replace("/<\/del>/", "[/s]", $outStr);
-		
-		// Delete all remaining tags
-		$outStr = preg_replace("/<[^<>]*>/", "", $outStr);
-		
-		// Convert all special tags to pango markup
-		$outStr = preg_replace("/\[([^\[\]]*)\]/", "<$1>", $outStr);
-		
-		// Replace html entitys
-		$outStr = StripHtmlEntities($outStr);
-		
-		$outStr = str_replace("&", "&amp;", $outStr);
-	}
-
 	// Finalize the output if allowed
 	if($mode == STRIPHTML_ALL) {
 		// Delete all tags
@@ -243,9 +234,9 @@ function QueryFeed($baseUrl, $opts)
 	return file_get_contents($baseUrl . (strlen($query)>0 ? (";" . $query) : ""));
 }
 
-function ParseStripmode($str, $def="simplify")
+function ParseStripmode($str, $def="none")
 {
-	$stripmodes = array("none", "simplify", "all");
+	$stripmodes = array("none", "all");
 	$stripmodeindex = 0;
 	foreach ($stripmodes as $stripmode) {
 		if (stripos($str, $stripmode) !== false) {

@@ -29,7 +29,7 @@ namespace CodeWalriiNotify
 			this.Title = feedTitle + (feedTitle.Length > 0 ? " " : "") + "Post Notifier";
 
 			notifier.Run();
-			//notifier.ForceRefresh();
+			notifier.ForceRefresh();
 		}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a)

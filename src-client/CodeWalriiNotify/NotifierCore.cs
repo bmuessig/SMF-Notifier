@@ -12,6 +12,7 @@ namespace CodeWalriiNotify
 		private RecyclerView postsView;
 		private SettingsData settings;
 		private BackgroundWorker asyncThread;
+		private bool timerRunning;
 
 		public NotifierCore(Window MainWindow, RecyclerView PostsView, SettingsData Settings)
 		{
@@ -19,35 +20,29 @@ namespace CodeWalriiNotify
 			postsView = PostsView;
 			settings = Settings;
 
-			/*
-			GLib.Timeout.Add(settings.QueryInterval * 100, new GLib.TimeoutHandler(delegate {
-				DoQuery();
-				return true;
-			}));
-			*/
-
 			asyncThread = new BackgroundWorker();
 			asyncThread.DoWork += AsyncThread_DoWork;
 			asyncThread.RunWorkerCompleted += AsyncThread_RunWorkerCompleted;
 		}
 
-		void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		protected void RunTimer()
 		{
-			mainWindow.Title = "Almost done!";
-			lock (mainWindow) {
-				lock (postsView) {
-					if (e.Result.GetType() == typeof(List<Widget>)) {
-						List <Widget> widgets = ((List<Widget>)e.Result);
-						postsView.Clear();
-						foreach (Widget widget in widgets) {
-							postsView.InsertFirst(widget);
-						}
-						mainWindow.Title = "Done.";
-					} else {
-						mainWindow.Title = "Failed!";
-					}
-				}
-			}
+			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
+				DoRefreshAsync();
+				return timerRunning;
+			}));
+		}
+
+		protected void StopTimer()
+		{
+			timerRunning = false;
+		}
+
+		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			Gtk.Application.Invoke(delegate {
+				ThreadSafeSync(e.Result);
+			});
 		}
 
 		void AsyncThread_DoWork(object sender, DoWorkEventArgs e)
@@ -62,12 +57,12 @@ namespace CodeWalriiNotify
 
 		public void Run()
 		{
-			//queryTimer.Start();
+			RunTimer();
 		}
 
 		public void Pause()
 		{
-			//queryTimer.Stop();
+			StopTimer();
 		}
 
 		public void Shutdown()
@@ -80,12 +75,32 @@ namespace CodeWalriiNotify
 			DoRefreshAsync();
 		}
 
+		protected void ThreadSafeSync(object result)
+		{
+			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Almost done, hold on!)";
+			if (result.GetType() == typeof(List<Widget>)) {
+				List <Widget> widgets = ((List<Widget>)result);
+				postsView.Clear();
+				foreach (Widget widget in widgets)
+					postsView.InsertFirst(widget);
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
+			} else
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
+		}
+
 		protected void DoRefreshAsync()
 		{
 			if (asyncThread.IsBusy)
 				return;
-			mainWindow.Title = "Refreshing...";
+			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing...";
 			asyncThread.RunWorkerAsync(settings);
+		}
+
+		protected void DoRefreshSync()
+		{
+			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Synchronized; this can take a while!)";
+			AsyncThread_RunWorkerCompleted(null, new RunWorkerCompletedEventArgs(DoRefresh(settings), null, false));
+			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
 		}
 
 		protected object DoRefresh(SettingsData Settings)

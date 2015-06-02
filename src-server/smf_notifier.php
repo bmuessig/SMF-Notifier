@@ -1,5 +1,5 @@
 <?php
-/* SMF Feed Parser API
+/* SMF Notifier Query API
  * (c) 2015 Muessigb <muessigb@yahoo.de> (Muessigb.net)
  * MIT License
 */

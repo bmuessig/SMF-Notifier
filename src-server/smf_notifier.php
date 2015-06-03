@@ -22,7 +22,7 @@ define("DEFAULT_STRIPHTML_MODE", "NONE");
 // Static internal constants
 define("API_VERSION_MAJOR", 04);
 define("API_VERSION_MINOR", 1506);
-define("API_VERSION_REV", ord('b'));
+define("API_VERSION_REV", ord('c'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
@@ -132,8 +132,9 @@ ob_start();
 } else {
 	$json = json_encode(array(	"whoami"		=> "SMF Notifier Query API",
 								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
-								"cache_ttl" 	=> CACHE_TIME,
-								"cache_posts"	=> CACHE_POSTS,
+								"configuration"	=> array(	"cache_ttl" 	=> CACHE_TIME,
+															"cache_posts"	=> CACHE_POSTS
+														),
 								"defaults"		=> array(	"max_posts"			=> DEFAULT_MAX_POSTS,
 															"html_stripmode" 	=> DEFAULT_STRIPHTML_MODE
 														)

@@ -127,7 +127,7 @@ namespace CodeWalriiNotify
 
 		public SettingsData()
 		{
-			FeedURL = "http://api.muessigb.net/smf_notifier.php";
+			FeedURL = "";
 			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;

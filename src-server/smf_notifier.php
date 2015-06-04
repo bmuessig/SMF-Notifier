@@ -7,7 +7,8 @@
 
 /* CHANGE YOUR SETTINGS BELOW */
 
-define("BASE_SITE_URL", "http://codewalr.us/index.php");
+define("BASE_SITE_URL", "http://codewalr.us");
+define("SITE_INDEX_URL", BASE_SITE_URL . "/index.php");
 define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_SITE_URL) . ".db");
 define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
@@ -22,7 +23,7 @@ define("DEFAULT_STRIPHTML_MODE", "NONE");
 // Static internal constants
 define("API_VERSION_MAJOR", 04);
 define("API_VERSION_MINOR", 1506);
-define("API_VERSION_REV", ord('c'));
+define("API_VERSION_REV", ord('d'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
@@ -55,7 +56,7 @@ ob_start();
 			}
 
 			if(! $cached) {
-				$queryUrl = BASE_SITE_URL . "?action=.xml";
+				$queryUrl = SITE_INDEX_URL . "?action=.xml";
 				$queryOpts = array("sa=recent", "limit=" . CACHE_POSTS);
 				$rawInput = QueryFeed($queryUrl, $queryOpts);
 				file_put_contents(TMP_CACHE_FILE, json_encode(array("timestamp" => time(), "data" => $rawInput)));
@@ -133,7 +134,8 @@ ob_start();
 	$json = json_encode(array(	"whoami"		=> "SMF Notifier Query API",
 								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
 								"configuration"	=> array(	"cache_ttl" 	=> CACHE_TIME,
-															"cache_posts"	=> CACHE_POSTS
+															"cache_posts"	=> CACHE_POSTS,
+															"site_url"		=> BASE_SITE_URL
 														),
 								"defaults"		=> array(	"max_posts"			=> DEFAULT_MAX_POSTS,
 															"html_stripmode" 	=> DEFAULT_STRIPHTML_MODE
@@ -223,7 +225,7 @@ function StripHtml($str, $mode)
 	
 	if($mode == STRIPHTML_NONE) {
 		// Fix smilies
-		$outStr = preg_replace("/<img src=\"(Smileys\/cwsmileys\/[^\n\r\"]*?)\" ([^<>\n\r]*?)>/", "<img src=\"http://codewalr.us/$1\" $2>", $outStr);
+		$outStr = preg_replace("/<img src=\"(Smileys[^\n\r\"]*?)\" ([^<>\n\r]*?)>/", "<img src=\"". BASE_SITE_URL . "/$1\" $2>", $outStr);
 	}
 	
 	return $outStr;

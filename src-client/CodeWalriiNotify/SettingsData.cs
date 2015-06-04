@@ -127,7 +127,7 @@ namespace CodeWalriiNotify
 
 		public SettingsData()
 		{
-			FeedURL = "";
+			FeedURL = "http://api.muessigb.net/codewalrus-notify/";
 			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;

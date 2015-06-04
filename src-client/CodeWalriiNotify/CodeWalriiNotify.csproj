@@ -92,6 +92,7 @@
     <Compile Include="NotificationWindow.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.NotificationWindow.cs" />
     <Compile Include="Notificator.cs" />
+    <Compile Include="MyToolbox.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace CodeWalriiNotify
 		int targetX;
 
 		public NotificationWindow(PostMeta Post, MainWindow MainWindow)
-			: base(Gtk.WindowType.Toplevel)
+			: base(Gtk.WindowType.Popup)
 		{
 			this.Build();
 
@@ -40,7 +40,7 @@ namespace CodeWalriiNotify
 
 			this.KeepAbove = true;
 
-			this.Move(this.Screen.Width + this.WidthRequest, (int)((this.Screen.Height * SettingsProvider.CurrentSettings.VisualNotifyVerticalAlignment) - this.HeightRequest));
+			this.Move(this.Screen.Width + this.WidthRequest, (int)((this.Screen.Height - this.HeightRequest) * SettingsProvider.CurrentSettings.VisualNotifyVerticalAlignment));
 
 			hasTimeout = false;
 			restartTimeout = false;

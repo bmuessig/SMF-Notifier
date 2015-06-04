@@ -12,6 +12,8 @@ namespace CodeWalriiNotify
 		private SettingsData settings;
 		private BackgroundWorker asyncThread;
 
+		private APIMeta apiInfo;
+
 		private ulong lastChanged;
 
 		public NotifierCore(Window MainWindow, RecyclerView PostsView, SettingsData Settings)
@@ -26,6 +28,8 @@ namespace CodeWalriiNotify
 
 			lastChanged = 0;
 			TimerRunning = false;
+
+			InitAPIAsync(Settings);
 		}
 
 		public bool TimerRunning { get; private set; }
@@ -85,6 +89,36 @@ namespace CodeWalriiNotify
 			DoRefreshAsync();
 		}
 
+		BackgroundWorker apiInitAsync;
+
+		protected void InitAPIAsync(SettingsData Settings)
+		{
+			apiInitAsync = new BackgroundWorker();
+			apiInitAsync.DoWork += delegate(object sender, DoWorkEventArgs e) {
+				byte repeat = 0;
+				APIMeta apiMeta = null;
+				while (apiMeta == null && repeat < 3) {
+					apiMeta = GetAPIInfo((SettingsData)e.Argument);
+					repeat++;
+				}
+
+				e.Result = apiMeta;
+			};
+			apiInitAsync.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e) {
+				var apiMeta = (APIMeta)e.Result;
+				if (apiMeta != null) {
+					Application.Invoke(delegate {
+						apiInfo = apiMeta;
+					});
+				} else {
+					Application.Invoke(delegate {
+						SettingsDialog.PromptInvalidSetting("Invalid API!\nYou might want to change the settings!", (MainWindow)mainWindow);
+					});
+				}
+			};
+			apiInitAsync.RunWorkerAsync(Settings);
+		}
+
 		protected bool ThreadSafeSync(RefreshResult Result)
 		{
 			if (Result.Success) {
@@ -115,11 +149,20 @@ namespace CodeWalriiNotify
 				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
 		}
 
+		protected APIMeta GetAPIInfo(SettingsData Settings)
+		{
+			try {
+				String js = FeedRetriever.RetrieveFeedInfo(Settings); // We need to request info from the API
+				return new APIMeta(js);
+			} catch (Exception) {
+				return null;
+			}
+		}
+
 		protected RefreshResult DoRefresh(SettingsData Settings)
 		{
 			try {
-				var fdr = new FeedRetriever(Settings.FeedURL);
-				String js = fdr.RetrieveData("?query"); // We need to tell the API that we want to request data
+				String js = FeedRetriever.RetrieveFeedData(Settings); // We need to request data from the API
 
 				var query = new APIQueryMeta(js);
 

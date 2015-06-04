@@ -1,6 +1,7 @@
 ﻿using System;
 using Gdk;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace CodeWalriiNotify
 {
@@ -37,9 +38,36 @@ namespace CodeWalriiNotify
 			headerBox.Realized += delegate {
 				headerBox.GdkWindow.Cursor = new Cursor(CursorType.Hand1);
 			};
+
 			headerBox.ButtonPressEvent += delegate {
-				var urlInfo = new ProcessStartInfo(URL);
-				Process.Start(urlInfo);
+				URL = "notepad.exe " + URL;
+				if (MyToolbox.CheckUrl(URL)) {
+					try {
+						var urlInfo = new ProcessStartInfo(URL); // I am fully aware of this possible security breach; it's fixed now, as only correct urls will pass
+						Process.Start(urlInfo);
+					} catch (Exception) {
+						return;
+					}
+				} else {
+					MessageBox.Show(
+						String.Format("The post URL \"{0}\" could not be parsed as an URL.\nOpening it is a possible security risk.\n\nDo you want to proceed?",
+							URL),
+						"Open URL",
+						Gtk.MessageType.Warning,
+						Gtk.ButtonsType.YesNo,
+						new Gtk.ResponseHandler(delegate(object o, Gtk.ResponseArgs args) {
+							if (args.ResponseId == Gtk.ResponseType.Yes) {
+								try {
+									var urlInfo = new ProcessStartInfo(URL); // I am fully aware of this imense security breach; see the note above
+									Process.Start(urlInfo);
+								} catch (Exception) {
+									return;
+								}
+							}
+						})
+					);
+				}
+				
 			};
 			bodyBox.Realized += delegate {
 				bodyBox.GdkWindow.Cursor = new Cursor(CursorType.Arrow);

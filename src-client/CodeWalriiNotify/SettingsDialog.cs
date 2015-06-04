@@ -121,11 +121,11 @@ namespace CodeWalriiNotify
 			ReadSettings(new SettingsData());
 		}
 
-		/*public static void PromptInvalidSetting(string SettingName, MainWindow MainWindow)
+		public static void PromptInvalidSetting(string Message, MainWindow MainWindow)
 		{
 			MainWindow.Hide();
 			MessageBox.Show(
-				String.Format("The {0} setting is invalid. Press OK to change it or Cancel to terminate the program.", SettingName),
+				Message,
 				"Invalid Configuration", 
 				Gtk.MessageType.Error,
 				Gtk.ButtonsType.OkCancel,
@@ -146,7 +146,7 @@ namespace CodeWalriiNotify
 					}
 				})
 			);
-		}*/
+		}
 	}
 }
 

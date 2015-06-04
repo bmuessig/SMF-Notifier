@@ -53,7 +53,6 @@ namespace CodeWalriiNotify
 		protected void OnRefreshActionActivated(object sender, EventArgs e)
 		{
 			notifier.ForceRefresh();
-			this.Hide();
 		}
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)

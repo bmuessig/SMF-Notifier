@@ -21,9 +21,9 @@ define("DEFAULT_STRIPHTML_MODE", "NONE");
 /* DO NOT CHANGE ANYTHING BELOW THIS LINE! */
 
 // Static internal constants
-define("API_VERSION_MAJOR", 04);
-define("API_VERSION_MINOR", 1506);
-define("API_VERSION_REV", ord('d'));
+define("API_VERSION_MAJOR", 4);
+define("API_VERSION_MINOR", 3);
+define("API_VERSION_REV", ord('a'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);

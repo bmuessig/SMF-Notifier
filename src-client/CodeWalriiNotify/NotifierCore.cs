@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Gtk;
+using System.Threading;
 
 namespace CodeWalriiNotify
 {
 	public class NotifierCore
 	{
-		private Window mainWindow;
+		private MainWindow mainWindow;
 		private RecyclerView postsView;
 		private SettingsData settings;
 		private BackgroundWorker asyncThread;
 
 		private APIMeta apiInfo;
 
+		private Notificator notificator;
+
 		private ulong lastChanged;
 
-		public NotifierCore(Window MainWindow, RecyclerView PostsView, SettingsData Settings)
+		public NotifierCore(MainWindow MainWindow, RecyclerView PostsView, SettingsData Settings)
 		{
 			mainWindow = MainWindow;
 			postsView = PostsView;
@@ -29,7 +32,7 @@ namespace CodeWalriiNotify
 			lastChanged = 0;
 			TimerRunning = false;
 
-			InitAPIAsync(Settings);
+			notificator = new Notificator(Settings, MainWindow);
 		}
 
 		public bool TimerRunning { get; private set; }
@@ -38,7 +41,7 @@ namespace CodeWalriiNotify
 		{
 			TimerRunning = true;
 			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
-				DoRefreshAsync();
+				DoRefresh();
 				return TimerRunning;
 			}));
 		}
@@ -50,18 +53,42 @@ namespace CodeWalriiNotify
 
 		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-			Gtk.Application.Invoke(delegate {
-				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Almost done, hold on!)";
-				if (ThreadSafeSync((RefreshResult)e.Result))
-					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
-				else
-					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
+			Application.Invoke(delegate {
+				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Synchronizing... (Almost done, hold on!)";
+
+				var result = (RefreshResult)e.Result;
+				bool postRefreshSuccess = true;
+				bool infoQuerySuccess = true;
+
+				if (result.Opts.DoInfo)
+					infoQuerySuccess = ThreadSafeInfoSync(result.APIQuery);
+				if (result.Opts.DoPosts && infoQuerySuccess)
+					postRefreshSuccess = ThreadSafePostSync(result.PostRefresh);
+
+				if (infoQuerySuccess) {
+					if (postRefreshSuccess)
+						mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
+					else
+						mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
+				} else {
+					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Invalid API, please check your settings!";
+					StopTimer();
+				}
 			});
 		}
 
 		void AsyncThread_DoWork(object sender, DoWorkEventArgs e)
 		{
-			e.Result = DoRefresh((SettingsData)e.Argument);
+			var opts = (RefreshOpts)e.Argument;
+			var apiResult = new APIQueryResult();
+			var postResult = new PostRefreshResult();
+
+			if (opts.DoInfo)
+				apiResult = DoAPIInfoQuery(opts.Settings);
+			if (opts.DoPosts && (!opts.DoInfo || apiResult.Success))
+				postResult = DoPostsRefresh(opts.Settings);
+
+			e.Result = new RefreshResult(opts, apiResult, postResult);
 		}
 
 		protected void DoQuery()
@@ -86,40 +113,21 @@ namespace CodeWalriiNotify
 
 		public void ForceRefresh()
 		{
-			DoRefreshAsync();
+			DoRefresh();
 		}
 
-		BackgroundWorker apiInitAsync;
-
-		protected void InitAPIAsync(SettingsData Settings)
+		protected bool ThreadSafeInfoSync(APIQueryResult Result)
 		{
-			apiInitAsync = new BackgroundWorker();
-			apiInitAsync.DoWork += delegate(object sender, DoWorkEventArgs e) {
-				byte repeat = 0;
-				APIMeta apiMeta = null;
-				while (apiMeta == null && repeat < 3) {
-					apiMeta = GetAPIInfo((SettingsData)e.Argument);
-					repeat++;
-				}
-
-				e.Result = apiMeta;
-			};
-			apiInitAsync.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e) {
-				var apiMeta = (APIMeta)e.Result;
-				if (apiMeta != null) {
-					Application.Invoke(delegate {
-						apiInfo = apiMeta;
-					});
-				} else {
-					Application.Invoke(delegate {
-						SettingsDialog.PromptInvalidSetting("Invalid API!\nYou might want to change the settings!", (MainWindow)mainWindow);
-					});
-				}
-			};
-			apiInitAsync.RunWorkerAsync(Settings);
+			if (Result.Success) {
+				apiInfo = Result.Meta;
+				return true;
+			} else {
+				//SettingsDialog.PromptInvalidSetting("Invalid API!\nYou might want to change the settings!", (MainWindow)mainWindow);
+				return false;
+			}
 		}
 
-		protected bool ThreadSafeSync(RefreshResult Result)
+		protected bool ThreadSafePostSync(PostRefreshResult Result)
 		{
 			if (Result.Success) {
 				if (Result.Refresh) {
@@ -132,34 +140,52 @@ namespace CodeWalriiNotify
 			return false;
 		}
 
-		protected void DoRefreshAsync()
+		protected void DoRefresh()
 		{
 			if (asyncThread.IsBusy)
 				return;
-			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing...";
-			asyncThread.RunWorkerAsync(settings);
+			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Synchronizing...";
+			asyncThread.RunWorkerAsync(new RefreshOpts(apiInfo == null, true, settings));
 		}
 
-		protected void DoRefreshSync()
+		protected APIQueryResult DoAPIInfoQuery(SettingsData Settings, uint MaxTries = 3, uint Sleep = 500)
 		{
-			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing... (Synchronized; this can take a while!)";
-			if (ThreadSafeSync(DoRefresh(settings)))
-				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
-			else
-				mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
+			byte repeat = 0;
+			APIMeta apiMeta = null;
+			Exception lastErr = null;
+
+			while (apiMeta == null && repeat < MaxTries) {
+				if (repeat > 0)
+					Thread.Sleep((int)Sleep); // Wait a moment for things to settle
+				bool success;
+				object result = GetAPIInfo(Settings, out success); 
+
+				if (success) {
+					apiMeta = (APIMeta)result;
+				} else {
+					lastErr = (Exception)result;
+				}
+
+				repeat++;
+			}
+
+			return apiMeta != null ? new APIQueryResult(apiMeta, repeat) : new APIQueryResult(lastErr, repeat);
 		}
 
-		protected APIMeta GetAPIInfo(SettingsData Settings)
+		protected object GetAPIInfo(SettingsData Settings, out bool Success)
 		{
 			try {
 				String js = FeedRetriever.RetrieveFeedInfo(Settings); // We need to request info from the API
+
+				Success = true;
 				return new APIMeta(js);
-			} catch (Exception) {
-				return null;
+			} catch (Exception ex) {
+				Success = false;
+				return ex;
 			}
 		}
 
-		protected RefreshResult DoRefresh(SettingsData Settings)
+		protected PostRefreshResult DoPostsRefresh(SettingsData Settings)
 		{
 			try {
 				String js = FeedRetriever.RetrieveFeedData(Settings); // We need to request data from the API
@@ -182,24 +208,76 @@ namespace CodeWalriiNotify
 
 						lastChanged = query.Changed;
 
-						return new RefreshResult(widgets);
+						return new PostRefreshResult(widgets);
 					} else
-						return new RefreshResult(true);
+						return new PostRefreshResult(true);
 				} else
-					return new RefreshResult(false);
+					return new PostRefreshResult(false);
 			} catch (Exception ex) {
-				return new RefreshResult(ex);
+				return new PostRefreshResult(ex);
+			}
+		}
+
+		protected struct RefreshOpts
+		{
+			public bool DoInfo;
+			public bool DoPosts;
+			public SettingsData Settings;
+
+			public RefreshOpts(bool DoInfo, bool DoPosts, SettingsData Settings)
+			{
+				this.DoInfo = DoInfo;
+				this.DoPosts = DoPosts;
+				this.Settings = Settings;
 			}
 		}
 
 		protected struct RefreshResult
+		{
+			public RefreshOpts Opts;
+			public APIQueryResult APIQuery;
+			public PostRefreshResult PostRefresh;
+
+			public RefreshResult(RefreshOpts Opts, APIQueryResult APIQuery, PostRefreshResult PostRefresh)
+			{
+				this.Opts = Opts;
+				this.APIQuery = APIQuery;
+				this.PostRefresh = PostRefresh;
+			}
+		}
+
+		protected struct APIQueryResult
+		{
+			public bool Success;
+			public uint Tries;
+			public Exception Exception;
+			public APIMeta Meta;
+
+			public APIQueryResult(Exception Exception, uint Tries)
+			{
+				Success = false;
+				this.Exception = Exception;
+				this.Tries = Tries;
+				Meta = null;
+			}
+
+			public APIQueryResult(APIMeta Meta, uint Tries)
+			{
+				Success = Meta != null;
+				Exception = null;
+				this.Tries = Tries;
+				this.Meta = Meta;
+			}
+		}
+
+		protected struct PostRefreshResult
 		{
 			public bool Success;
 			public bool Refresh;
 			public Exception Exception;
 			public List<Widget> Widgets;
 
-			public RefreshResult(bool Success)
+			public PostRefreshResult(bool Success)
 			{
 				this.Success = Success;
 				this.Refresh = false;
@@ -207,7 +285,7 @@ namespace CodeWalriiNotify
 				Widgets = null;
 			}
 
-			public RefreshResult(Exception Exception)
+			public PostRefreshResult(Exception Exception)
 			{
 				Success = false;
 				Refresh = false;
@@ -215,7 +293,7 @@ namespace CodeWalriiNotify
 				Widgets = null;
 			}
 
-			public RefreshResult(List<Widget> Widgets)
+			public PostRefreshResult(List<Widget> Widgets)
 			{
 				Success = true;
 				Refresh = Widgets != null;

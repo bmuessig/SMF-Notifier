@@ -9,8 +9,6 @@ namespace CodeWalriiNotify
 	{
 		NotifierCore notifier;
 
-		Notificator nfc;
-
 		public MainWindow()
 			: base(WindowType.Toplevel)
 		{
@@ -32,9 +30,6 @@ namespace CodeWalriiNotify
 
 			notifier.Run();
 			notifier.ForceRefresh();
-
-			nfc = new Notificator(SettingsProvider.CurrentSettings, this);
-			nfc.NewPost(new PostMeta("Sample Subject", "Muessigb", "Lol lol loll lllolll", DateTime.Now, "http://google.de/"));
 		}
 
 		public void Shutdown()

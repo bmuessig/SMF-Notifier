@@ -5,6 +5,9 @@ namespace CodeWalriiNotify
 {
 	public class APIMeta
 	{
+		public const uint API_MAJOR = 4;
+		public const uint API_MIN_MINOR = 3;
+
 		public string Whoami { get; private set; }
 
 		public VersionStruct Version { get; private set; }
@@ -31,6 +34,9 @@ namespace CodeWalriiNotify
 				ver.Major = (uint)apiObj.version[0];
 				ver.Minor = (uint)apiObj.version[1];
 				ver.Revision = (uint)apiObj.version[2];
+
+				if (ver.Major != API_MAJOR || ver.Minor < API_MIN_MINOR) // Check version compatibility
+					throw new Exception("API version mismatch!");
 
 				cfg.CacheTTL = (uint)apiObj.configuration.cache_ttl;
 				cfg.CachePosts = (byte)apiObj.configuration.cache_posts;

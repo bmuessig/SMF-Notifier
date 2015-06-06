@@ -34,6 +34,7 @@ namespace CodeWalriiNotify
 
 				cfg.CacheTTL = (uint)apiObj.configuration.cache_ttl;
 				cfg.CachePosts = (byte)apiObj.configuration.cache_posts;
+				cfg.FeedURL = (string)apiObj.configuration.feed_url;
 
 				def.MaxPosts = (byte)apiObj.defaults.max_posts;
 				def.HTMLStripmode = (string)apiObj.defaults.html_stripmode;
@@ -58,6 +59,7 @@ namespace CodeWalriiNotify
 		{
 			public uint CacheTTL;
 			public byte CachePosts;
+			public string FeedURL;
 		}
 
 		public struct DefaultStruct

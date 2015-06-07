@@ -34,9 +34,9 @@ namespace CodeWalriiNotify
 			visualNotifyAnimationCb.Active = CurrentSettings.VisualNotifyDoAnimate;
 			visualNotifyAnimationIntervalDec.Value = CurrentSettings.VisualNotifyAnimationInterval;
 			visualNotifyTimeoutDec.Value = CurrentSettings.VisualNotifyTimeout;
-			audioNotifyCb.Active = CurrentSettings.AudioNotifyEnable;
-			customAudioCb.Active = CurrentSettings.AudioNotifyUseCustomAudio;
-			audioFileSel.SetFilename(CurrentSettings.AudioNotifyFile);
+			audioNotifyEnabledCb.Active = CurrentSettings.AudioNotifyEnable;
+			audioNotifyCustomAudioCb.Active = CurrentSettings.AudioNotifyUseCustomAudio;
+			audioNotifyFileSel.SetFilename(CurrentSettings.AudioNotifyFile);
 
 			// Colors
 			headerBgColorBtn.Color = CurrentSettings.HeaderBackcolor;
@@ -73,9 +73,9 @@ namespace CodeWalriiNotify
 			CurrentSettings.VisualNotifyDoAnimate = visualNotifyAnimationCb.Active;
 			CurrentSettings.VisualNotifyAnimationInterval = (uint)visualNotifyAnimationIntervalDec.ValueAsInt;
 			CurrentSettings.VisualNotifyTimeout = (uint)visualNotifyTimeoutDec.ValueAsInt;
-			CurrentSettings.AudioNotifyEnable = audioNotifyCb.Active;
-			CurrentSettings.AudioNotifyUseCustomAudio = customAudioCb.Active;
-			CurrentSettings.AudioNotifyFile = audioFileSel.Filename;
+			CurrentSettings.AudioNotifyEnable = audioNotifyEnabledCb.Active;
+			CurrentSettings.AudioNotifyUseCustomAudio = audioNotifyCustomAudioCb.Active;
+			CurrentSettings.AudioNotifyFile = audioNotifyFileSel.Filename;
 
 			// Colors
 			CurrentSettings.HeaderBackcolor = headerBgColorBtn.Color;

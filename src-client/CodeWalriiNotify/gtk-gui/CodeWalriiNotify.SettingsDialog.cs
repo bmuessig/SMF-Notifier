@@ -10,17 +10,17 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Table notifierTable;
 		
-		private global::Gtk.FileChooserButton audioFileSel;
+		private global::Gtk.CheckButton audioNotifyCustomAudioCb;
 		
-		private global::Gtk.Label audioFileSelLbl;
+		private global::Gtk.Label audioNotifyCustomAudioCbLbl;
 		
-		private global::Gtk.CheckButton audioNotifyCb;
+		private global::Gtk.CheckButton audioNotifyEnabledCb;
 		
-		private global::Gtk.Label audioNotifyCbLbl;
+		private global::Gtk.Label audioNotifyEnabledCbLbl;
 		
-		private global::Gtk.CheckButton customAudioCb;
+		private global::Gtk.FileChooserButton audioNotifyFileSel;
 		
-		private global::Gtk.Label customAudioCbLbl;
+		private global::Gtk.Label audioNotifyFileSelLbl;
 		
 		private global::Gtk.CheckButton customIconCb;
 		
@@ -156,33 +156,37 @@ namespace CodeWalriiNotify
 			this.notifierTable.ColumnSpacing = ((uint)(6));
 			this.notifierTable.BorderWidth = ((uint)(6));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.audioFileSel = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Select a File"), ((global::Gtk.FileChooserAction)(0)));
-			this.audioFileSel.Name = "audioFileSel";
-			this.notifierTable.Add (this.audioFileSel);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioFileSel]));
-			w3.TopAttach = ((uint)(11));
-			w3.BottomAttach = ((uint)(12));
+			this.audioNotifyCustomAudioCb = new global::Gtk.CheckButton ();
+			this.audioNotifyCustomAudioCb.CanFocus = true;
+			this.audioNotifyCustomAudioCb.Name = "audioNotifyCustomAudioCb";
+			this.audioNotifyCustomAudioCb.Label = "";
+			this.audioNotifyCustomAudioCb.DrawIndicator = true;
+			this.notifierTable.Add (this.audioNotifyCustomAudioCb);
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCustomAudioCb]));
+			w3.TopAttach = ((uint)(10));
+			w3.BottomAttach = ((uint)(11));
 			w3.LeftAttach = ((uint)(1));
 			w3.RightAttach = ((uint)(2));
+			w3.XOptions = ((global::Gtk.AttachOptions)(1));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.audioFileSelLbl = new global::Gtk.Label ();
-			this.audioFileSelLbl.Name = "audioFileSelLbl";
-			this.audioFileSelLbl.Xalign = 0F;
-			this.audioFileSelLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio File");
-			this.notifierTable.Add (this.audioFileSelLbl);
-			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioFileSelLbl]));
-			w4.TopAttach = ((uint)(11));
-			w4.BottomAttach = ((uint)(12));
+			this.audioNotifyCustomAudioCbLbl = new global::Gtk.Label ();
+			this.audioNotifyCustomAudioCbLbl.Name = "audioNotifyCustomAudioCbLbl";
+			this.audioNotifyCustomAudioCbLbl.Xalign = 0F;
+			this.audioNotifyCustomAudioCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Notify Use Custom Audio");
+			this.notifierTable.Add (this.audioNotifyCustomAudioCbLbl);
+			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCustomAudioCbLbl]));
+			w4.TopAttach = ((uint)(10));
+			w4.BottomAttach = ((uint)(11));
 			w4.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.audioNotifyCb = new global::Gtk.CheckButton ();
-			this.audioNotifyCb.CanFocus = true;
-			this.audioNotifyCb.Name = "audioNotifyCb";
-			this.audioNotifyCb.Label = "";
-			this.audioNotifyCb.DrawIndicator = true;
-			this.notifierTable.Add (this.audioNotifyCb);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCb]));
+			this.audioNotifyEnabledCb = new global::Gtk.CheckButton ();
+			this.audioNotifyEnabledCb.CanFocus = true;
+			this.audioNotifyEnabledCb.Name = "audioNotifyEnabledCb";
+			this.audioNotifyEnabledCb.Label = "";
+			this.audioNotifyEnabledCb.DrawIndicator = true;
+			this.notifierTable.Add (this.audioNotifyEnabledCb);
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyEnabledCb]));
 			w5.TopAttach = ((uint)(9));
 			w5.BottomAttach = ((uint)(10));
 			w5.LeftAttach = ((uint)(1));
@@ -190,38 +194,34 @@ namespace CodeWalriiNotify
 			w5.XOptions = ((global::Gtk.AttachOptions)(1));
 			w5.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.audioNotifyCbLbl = new global::Gtk.Label ();
-			this.audioNotifyCbLbl.Name = "audioNotifyCbLbl";
-			this.audioNotifyCbLbl.Xalign = 0F;
-			this.audioNotifyCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Notify");
-			this.notifierTable.Add (this.audioNotifyCbLbl);
-			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyCbLbl]));
+			this.audioNotifyEnabledCbLbl = new global::Gtk.Label ();
+			this.audioNotifyEnabledCbLbl.Name = "audioNotifyEnabledCbLbl";
+			this.audioNotifyEnabledCbLbl.Xalign = 0F;
+			this.audioNotifyEnabledCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Notify Enabled");
+			this.notifierTable.Add (this.audioNotifyEnabledCbLbl);
+			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyEnabledCbLbl]));
 			w6.TopAttach = ((uint)(9));
 			w6.BottomAttach = ((uint)(10));
 			w6.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.customAudioCb = new global::Gtk.CheckButton ();
-			this.customAudioCb.CanFocus = true;
-			this.customAudioCb.Name = "customAudioCb";
-			this.customAudioCb.Label = "";
-			this.customAudioCb.DrawIndicator = true;
-			this.notifierTable.Add (this.customAudioCb);
-			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customAudioCb]));
-			w7.TopAttach = ((uint)(10));
-			w7.BottomAttach = ((uint)(11));
+			this.audioNotifyFileSel = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Select a File"), ((global::Gtk.FileChooserAction)(0)));
+			this.audioNotifyFileSel.Name = "audioNotifyFileSel";
+			this.notifierTable.Add (this.audioNotifyFileSel);
+			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyFileSel]));
+			w7.TopAttach = ((uint)(11));
+			w7.BottomAttach = ((uint)(12));
 			w7.LeftAttach = ((uint)(1));
 			w7.RightAttach = ((uint)(2));
-			w7.XOptions = ((global::Gtk.AttachOptions)(1));
 			w7.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
-			this.customAudioCbLbl = new global::Gtk.Label ();
-			this.customAudioCbLbl.Name = "customAudioCbLbl";
-			this.customAudioCbLbl.Xalign = 0F;
-			this.customAudioCbLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Use Custom Audio");
-			this.notifierTable.Add (this.customAudioCbLbl);
-			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.customAudioCbLbl]));
-			w8.TopAttach = ((uint)(10));
-			w8.BottomAttach = ((uint)(11));
+			this.audioNotifyFileSelLbl = new global::Gtk.Label ();
+			this.audioNotifyFileSelLbl.Name = "audioNotifyFileSelLbl";
+			this.audioNotifyFileSelLbl.Xalign = 0F;
+			this.audioNotifyFileSelLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Audio Notify Custom Wave File");
+			this.notifierTable.Add (this.audioNotifyFileSelLbl);
+			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.notifierTable [this.audioNotifyFileSelLbl]));
+			w8.TopAttach = ((uint)(11));
+			w8.BottomAttach = ((uint)(12));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child notifierTable.Gtk.Table+TableChild
 			this.customIconCb = new global::Gtk.CheckButton ();

@@ -24,8 +24,10 @@ namespace CodeWalriiNotify
 
 		public void NewPost(PostMeta Post)
 		{
-			var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain);
-			nwin.ShowMe();
+			if (settings.VisualNotifyEnable) {
+				var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain);
+				nwin.ShowMe();
+			}
 
 			if (!winMain.HasFocus) {
 				notificationIcon.Visible = true;
@@ -44,8 +46,15 @@ namespace CodeWalriiNotify
 				return;
 			}
 				
-			var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new Posts", (Posts.Length - 1).ToString()), winMain);
-			nwin.ShowMe();
+			if (settings.VisualNotifyEnable) {
+				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new Posts", (Posts.Length - 1).ToString()), winMain);
+				nwin.ShowMe();
+			}
+
+			if (!winMain.HasFocus) {
+				notificationIcon.Visible = true;
+				notificationIcon.Blinking = true;
+			}
 		}
 
 		protected void PlayAudio()

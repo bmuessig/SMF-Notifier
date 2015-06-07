@@ -14,6 +14,8 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.Action quitAction;
 		
+		private global::Gtk.ToggleAction autoRefreshAction;
+		
 		private global::Gtk.VBox horizontalSplit;
 		
 		private global::Gtk.MenuBar menuBar;
@@ -29,7 +31,7 @@ namespace CodeWalriiNotify
 			this.MenuAction = new global::Gtk.Action ("MenuAction", global::Mono.Unix.Catalog.GetString ("Menu"), null, null);
 			this.MenuAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Menu");
 			w1.Add (this.MenuAction, null);
-			this.refreshAction = new global::Gtk.Action ("refreshAction", global::Mono.Unix.Catalog.GetString ("_Refresh"), null, "gtk-refresh");
+			this.refreshAction = new global::Gtk.Action ("refreshAction", global::Mono.Unix.Catalog.GetString ("_Refresh Posts"), null, "gtk-refresh");
 			this.refreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Refresh");
 			w1.Add (this.refreshAction, "F5");
 			this.preferencesAction = new global::Gtk.Action ("preferencesAction", global::Mono.Unix.Catalog.GetString ("_Settings"), null, "gtk-preferences");
@@ -38,12 +40,17 @@ namespace CodeWalriiNotify
 			this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Quit"), null, "gtk-quit");
 			this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Quit");
 			w1.Add (this.quitAction, null);
+			this.autoRefreshAction = new global::Gtk.ToggleAction ("autoRefreshAction", global::Mono.Unix.Catalog.GetString ("_Auto Refresh"), null, null);
+			this.autoRefreshAction.Active = true;
+			this.autoRefreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Auto Refresh");
+			w1.Add (this.autoRefreshAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.WidthRequest = 480;
 			this.HeightRequest = 540;
 			this.Name = "CodeWalriiNotify.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Notifier");
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Resizable = false;
 			this.AllowGrow = false;
@@ -52,7 +59,7 @@ namespace CodeWalriiNotify
 			this.horizontalSplit.Name = "horizontalSplit";
 			this.horizontalSplit.Spacing = 6;
 			// Container child horizontalSplit.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString (@"<ui><menubar name='menuBar'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString (@"<ui><menubar name='menuBar'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='autoRefreshAction' action='autoRefreshAction'/><separator/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
 			this.menuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menuBar")));
 			this.menuBar.Name = "menuBar";
 			this.horizontalSplit.Add (this.menuBar);
@@ -79,6 +86,7 @@ namespace CodeWalriiNotify
 			this.refreshAction.Activated += new global::System.EventHandler (this.OnRefreshActionActivated);
 			this.preferencesAction.Activated += new global::System.EventHandler (this.OnPreferencesActionActivated);
 			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
+			this.autoRefreshAction.Toggled += new global::System.EventHandler (this.OnAutoRefreshActionToggled);
 		}
 	}
 }

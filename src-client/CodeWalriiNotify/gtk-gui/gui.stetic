@@ -18,7 +18,7 @@
       <action id="refreshAction">
         <property name="Type">Action</property>
         <property name="Accelerator">F5</property>
-        <property name="Label" translatable="yes">_Refresh</property>
+        <property name="Label" translatable="yes">_Refresh Posts</property>
         <property name="ShortLabel" translatable="yes">Refresh</property>
         <property name="StockId">gtk-refresh</property>
         <signal name="Activated" handler="OnRefreshActionActivated" />
@@ -38,11 +38,20 @@
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnQuitActionActivated" />
       </action>
+      <action id="autoRefreshAction">
+        <property name="Type">Toggle</property>
+        <property name="Label" translatable="yes">_Auto Refresh</property>
+        <property name="ShortLabel" translatable="yes">_Auto Refresh</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">True</property>
+        <signal name="Toggled" handler="OnAutoRefreshActionToggled" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">480</property>
     <property name="HeightRequest">540</property>
     <property name="Title" translatable="yes">Notifier</property>
+    <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Resizable">False</property>
     <property name="AllowGrow">False</property>
@@ -57,6 +66,8 @@
             <node name="menuBar" type="Menubar">
               <node type="Menu" action="MenuAction">
                 <node type="Menuitem" action="refreshAction" />
+                <node type="Menuitem" action="autoRefreshAction" />
+                <node type="Separator" />
                 <node type="Menuitem" action="preferencesAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="quitAction" />

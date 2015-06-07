@@ -3,7 +3,7 @@ using Gtk;
 
 namespace CodeWalriiNotify
 {
-	public partial class NotificationWindow : Gtk.Window
+	public partial class NotificationWindow : Window
 	{
 		MainWindow winMain;
 		bool hasTimeout;
@@ -11,7 +11,7 @@ namespace CodeWalriiNotify
 		int targetX;
 
 		public NotificationWindow(string Subject, string Subtitle, MainWindow MainWindow)
-			: base(Gtk.WindowType.Popup)
+			: base(WindowType.Popup)
 		{
 			this.Build();
 
@@ -26,13 +26,13 @@ namespace CodeWalriiNotify
 			var titleFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.TitleFont);
 			var detailFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.DetailFont);
 
-			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
-			subjectLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
+			headerBox.ModifyBg(StateType.Normal, headerBackcolor);
+			subjectLabel.ModifyFg(StateType.Normal, titleForecolor);
 			subjectLabel.ModifyFont(titleFont);
-			mainBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
-			footerBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
-			actionBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
-			secondLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
+			mainBox.ModifyBg(StateType.Normal, bodyBackcolor);
+			footerBox.ModifyBg(StateType.Normal, footerBackcolor);
+			actionBox.ModifyBg(StateType.Normal, footerBackcolor);
+			secondLabel.ModifyFg(StateType.Normal, authorForecolor);
 			secondLabel.ModifyFont(detailFont);
 
 			subjectLabel.Text = Subject;
@@ -57,8 +57,7 @@ namespace CodeWalriiNotify
 		protected void OnViewButtonClicked(object sender, EventArgs e)
 		{
 			StopTimeout();
-			winMain.Show();
-			winMain.GrabFocus();
+			winMain.ShowLatestPost();
 			this.Destroy();
 		}
 

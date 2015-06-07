@@ -118,7 +118,7 @@ namespace CodeWalriiNotify
 			var postResult = new PostRefreshResult();
 
 			if (opts.DoInfo)
-				apiResult = DoAPIInfoQuery(opts.Settings);
+				apiResult = DoAPIInfoQuery(opts.Settings, 3, 500);
 			if (opts.DoPosts && (!opts.DoInfo || apiResult.Success))
 				postResult = DoPostsRefresh(opts.Settings, opts.LastChanged, opts.LastPostTime);
 

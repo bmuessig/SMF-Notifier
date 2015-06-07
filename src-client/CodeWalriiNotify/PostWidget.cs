@@ -40,7 +40,6 @@ namespace CodeWalriiNotify
 			};
 
 			headerBox.ButtonPressEvent += delegate {
-				URL = "notepad.exe " + URL;
 				if (MyToolbox.CheckUrl(URL)) {
 					try {
 						var urlInfo = new ProcessStartInfo(URL); // I am fully aware of this possible security breach; it's fixed now, as only correct urls will pass

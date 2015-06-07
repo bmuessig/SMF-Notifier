@@ -6,16 +6,18 @@ namespace CodeWalriiNotify
 	public partial class NotificationWindow : Window
 	{
 		MainWindow winMain;
+		NotifierCore notifier;
 		bool hasTimeout;
 		bool restartTimeout;
 		int targetX;
 
-		public NotificationWindow(string Subject, string Subtitle, MainWindow MainWindow)
+		public NotificationWindow(string Subject, string Subtitle, MainWindow MainWindow, NotifierCore Notifier)
 			: base(WindowType.Popup)
 		{
 			this.Build();
 
 			winMain = MainWindow;
+			notifier = Notifier;
 
 			var headerBackcolor = SettingsProvider.CurrentSettings.HeaderBackcolor;
 			var titleForecolor = SettingsProvider.CurrentSettings.TitleForecolor;
@@ -51,13 +53,13 @@ namespace CodeWalriiNotify
 			this.Show();
 			Begin();
 			StartTimeout();
-			this.GrabFocus();
 		}
 
 		protected void OnViewButtonClicked(object sender, EventArgs e)
 		{
 			StopTimeout();
 			winMain.ShowLatestPost();
+			notifier.MarkPostsRead();
 			this.Destroy();
 		}
 

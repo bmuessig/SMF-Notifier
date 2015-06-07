@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Gtk;
 using System.Threading;
-using System.Collections.ObjectModel;
 
 namespace CodeWalriiNotify
 {
@@ -20,6 +19,8 @@ namespace CodeWalriiNotify
 
 		private ulong lastChanged;
 		private DateTime lastPostTime;
+
+		public bool TimerAlive{ get; private set; }
 
 		public bool TimerRunning { get; private set; }
 
@@ -43,26 +44,39 @@ namespace CodeWalriiNotify
 			lastChanged = 0;
 			lastPostTime = DateTime.Now;
 
-			notificator = new Notificator(Settings, MainWindow);
+			notificator = new Notificator(Settings, MainWindow, this);
 
-			StopTimer();
+			TimerAlive = false;
 		}
 
 		protected void RunTimer()
 		{
-			if (TimerRunning)
+			if (TimerRunning && TimerAlive)
 				return;
-			
+			if (!TimerAlive) {
+				GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
+					if (!TimerRunning)
+						return true;
+				
+					RefreshPosts();
+					return TimerAlive;
+				}));
+				TimerAlive = true;
+			}
+
 			TimerRunning = true;
-			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
-				RefreshPosts();
-				return TimerRunning;
-			}));
+			OnRaiseTimerRunningChanged(TimerRunning);
+		}
+
+		protected void KillTimer()
+		{
+			TimerRunning = false;
+			TimerAlive = false;
 
 			OnRaiseTimerRunningChanged(TimerRunning);
 		}
 
-		protected void StopTimer()
+		protected void PauseTimer()
 		{
 			TimerRunning = false;
 
@@ -106,7 +120,7 @@ namespace CodeWalriiNotify
 						mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Refreshing failed!";
 				} else {
 					mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Invalid API, please check your settings!";
-					StopTimer();
+					PauseTimer();
 				}
 			});
 		}
@@ -132,12 +146,22 @@ namespace CodeWalriiNotify
 
 		public void Pause()
 		{
-			StopTimer();
+			PauseTimer();
 		}
 
 		public void Shutdown()
 		{
-			Pause();
+			KillTimer();
+		}
+
+		public void MarkPostsRead()
+		{
+			if (NewPosts != null) {
+				if (NewPosts.Length > 0) {
+					lastPostTime = NewPosts[0].Time;
+					NewPosts = new PostMeta[]{ };
+				}
+			}
 		}
 
 		protected bool ThreadSafeInfoSync(APIQueryResult Result)
@@ -165,7 +189,7 @@ namespace CodeWalriiNotify
 					// Are there any new posts?
 					if (Result.NewPosts != null) {
 						if (Result.NewPosts.Length > 0) {
-							lastPostTime = Result.NewPosts[0].Time;
+							//lastPostTime = Result.NewPosts[0].Time;
 							notificator.NewPosts(Result.NewPosts);
 
 							OnRaisePostsArrived(Result.NewPosts);

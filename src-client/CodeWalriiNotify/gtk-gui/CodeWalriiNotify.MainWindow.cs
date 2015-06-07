@@ -72,6 +72,7 @@ namespace CodeWalriiNotify
 			this.mainRecyclerview.HeightRequest = 500;
 			this.mainRecyclerview.Events = ((global::Gdk.EventMask)(256));
 			this.mainRecyclerview.Name = "mainRecyclerview";
+			this.mainRecyclerview.VScroll = 0D;
 			this.horizontalSplit.Add (this.mainRecyclerview);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.horizontalSplit [this.mainRecyclerview]));
 			w3.Position = 1;
@@ -83,10 +84,11 @@ namespace CodeWalriiNotify
 			this.DefaultHeight = 580;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+			this.FocusInEvent += new global::Gtk.FocusInEventHandler (this.OnFocusInEvent);
 			this.refreshAction.Activated += new global::System.EventHandler (this.OnRefreshActionActivated);
 			this.preferencesAction.Activated += new global::System.EventHandler (this.OnPreferencesActionActivated);
 			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
-			this.autoRefreshAction.Toggled += new global::System.EventHandler (this.OnAutoRefreshActionToggled);
+			this.autoRefreshAction.Activated += new global::System.EventHandler (this.OnAutoRefreshActionActivated);
 		}
 	}
 }

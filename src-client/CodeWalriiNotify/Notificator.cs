@@ -7,32 +7,35 @@ namespace CodeWalriiNotify
 {
 	public class Notificator
 	{
-		SettingsData settings;
-		MainWindow winMain;
+		readonly SettingsData settings;
+		readonly MainWindow winMain;
+		readonly NotifierCore notifier;
 
-		StatusIcon notificationIcon;
-
-		public Notificator(SettingsData Settings, MainWindow MainWindow)
+		public Notificator(SettingsData Settings, MainWindow MainWindow, NotifierCore Notifier)
 		{
 			settings = Settings;
 			winMain = MainWindow;
+			notifier = Notifier;
+		}
 
-			notificationIcon = Settings.UseCustomIcon ? new StatusIcon(Settings.IconFile) : new StatusIcon(Gdk.Pixbuf.LoadFromResource("Bell.png"));
-			notificationIcon.Tooltip = Settings.FeedTitle + (Settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier";
-			notificationIcon.Visible = false;
+		private bool IsMainWindowVisible {
+			get {
+				return winMain.Visible && winMain.HasToplevelFocus;
+			}
 		}
 
 		public void NewPost(PostMeta Post)
 		{
-			if (settings.VisualNotifyEnable) {
-				var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain);
+			if (settings.VisualNotifyEnable && !IsMainWindowVisible) {
+				var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain, notifier);
 				nwin.ShowMe();
 			}
 
-			if (!winMain.HasFocus) {
-				notificationIcon.Visible = true;
-				notificationIcon.Blinking = true;
-			}
+			if (IsMainWindowVisible)
+				winMain.ShowLatestPost();
+
+			if (settings.AudioNotifyEnable)
+				PlayAudio();
 		}
 
 		public void NewPosts(PostMeta[] Posts)
@@ -46,15 +49,16 @@ namespace CodeWalriiNotify
 				return;
 			}
 				
-			if (settings.VisualNotifyEnable) {
-				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new Posts", (Posts.Length - 1).ToString()), winMain);
+			if (settings.VisualNotifyEnable && !IsMainWindowVisible) {
+				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new posts", (Posts.Length - 1).ToString()), winMain, notifier);
 				nwin.ShowMe();
 			}
 
-			if (!winMain.HasFocus) {
-				notificationIcon.Visible = true;
-				notificationIcon.Blinking = true;
-			}
+			if (IsMainWindowVisible)
+				winMain.ShowLatestPost();
+
+			if (settings.AudioNotifyEnable)
+				PlayAudio();
 		}
 
 		protected void PlayAudio()

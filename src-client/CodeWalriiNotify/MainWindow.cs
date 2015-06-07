@@ -33,6 +33,12 @@ namespace CodeWalriiNotify
 			notifier.RefreshPosts();
 		}
 
+		protected void OnFocusInEvent(object o, FocusInEventArgs args)
+		{
+			if (notifier != null)
+				notifier.MarkPostsRead();
+		}
+
 		protected void Notifier_TimerRunningChanged(object sender, NotifierCore.TimerRunningEventArgs e)
 		{
 			autoRefreshAction.Active = e.IsRunning;
@@ -41,8 +47,10 @@ namespace CodeWalriiNotify
 		public void ShowLatestPost()
 		{
 			this.Show();
-			this.Visible = true;
+			if (!this.Visible)
+				this.Visible = true;
 			this.GrabFocus();
+			this.mainRecyclerview.ScrollUp();
 		}
 
 		public void Shutdown()
@@ -74,7 +82,7 @@ namespace CodeWalriiNotify
 			dialog.Show();
 		}
 
-		protected void OnAutoRefreshActionToggled(object sender, EventArgs e)
+		protected void OnAutoRefreshActionActivated(object sender, EventArgs e)
 		{
 			if (autoRefreshAction.Active)
 				notifier.Run();

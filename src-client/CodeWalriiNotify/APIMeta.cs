@@ -35,7 +35,7 @@ namespace CodeWalriiNotify
 				ver.Minor = (uint)apiObj.version[1];
 				ver.Revision = (uint)apiObj.version[2];
 
-				if (ver.Major != API_MAJOR || ver.Minor < API_MIN_MINOR) // Check version compatibility
+				if (ver.Major != API_MAJOR || ver.Minor < API_MIN_MINOR) // Check version compatability
 					throw new Exception("API version mismatch!");
 
 				cfg.CacheTTL = (uint)apiObj.configuration.cache_ttl;

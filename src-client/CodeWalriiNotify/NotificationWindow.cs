@@ -10,7 +10,7 @@ namespace CodeWalriiNotify
 		bool restartTimeout;
 		int targetX;
 
-		public NotificationWindow(PostMeta Post, MainWindow MainWindow)
+		public NotificationWindow(string Subject, string Subtitle, MainWindow MainWindow)
 			: base(Gtk.WindowType.Popup)
 		{
 			this.Build();
@@ -27,16 +27,16 @@ namespace CodeWalriiNotify
 			var detailFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.DetailFont);
 
 			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
-			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
-			topicLabel.ModifyFont(titleFont);
+			subjectLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
+			subjectLabel.ModifyFont(titleFont);
 			mainBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
 			footerBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
 			actionBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
-			posterLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
-			posterLabel.ModifyFont(detailFont);
+			secondLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
+			secondLabel.ModifyFont(detailFont);
 
-			topicLabel.Text = Post.Subject;
-			posterLabel.Text = Post.Poster;
+			subjectLabel.Text = Subject;
+			secondLabel.Text = Subtitle;
 
 			this.KeepAbove = true;
 

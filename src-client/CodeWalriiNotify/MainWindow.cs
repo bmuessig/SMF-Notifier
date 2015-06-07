@@ -29,7 +29,7 @@ namespace CodeWalriiNotify
 			this.Title = feedTitle + (feedTitle.Length > 0 ? " " : "") + "Post Notifier";
 
 			notifier.Run();
-			notifier.ForceRefresh();
+			notifier.RefreshPosts();
 		}
 
 		public void Shutdown()
@@ -47,7 +47,7 @@ namespace CodeWalriiNotify
 
 		protected void OnRefreshActionActivated(object sender, EventArgs e)
 		{
-			notifier.ForceRefresh();
+			notifier.RefreshPosts();
 		}
 
 		protected void OnQuitActionActivated(object sender, EventArgs e)

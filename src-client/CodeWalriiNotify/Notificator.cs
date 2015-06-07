@@ -24,14 +24,28 @@ namespace CodeWalriiNotify
 
 		public void NewPost(PostMeta Post)
 		{
-			var nwin = new NotificationWindow(Post, winMain);
+			var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain);
 			nwin.ShowMe();
 
 			if (!winMain.HasFocus) {
 				notificationIcon.Visible = true;
 				notificationIcon.Blinking = true;
 			}
+		}
 
+		public void NewPosts(PostMeta[] Posts)
+		{
+			if (Posts == null)
+				return;
+			if (Posts.Length == 0)
+				return;
+			if (Posts.Length == 1) {
+				NewPost(Posts[0]);
+				return;
+			}
+				
+			var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new Posts", (Posts.Length - 1).ToString()), winMain);
+			nwin.ShowMe();
 		}
 
 		protected void PlayAudio()

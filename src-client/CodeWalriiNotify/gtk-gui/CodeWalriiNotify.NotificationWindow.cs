@@ -10,11 +10,11 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.EventBox headerBox;
 		
-		private global::Gtk.Label topicLabel;
+		private global::Gtk.Label subjectLabel;
 		
 		private global::Gtk.EventBox footerBox;
 		
-		private global::Gtk.Label posterLabel;
+		private global::Gtk.Label secondLabel;
 		
 		private global::Gtk.EventBox actionBox;
 		
@@ -50,14 +50,14 @@ namespace CodeWalriiNotify
 			this.headerBox.Events = ((global::Gdk.EventMask)(32));
 			this.headerBox.Name = "headerBox";
 			// Container child headerBox.Gtk.Container+ContainerChild
-			this.topicLabel = new global::Gtk.Label ();
-			this.topicLabel.WidthRequest = 430;
-			this.topicLabel.Name = "topicLabel";
-			this.topicLabel.Xpad = 5;
-			this.topicLabel.Xalign = 0F;
-			this.topicLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Topic");
-			this.topicLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
-			this.headerBox.Add (this.topicLabel);
+			this.subjectLabel = new global::Gtk.Label ();
+			this.subjectLabel.WidthRequest = 430;
+			this.subjectLabel.Name = "subjectLabel";
+			this.subjectLabel.Xpad = 5;
+			this.subjectLabel.Xalign = 0F;
+			this.subjectLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Subject");
+			this.subjectLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
+			this.headerBox.Add (this.subjectLabel);
 			this.vLayoutBox.Add (this.headerBox);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
 			w2.Position = 0;
@@ -66,14 +66,14 @@ namespace CodeWalriiNotify
 			this.footerBox = new global::Gtk.EventBox ();
 			this.footerBox.Name = "footerBox";
 			// Container child footerBox.Gtk.Container+ContainerChild
-			this.posterLabel = new global::Gtk.Label ();
-			this.posterLabel.WidthRequest = 300;
-			this.posterLabel.HeightRequest = 15;
-			this.posterLabel.Name = "posterLabel";
-			this.posterLabel.Xpad = 5;
-			this.posterLabel.Xalign = 1F;
-			this.posterLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
-			this.footerBox.Add (this.posterLabel);
+			this.secondLabel = new global::Gtk.Label ();
+			this.secondLabel.WidthRequest = 300;
+			this.secondLabel.HeightRequest = 15;
+			this.secondLabel.Name = "secondLabel";
+			this.secondLabel.Xpad = 5;
+			this.secondLabel.Xalign = 1F;
+			this.secondLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
+			this.footerBox.Add (this.secondLabel);
 			this.vLayoutBox.Add (this.footerBox);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
 			w4.Position = 1;

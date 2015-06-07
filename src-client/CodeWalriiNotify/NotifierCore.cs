@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Gtk;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace CodeWalriiNotify
 {
@@ -18,6 +19,16 @@ namespace CodeWalriiNotify
 		private Notificator notificator;
 
 		private ulong lastChanged;
+		private DateTime lastPostTime;
+
+		public bool TimerRunning { get; private set; }
+
+		public PostMeta[] CurrentPosts { get; private set; }
+
+		public PostMeta[] NewPosts { get; private set; }
+
+		public event EventHandler<TimerRunningEventArgs> TimerRunningChanged;
+		public event EventHandler<PostsArrivedEventArgs> PostsArrived;
 
 		public NotifierCore(MainWindow MainWindow, RecyclerView PostsView, SettingsData Settings)
 		{
@@ -30,25 +41,48 @@ namespace CodeWalriiNotify
 			asyncThread.RunWorkerCompleted += AsyncThread_RunWorkerCompleted;
 
 			lastChanged = 0;
-			TimerRunning = false;
+			lastPostTime = DateTime.Now;
 
 			notificator = new Notificator(Settings, MainWindow);
-		}
 
-		public bool TimerRunning { get; private set; }
+			StopTimer();
+		}
 
 		protected void RunTimer()
 		{
+			if (TimerRunning)
+				return;
+			
 			TimerRunning = true;
 			GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
-				DoRefresh();
+				RefreshPosts();
 				return TimerRunning;
 			}));
+
+			OnRaiseTimerRunningChanged(TimerRunning);
 		}
 
 		protected void StopTimer()
 		{
 			TimerRunning = false;
+
+			OnRaiseTimerRunningChanged(TimerRunning);
+		}
+
+		protected virtual void OnRaiseTimerRunningChanged(bool IsRunning)
+		{
+			EventHandler<TimerRunningEventArgs> handler = TimerRunningChanged;
+
+			if (handler != null)
+				handler(this, new TimerRunningEventArgs(IsRunning));
+		}
+
+		protected virtual void OnRaisePostsArrived(PostMeta[] Posts)
+		{
+			EventHandler<PostsArrivedEventArgs> handler = PostsArrived;
+
+			if (handler != null)
+				handler(this, new PostsArrivedEventArgs(Posts));
 		}
 
 		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -86,14 +120,9 @@ namespace CodeWalriiNotify
 			if (opts.DoInfo)
 				apiResult = DoAPIInfoQuery(opts.Settings);
 			if (opts.DoPosts && (!opts.DoInfo || apiResult.Success))
-				postResult = DoPostsRefresh(opts.Settings);
+				postResult = DoPostsRefresh(opts.Settings, opts.LastChanged, opts.LastPostTime);
 
 			e.Result = new RefreshResult(opts, apiResult, postResult);
-		}
-
-		protected void DoQuery()
-		{
-			ForceRefresh();
 		}
 
 		public void Run()
@@ -111,18 +140,12 @@ namespace CodeWalriiNotify
 			Pause();
 		}
 
-		public void ForceRefresh()
-		{
-			DoRefresh();
-		}
-
 		protected bool ThreadSafeInfoSync(APIQueryResult Result)
 		{
 			if (Result.Success) {
 				apiInfo = Result.Meta;
 				return true;
 			} else {
-				//SettingsDialog.PromptInvalidSetting("Invalid API!\nYou might want to change the settings!", (MainWindow)mainWindow);
 				return false;
 			}
 		}
@@ -131,21 +154,36 @@ namespace CodeWalriiNotify
 		{
 			if (Result.Success) {
 				if (Result.Refresh) {
+					CurrentPosts = Result.Meta.Posts;
+					lastChanged = Result.Meta.Changed;
+
+					// Add the UI widgets
 					postsView.Clear();
 					foreach (Widget widget in Result.Widgets)
 						postsView.InsertFirst(widget);
+
+					// Are there any new posts?
+					if (Result.NewPosts != null) {
+						if (Result.NewPosts.Length > 0) {
+							lastPostTime = Result.NewPosts[0].Time;
+							notificator.NewPosts(Result.NewPosts);
+
+							OnRaisePostsArrived(Result.NewPosts);
+						}
+					}
 				}
 				return true;
 			}
 			return false;
 		}
 
-		protected void DoRefresh()
+		public bool RefreshPosts()
 		{
 			if (asyncThread.IsBusy)
-				return;
+				return false;
 			mainWindow.Title = settings.FeedTitle + (settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier - Synchronizing...";
-			asyncThread.RunWorkerAsync(new RefreshOpts(apiInfo == null, true, settings));
+			asyncThread.RunWorkerAsync(new RefreshOpts(apiInfo == null, true, lastChanged, lastPostTime, settings));
+			return true;
 		}
 
 		protected APIQueryResult DoAPIInfoQuery(SettingsData Settings, uint MaxTries = 3, uint Sleep = 500)
@@ -185,7 +223,7 @@ namespace CodeWalriiNotify
 			}
 		}
 
-		protected PostRefreshResult DoPostsRefresh(SettingsData Settings)
+		protected PostRefreshResult DoPostsRefresh(SettingsData Settings, ulong LastChanged, DateTime LastPostTime)
 		{
 			try {
 				String js = FeedRetriever.RetrieveFeedData(Settings); // We need to request data from the API
@@ -193,8 +231,9 @@ namespace CodeWalriiNotify
 				var query = new APIQueryMeta(js);
 
 				if (query.Success) {
-					if (query.Changed > lastChanged) {
+					if (query.Changed > LastChanged) {
 						var widgets = new List<Widget>();
+						var newPosts = new List<PostMeta>();
 
 						foreach (PostMeta post in query.Posts) {
 							var pw = new PostWidget();
@@ -204,11 +243,12 @@ namespace CodeWalriiNotify
 							pw.Time = post.Time.ToString();
 							pw.URL = post.Link;
 							widgets.Add(pw);
+
+							if (post.Time > LastPostTime)
+								newPosts.Add(post);
 						}
 
-						lastChanged = query.Changed;
-
-						return new PostRefreshResult(widgets);
+						return new PostRefreshResult(query, newPosts.ToArray(), widgets);
 					} else
 						return new PostRefreshResult(true);
 				} else
@@ -222,12 +262,16 @@ namespace CodeWalriiNotify
 		{
 			public bool DoInfo;
 			public bool DoPosts;
+			public ulong LastChanged;
+			public DateTime LastPostTime;
 			public SettingsData Settings;
 
-			public RefreshOpts(bool DoInfo, bool DoPosts, SettingsData Settings)
+			public RefreshOpts(bool DoInfo, bool DoPosts, ulong LastChanged, DateTime LastPostTime, SettingsData Settings)
 			{
 				this.DoInfo = DoInfo;
 				this.DoPosts = DoPosts;
+				this.LastChanged = LastChanged;
+				this.LastPostTime = LastPostTime;
 				this.Settings = Settings;
 			}
 		}
@@ -276,12 +320,16 @@ namespace CodeWalriiNotify
 			public bool Refresh;
 			public Exception Exception;
 			public List<Widget> Widgets;
+			public APIQueryMeta Meta;
+			public PostMeta[] NewPosts;
 
 			public PostRefreshResult(bool Success)
 			{
 				this.Success = Success;
 				this.Refresh = false;
 				Exception = null;
+				Meta = null;
+				NewPosts = null;
 				Widgets = null;
 			}
 
@@ -290,15 +338,41 @@ namespace CodeWalriiNotify
 				Success = false;
 				Refresh = false;
 				this.Exception = Exception;
+				Meta = null;
+				NewPosts = null;
 				Widgets = null;
 			}
 
-			public PostRefreshResult(List<Widget> Widgets)
+			public PostRefreshResult(APIQueryMeta Meta, PostMeta[] NewPosts, List<Widget> Widgets)
 			{
-				Success = true;
+				Success = Meta != null;
 				Refresh = Widgets != null;
+				this.Meta = Meta;
+				this.NewPosts = NewPosts;
 				this.Widgets = Widgets;
 				Exception = null;
+			}
+		}
+
+		[Serializable]
+		public sealed class TimerRunningEventArgs : EventArgs
+		{
+			public bool IsRunning { get; private set; }
+
+			public TimerRunningEventArgs(bool IsRunning)
+			{
+				this.IsRunning = IsRunning;
+			}
+		}
+
+		[Serializable]
+		public sealed class PostsArrivedEventArgs : EventArgs
+		{
+			public PostMeta[] Posts { get; private set; }
+
+			public PostsArrivedEventArgs(PostMeta[] Posts)
+			{
+				this.Posts = Posts;
 			}
 		}
 	}

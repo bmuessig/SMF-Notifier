@@ -24,7 +24,7 @@ namespace CodeWalriiNotify
 			Subject = "";
 			Poster = "";
 			Body = "";
-			Time = DateTime.Now;
+			Time = new DateTime(1970, 0, 0);
 			Link = "";
 		}
 

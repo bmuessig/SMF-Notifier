@@ -22,13 +22,15 @@ define("DEFAULT_STRIPHTML_MODE", "NONE");
 // Static internal constants
 define("API_VERSION_MAJOR", 4);
 define("API_VERSION_MINOR", 3);
-define("API_VERSION_REV", ord('b'));
+define("API_VERSION_REV", ord('c'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
 define("STRIPHTML_ALL", 1);
 
 ob_start();
+
+date_default_timezone_set("UTC");
 
 	if(isset($_GET['query'])) {
 		$exceptions = array();
@@ -194,7 +196,6 @@ function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 function ToUnixTime($smfStr)
 {
 	// Convert to unix time
-	date_default_timezone_set("UTC");
 	return strtotime(str_replace(" at ", ", ", $smfStr));
 }
 

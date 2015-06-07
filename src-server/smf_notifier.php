@@ -17,13 +17,12 @@ define("DEFAULT_MAX_POSTS", 10);
 define("DEFAULT_STRIPHTML_MODE", "NONE");
 
 
-
 /* DO NOT CHANGE ANYTHING BELOW THIS LINE! */
 
 // Static internal constants
 define("API_VERSION_MAJOR", 4);
 define("API_VERSION_MINOR", 3);
-define("API_VERSION_REV", ord('a'));
+define("API_VERSION_REV", ord('b'));
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
@@ -195,6 +194,7 @@ function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 function ToUnixTime($smfStr)
 {
 	// Convert to unix time
+	date_default_timezone_set("UTC");
 	return strtotime(str_replace(" at ", ", ", $smfStr));
 }
 

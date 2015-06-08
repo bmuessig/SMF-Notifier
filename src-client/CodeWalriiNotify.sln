@@ -14,4 +14,7 @@ Global
 		{D36EB888-384E-4A59-94E0-E8A5A506B296}.Release|x86.ActiveCfg = Release|x86
 		{D36EB888-384E-4A59-94E0-E8A5A506B296}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 1.1
+	EndGlobalSection
 EndGlobal

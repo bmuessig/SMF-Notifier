@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="CodeWalriiNotify\CodeWalriiNotify.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\SettingsData.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\MyToolbox.cs">
     <Files>
       <File FileName="CodeWalriiNotify\PostMeta.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\APIMeta.cs" Line="1" Column="1" />
@@ -8,21 +8,20 @@
       <File FileName="CodeWalriiNotify\RecyclerView.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\MainWindow.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\SettingsProvider.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\SettingsData.cs" Line="124" Column="8" />
+      <File FileName="CodeWalriiNotify\SettingsData.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\Program.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\NotifierCore.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\PostWidget.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\NotificationWindow.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\Notificator.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\NotificationWindow.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\SettingsDialog.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="32" Column="23" />
+      <File FileName="CodeWalriiNotify\VersionDialog.cs" Line="15" Column="90" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\PostWidget.cs" line="64" column="17" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

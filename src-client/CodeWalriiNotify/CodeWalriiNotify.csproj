@@ -9,6 +9,7 @@
     <AssemblyName>CodeWalriiNotify</AssemblyName>
     <StartupObject>CodeWalriiNotify.MainClass</StartupObject>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <ReleaseVersion>1.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,6 +94,8 @@
     <Compile Include="gtk-gui\CodeWalriiNotify.NotificationWindow.cs" />
     <Compile Include="Notificator.cs" />
     <Compile Include="MyToolbox.cs" />
+    <Compile Include="VersionDialog.cs" />
+    <Compile Include="gtk-gui\CodeWalriiNotify.VersionDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

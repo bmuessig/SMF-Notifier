@@ -129,6 +129,7 @@ namespace CodeWalriiNotify
 			this.Name = "CodeWalriiNotify.SettingsDialog";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Settings");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "gtk-preferences", global::Gtk.IconSize.Dnd);
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Internal child CodeWalriiNotify.SettingsDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;

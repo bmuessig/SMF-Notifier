@@ -46,11 +46,11 @@ namespace CodeWalriiNotify
 
 		public void ShowLatestPost()
 		{
-			this.Show();
 			if (!this.Visible)
 				this.Visible = true;
-			this.GrabFocus();
+			this.Present();
 			this.mainRecyclerview.ScrollUp();
+			this.notifier.MarkPostsRead();
 		}
 
 		public void Shutdown()
@@ -79,6 +79,12 @@ namespace CodeWalriiNotify
 		protected void OnPreferencesActionActivated(object sender, EventArgs e)
 		{
 			var dialog = new SettingsDialog(this);
+			dialog.Show();
+		}
+
+		protected void OnVersionActionActivated(object sender, EventArgs e)
+		{
+			var dialog = new VersionDialog();
 			dialog.Show();
 		}
 

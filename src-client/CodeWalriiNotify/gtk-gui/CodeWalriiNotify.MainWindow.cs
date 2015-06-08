@@ -16,6 +16,8 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.ToggleAction autoRefreshAction;
 		
+		private global::Gtk.Action versionAction;
+		
 		private global::Gtk.VBox horizontalSplit;
 		
 		private global::Gtk.MenuBar menuBar;
@@ -36,7 +38,7 @@ namespace CodeWalriiNotify
 			w1.Add (this.refreshAction, "F5");
 			this.preferencesAction = new global::Gtk.Action ("preferencesAction", global::Mono.Unix.Catalog.GetString ("_Settings"), null, "gtk-preferences");
 			this.preferencesAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Settings");
-			w1.Add (this.preferencesAction, "<Primary>s");
+			w1.Add (this.preferencesAction, null);
 			this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Quit"), null, "gtk-quit");
 			this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Quit");
 			w1.Add (this.quitAction, null);
@@ -44,6 +46,9 @@ namespace CodeWalriiNotify
 			this.autoRefreshAction.Active = true;
 			this.autoRefreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Auto Refresh");
 			w1.Add (this.autoRefreshAction, null);
+			this.versionAction = new global::Gtk.Action ("versionAction", global::Mono.Unix.Catalog.GetString ("Version"), null, "gtk-dialog-info");
+			this.versionAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Version");
+			w1.Add (this.versionAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.WidthRequest = 480;
@@ -59,7 +64,7 @@ namespace CodeWalriiNotify
 			this.horizontalSplit.Name = "horizontalSplit";
 			this.horizontalSplit.Spacing = 6;
 			// Container child horizontalSplit.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString (@"<ui><menubar name='menuBar'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='autoRefreshAction' action='autoRefreshAction'/><separator/><menuitem name='preferencesAction' action='preferencesAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString (@"<ui><menubar name='menuBar'><menu name='MenuAction' action='MenuAction'><menuitem name='refreshAction' action='refreshAction'/><menuitem name='autoRefreshAction' action='autoRefreshAction'/><separator/><menuitem name='preferencesAction' action='preferencesAction'/><menuitem name='versionAction' action='versionAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu></menubar></ui>");
 			this.menuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menuBar")));
 			this.menuBar.Name = "menuBar";
 			this.horizontalSplit.Add (this.menuBar);
@@ -89,6 +94,7 @@ namespace CodeWalriiNotify
 			this.preferencesAction.Activated += new global::System.EventHandler (this.OnPreferencesActionActivated);
 			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 			this.autoRefreshAction.Activated += new global::System.EventHandler (this.OnAutoRefreshActionActivated);
+			this.versionAction.Activated += new global::System.EventHandler (this.OnVersionActionActivated);
 		}
 	}
 }

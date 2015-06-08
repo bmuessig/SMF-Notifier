@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace CodeWalriiNotify
 {
@@ -16,6 +17,20 @@ namespace CodeWalriiNotify
 		public static bool CheckUrl(string URL)
 		{
 			return urlMatchingRegex.Match(URL).Success;
+		}
+
+		public static DateTime GetBuildDate()
+		{
+			var version = Assembly.GetEntryAssembly().GetName().Version;
+			return new DateTime(2000, 1, 1).Add(new TimeSpan(
+				TimeSpan.TicksPerDay * version.Build + // days since 1 January 2000
+				TimeSpan.TicksPerSecond * 2 * version.Revision)); // seconds since midnight, (multiply by 2 to get original)
+		}
+
+		public static string GetVersionString()
+		{
+			Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+			return string.Format("{0}.{1}", ver.Major.ToString(), ver.Minor.ToString());
 		}
 	}
 }

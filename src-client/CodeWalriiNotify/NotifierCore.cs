@@ -19,6 +19,7 @@ namespace CodeWalriiNotify
 
 		private ulong lastChanged;
 		private DateTime lastPostTime;
+		private DateTime lastUnreadPostTime;
 
 		public bool TimerAlive{ get; private set; }
 
@@ -42,6 +43,7 @@ namespace CodeWalriiNotify
 			asyncThread.RunWorkerCompleted += AsyncThread_RunWorkerCompleted;
 
 			lastChanged = 0;
+			lastUnreadPostTime = DateTime.Now;
 			lastPostTime = DateTime.Now;
 
 			notificator = new Notificator(Settings, MainWindow, this);
@@ -160,8 +162,10 @@ namespace CodeWalriiNotify
 				if (NewPosts.Length > 0) {
 					lastPostTime = NewPosts[0].Time;
 					NewPosts = new PostMeta[]{ };
-				}
-			}
+				} else
+					lastPostTime = lastUnreadPostTime;
+			} else
+				lastPostTime = lastUnreadPostTime;
 		}
 
 		protected bool ThreadSafeInfoSync(APIQueryResult Result)
@@ -188,8 +192,10 @@ namespace CodeWalriiNotify
 
 					// Are there any new posts?
 					if (Result.NewPosts != null) {
+						NewPosts = Result.NewPosts;
+
 						if (Result.NewPosts.Length > 0) {
-							//lastPostTime = Result.NewPosts[0].Time;
+							lastUnreadPostTime = Result.NewPosts[0].Time;
 							notificator.NewPosts(Result.NewPosts);
 
 							OnRaisePostsArrived(Result.NewPosts);

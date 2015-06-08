@@ -16,7 +16,7 @@
       <File FileName="CodeWalriiNotify\NotificationWindow.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\SettingsDialog.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="32" Column="23" />
+      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="31" Column="4" />
       <File FileName="CodeWalriiNotify\VersionDialog.cs" Line="15" Column="90" />
     </Files>
   </MonoDevelop.Ide.Workbench>

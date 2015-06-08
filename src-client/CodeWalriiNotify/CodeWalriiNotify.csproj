@@ -10,6 +10,7 @@
     <StartupObject>CodeWalriiNotify.MainClass</StartupObject>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <ReleaseVersion>1.1</ReleaseVersion>
+    <ApplicationIcon>Bell.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +101,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Bell.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="walrii.gif">

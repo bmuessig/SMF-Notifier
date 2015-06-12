@@ -9,6 +9,7 @@
 
 define("BASE_SITE_URL", "http://codewalr.us");
 define("SITE_INDEX_URL", BASE_SITE_URL . "/index.php");
+define("SITE_TITLE", "CodeWalr.us");
 define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_SITE_URL) . ".db");
 define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
@@ -21,8 +22,8 @@ define("DEFAULT_STRIPHTML_MODE", "NONE");
 
 // Static internal constants
 define("API_VERSION_MAJOR", 4);
-define("API_VERSION_MINOR", 3);
-define("API_VERSION_REV", ord('c'));
+define("API_VERSION_MINOR", 4);
+define("API_VERSION_REV", 0);
 
 // Internal Constants
 define("STRIPHTML_NONE", 0);
@@ -136,7 +137,8 @@ date_default_timezone_set("UTC");
 								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
 								"configuration"	=> array(	"cache_ttl" 	=> CACHE_TIME,
 															"cache_posts"	=> CACHE_POSTS,
-															"site_url"		=> BASE_SITE_URL
+															"site_url"		=> BASE_SITE_URL,
+															"site_title"	=> SITE_TITLE
 														),
 								"defaults"		=> array(	"max_posts"			=> DEFAULT_MAX_POSTS,
 															"html_stripmode" 	=> DEFAULT_STRIPHTML_MODE

@@ -51,14 +51,14 @@ namespace CodeWalriiNotify
 			w1.Add (this.versionAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
-			this.WidthRequest = 480;
-			this.HeightRequest = 540;
+			this.WidthRequest = 540;
+			this.HeightRequest = 580;
 			this.Name = "CodeWalriiNotify.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Notifier");
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-			this.Resizable = false;
-			this.AllowGrow = false;
+			this.DefaultWidth = 540;
+			this.DefaultHeight = 580;
 			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
 			this.horizontalSplit = new global::Gtk.VBox ();
 			this.horizontalSplit.Name = "horizontalSplit";
@@ -85,8 +85,6 @@ namespace CodeWalriiNotify
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 500;
-			this.DefaultHeight = 580;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.FocusInEvent += new global::Gtk.FocusInEventHandler (this.OnFocusInEvent);

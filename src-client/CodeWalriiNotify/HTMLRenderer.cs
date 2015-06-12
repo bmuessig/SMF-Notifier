@@ -8,10 +8,19 @@ namespace CodeWalriiNotify
 {
 	public static class HTMLRenderer
 	{
-		public static Gdk.Pixbuf RenderHTML(string HTML, uint Width, uint Height, bool UseAntiAlias = true)
+		public static Gdk.Pixbuf RenderHTML(string HTML, uint Width = 0, uint Height = 0, bool UseAntiAlias = true)
 		{
 			Image img = HtmlRender.RenderToImageGdiPlus(HTML, (int)Width, (int)Height, UseAntiAlias ? System.Drawing.Text.TextRenderingHint.AntiAlias : System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit);
 			return ImageToPixbuf(img);
+		}
+
+		public static SizeF MeasureHTML(string HTML, uint Width = 0)
+		{
+			using (Image img = new Bitmap(1, 1)) {
+				using (Graphics g = Graphics.FromImage(img)) {
+					return  HtmlRender.MeasureGdiPlus(g, HTML, Width);
+				}
+			}
 		}
 
 		static Gdk.Pixbuf ImageToPixbuf(Image image)

@@ -9,7 +9,7 @@
     <AssemblyName>CodeWalriiNotify</AssemblyName>
     <StartupObject>CodeWalriiNotify.MainClass</StartupObject>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ReleaseVersion>1.1</ReleaseVersion>
+    <ReleaseVersion>1.2</ReleaseVersion>
     <ApplicationIcon>Bell.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

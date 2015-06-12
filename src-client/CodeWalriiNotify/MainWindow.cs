@@ -20,14 +20,13 @@ namespace CodeWalriiNotify
 			while (Application.EventsPending())
 				Application.RunIteration();
 
+			this.Present();
+
 			string iconFileName = SettingsProvider.CurrentSettings.IconFile;
 			this.Icon = SettingsProvider.CurrentSettings.UseCustomIcon ? new Gdk.Pixbuf(iconFileName) : Gdk.Pixbuf.LoadFromResource("Bell.png");
 
 			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings);
 			notifier.TimerRunningChanged += Notifier_TimerRunningChanged;
-
-			string feedTitle = SettingsProvider.CurrentSettings.FeedTitle;
-			this.Title = feedTitle + (feedTitle.Length > 0 ? " " : "") + "Post Notifier";
 
 			notifier.Run();
 			notifier.RefreshPosts();

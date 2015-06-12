@@ -61,7 +61,6 @@ namespace CodeWalriiNotify
 			this.vLayoutBox.Add (this.headerBox);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
 			w2.Position = 0;
-			w2.Expand = false;
 			// Container child vLayoutBox.Gtk.Box+BoxChild
 			this.footerBox = new global::Gtk.EventBox ();
 			this.footerBox.Name = "footerBox";
@@ -77,8 +76,6 @@ namespace CodeWalriiNotify
 			this.vLayoutBox.Add (this.footerBox);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
 			w4.Position = 1;
-			w4.Expand = false;
-			w4.Fill = false;
 			// Container child vLayoutBox.Gtk.Box+BoxChild
 			this.actionBox = new global::Gtk.EventBox ();
 			this.actionBox.Name = "actionBox";
@@ -115,7 +112,6 @@ namespace CodeWalriiNotify
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.actionBox]));
 			w8.PackType = ((global::Gtk.PackType)(1));
 			w8.Position = 2;
-			w8.Expand = false;
 			w8.Fill = false;
 			this.mainBox.Add (this.vLayoutBox);
 			this.Add (this.mainBox);

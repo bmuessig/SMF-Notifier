@@ -127,7 +127,7 @@ namespace CodeWalriiNotify
 
 		public SettingsData()
 		{
-			FeedURL = "http://api.muessigb.net/codewalrus-notify/";
+			FeedURL = "http://codewalr.us/notifier/";
 			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;
@@ -150,7 +150,7 @@ namespace CodeWalriiNotify
 			AuthorForecolor = new Color(198, 198, 198);
 			TitleFont = "Tahoma 16";
 			DetailFont = "Tahoma 11";
-			BodyFormat = "<html><head><style>img{max-width:440px;}\na{text-decoration:none;}</style></head><body><post></body></html>";
+			BodyFormat = "<html>\n<head>\n<style>\nimg{\nmax-width:100%;\nheight:auto;\n}\n\na{\ntext-decoration:none;\n}\n</style>\n</head>\n<body>\n<post>\n</body>\n</html>";
 		}
 	}
 }

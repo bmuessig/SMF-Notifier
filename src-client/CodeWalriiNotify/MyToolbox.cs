@@ -32,6 +32,11 @@ namespace CodeWalriiNotify
 			Version ver = Assembly.GetExecutingAssembly().GetName().Version;
 			return string.Format("{0}.{1}", ver.Major.ToString(), ver.Minor.ToString());
 		}
+
+		public static string BuildTitle(SettingsData Settings, uint UnreadPosts, string CustomStatus = "")
+		{
+			return Settings.FeedTitle + (Settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+		}
 	}
 }
 

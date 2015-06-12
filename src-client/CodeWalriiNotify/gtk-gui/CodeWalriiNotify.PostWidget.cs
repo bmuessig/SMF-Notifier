@@ -10,19 +10,17 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.EventBox headerBox;
 		
-		private global::Gtk.Fixed headerContainer;
-		
-		private global::Gtk.Label timeLabel;
+		private global::Gtk.VBox headerSubVbox;
 		
 		private global::Gtk.Label topicLabel;
+		
+		private global::Gtk.Label timeLabel;
 		
 		private global::Gtk.EventBox bodyBox;
 		
 		private global::Gtk.Image bodyRenderarea;
 		
 		private global::Gtk.EventBox footerBox;
-		
-		private global::Gtk.Fixed footerContainer;
 		
 		private global::Gtk.Label posterLabel;
 
@@ -44,35 +42,33 @@ namespace CodeWalriiNotify
 			this.headerBox.Events = ((global::Gdk.EventMask)(32));
 			this.headerBox.Name = "headerBox";
 			// Container child headerBox.Gtk.Container+ContainerChild
-			this.headerContainer = new global::Gtk.Fixed ();
-			this.headerContainer.WidthRequest = 450;
-			this.headerContainer.HeightRequest = 75;
-			this.headerContainer.Name = "headerContainer";
-			this.headerContainer.HasWindow = false;
-			// Container child headerContainer.Gtk.Fixed+FixedChild
-			this.timeLabel = new global::Gtk.Label ();
-			this.timeLabel.WidthRequest = 300;
-			this.timeLabel.HeightRequest = 15;
-			this.timeLabel.Name = "timeLabel";
-			this.timeLabel.Xalign = 1F;
-			this.timeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Time");
-			this.headerContainer.Add (this.timeLabel);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.timeLabel]));
-			w1.X = 150;
-			w1.Y = 53;
-			// Container child headerContainer.Gtk.Fixed+FixedChild
+			this.headerSubVbox = new global::Gtk.VBox ();
+			this.headerSubVbox.Name = "headerSubVbox";
+			this.headerSubVbox.Spacing = 6;
+			// Container child headerSubVbox.Gtk.Box+BoxChild
 			this.topicLabel = new global::Gtk.Label ();
-			this.topicLabel.WidthRequest = 430;
-			this.topicLabel.HeightRequest = 30;
 			this.topicLabel.Name = "topicLabel";
+			this.topicLabel.Xpad = 10;
+			this.topicLabel.Ypad = 10;
 			this.topicLabel.Xalign = 0F;
+			this.topicLabel.Yalign = 0F;
 			this.topicLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Topic");
 			this.topicLabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
-			this.headerContainer.Add (this.topicLabel);
-			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.headerContainer [this.topicLabel]));
-			w2.X = 10;
-			w2.Y = 7;
-			this.headerBox.Add (this.headerContainer);
+			this.headerSubVbox.Add (this.topicLabel);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.headerSubVbox [this.topicLabel]));
+			w1.Position = 0;
+			// Container child headerSubVbox.Gtk.Box+BoxChild
+			this.timeLabel = new global::Gtk.Label ();
+			this.timeLabel.Name = "timeLabel";
+			this.timeLabel.Xpad = 5;
+			this.timeLabel.Ypad = 2;
+			this.timeLabel.Xalign = 1F;
+			this.timeLabel.Yalign = 1F;
+			this.timeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Time");
+			this.headerSubVbox.Add (this.timeLabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.headerSubVbox [this.timeLabel]));
+			w2.Position = 1;
+			this.headerBox.Add (this.headerSubVbox);
 			this.vLayoutBox.Add (this.headerBox);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.headerBox]));
 			w4.Position = 0;
@@ -96,33 +92,24 @@ namespace CodeWalriiNotify
 			this.footerBox = new global::Gtk.EventBox ();
 			this.footerBox.Name = "footerBox";
 			// Container child footerBox.Gtk.Container+ContainerChild
-			this.footerContainer = new global::Gtk.Fixed ();
-			this.footerContainer.HeightRequest = 20;
-			this.footerContainer.Name = "footerContainer";
-			this.footerContainer.HasWindow = false;
-			// Container child footerContainer.Gtk.Fixed+FixedChild
 			this.posterLabel = new global::Gtk.Label ();
-			this.posterLabel.WidthRequest = 300;
-			this.posterLabel.HeightRequest = 15;
 			this.posterLabel.Name = "posterLabel";
+			this.posterLabel.Xpad = 5;
+			this.posterLabel.Ypad = 2;
 			this.posterLabel.Xalign = 1F;
+			this.posterLabel.Yalign = 1F;
 			this.posterLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
-			this.footerContainer.Add (this.posterLabel);
-			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.footerContainer [this.posterLabel]));
-			w7.X = 150;
-			w7.Y = 2;
-			this.footerBox.Add (this.footerContainer);
+			this.footerBox.Add (this.posterLabel);
 			this.vLayoutBox.Add (this.footerBox);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
-			w9.Position = 2;
-			w9.Expand = false;
-			w9.Fill = false;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
+			w8.Position = 2;
 			this.mainBox.Add (this.vLayoutBox);
 			this.Add (this.mainBox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
+			this.bodyRenderarea.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnBodyRenderareaExposeEvent);
 		}
 	}
 }

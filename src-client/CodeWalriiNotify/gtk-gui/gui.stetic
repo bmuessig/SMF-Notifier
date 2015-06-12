@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/CodeWalriiNotify.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="CodeWalriiNotify.MainWindow" design-size="500 580">
+  <widget class="Gtk.Window" id="CodeWalriiNotify.MainWindow" design-size="540 580">
     <action-group name="Default">
       <action id="MenuAction">
         <property name="Type">Action</property>
@@ -54,13 +54,13 @@
       </action>
     </action-group>
     <property name="MemberName" />
-    <property name="WidthRequest">480</property>
-    <property name="HeightRequest">540</property>
+    <property name="WidthRequest">540</property>
+    <property name="HeightRequest">580</property>
     <property name="Title" translatable="yes">Notifier</property>
     <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Resizable">False</property>
-    <property name="AllowGrow">False</property>
+    <property name="DefaultWidth">540</property>
+    <property name="DefaultHeight">580</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <signal name="FocusInEvent" handler="OnFocusInEvent" />
     <child>
@@ -119,36 +119,36 @@
                 <property name="MemberName" />
                 <property name="Events">Button1MotionMask</property>
                 <child>
-                  <widget class="Gtk.Fixed" id="headerContainer">
+                  <widget class="Gtk.VBox" id="headerSubVbox">
                     <property name="MemberName" />
-                    <property name="WidthRequest">450</property>
-                    <property name="HeightRequest">75</property>
-                    <property name="HasWindow">False</property>
-                    <child>
-                      <widget class="Gtk.Label" id="timeLabel">
-                        <property name="MemberName" />
-                        <property name="WidthRequest">300</property>
-                        <property name="HeightRequest">15</property>
-                        <property name="Xalign">1</property>
-                        <property name="LabelProp" translatable="yes">Time</property>
-                      </widget>
-                      <packing>
-                        <property name="X">150</property>
-                        <property name="Y">53</property>
-                      </packing>
-                    </child>
+                    <property name="Spacing">6</property>
                     <child>
                       <widget class="Gtk.Label" id="topicLabel">
                         <property name="MemberName" />
-                        <property name="WidthRequest">430</property>
-                        <property name="HeightRequest">30</property>
+                        <property name="Xpad">10</property>
+                        <property name="Ypad">10</property>
                         <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
                         <property name="LabelProp" translatable="yes">Topic</property>
                         <property name="Ellipsize">End</property>
                       </widget>
                       <packing>
-                        <property name="X">10</property>
-                        <property name="Y">7</property>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="timeLabel">
+                        <property name="MemberName" />
+                        <property name="Xpad">5</property>
+                        <property name="Ypad">2</property>
+                        <property name="Xalign">1</property>
+                        <property name="Yalign">1</property>
+                        <property name="LabelProp" translatable="yes">Time</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
@@ -171,6 +171,7 @@
                     <property name="Ypad">5</property>
                     <property name="Xalign">0</property>
                     <property name="Yalign">0</property>
+                    <signal name="ExposeEvent" handler="OnBodyRenderareaExposeEvent" />
                   </widget>
                 </child>
               </widget>
@@ -183,31 +184,19 @@
               <widget class="Gtk.EventBox" id="footerBox">
                 <property name="MemberName" />
                 <child>
-                  <widget class="Gtk.Fixed" id="footerContainer">
+                  <widget class="Gtk.Label" id="posterLabel">
                     <property name="MemberName" />
-                    <property name="HeightRequest">20</property>
-                    <property name="HasWindow">False</property>
-                    <child>
-                      <widget class="Gtk.Label" id="posterLabel">
-                        <property name="MemberName" />
-                        <property name="WidthRequest">300</property>
-                        <property name="HeightRequest">15</property>
-                        <property name="Xalign">1</property>
-                        <property name="LabelProp" translatable="yes">Poster</property>
-                      </widget>
-                      <packing>
-                        <property name="X">150</property>
-                        <property name="Y">2</property>
-                      </packing>
-                    </child>
+                    <property name="Xpad">5</property>
+                    <property name="Ypad">2</property>
+                    <property name="Xalign">1</property>
+                    <property name="Yalign">1</property>
+                    <property name="LabelProp" translatable="yes">Poster</property>
                   </widget>
                 </child>
               </widget>
               <packing>
                 <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
           </widget>
@@ -1456,7 +1445,6 @@
               <packing>
                 <property name="Position">0</property>
                 <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
               </packing>
             </child>
             <child>
@@ -1475,9 +1463,7 @@
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -1526,8 +1512,7 @@
               <packing>
                 <property name="PackType">End</property>
                 <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
+                <property name="AutoSize">False</property>
                 <property name="Fill">False</property>
               </packing>
             </child>
@@ -1665,7 +1650,7 @@
                     <property name="MemberName" />
                     <property name="Xalign">1</property>
                     <property name="Yalign">0</property>
-                    <property name="LabelProp" translatable="yes">Date:</property>
+                    <property name="LabelProp" translatable="yes">Build Date:</property>
                   </widget>
                   <packing>
                     <property name="TopAttach">1</property>

@@ -2,6 +2,7 @@
 using Gdk;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Gtk;
 
 namespace CodeWalriiNotify
 {
@@ -9,10 +10,13 @@ namespace CodeWalriiNotify
 	public partial class PostWidget : Gtk.Bin
 	{
 		private string BodyHTML = "";
+		private uint LastRenderWidth;
 
 		public PostWidget()
 		{
 			this.Build();
+
+			LastRenderWidth = 0;
 
 			var headerBackcolor = SettingsProvider.CurrentSettings.HeaderBackcolor;
 			var timeForecolor = SettingsProvider.CurrentSettings.TimestampForecolor;
@@ -71,6 +75,9 @@ namespace CodeWalriiNotify
 			bodyBox.Realized += delegate {
 				bodyBox.GdkWindow.Cursor = new Cursor(CursorType.Arrow);
 			};
+			bodyRenderarea.SizeAllocated += delegate(object o, SizeAllocatedArgs args) {
+				//		UpdateBody(args.Allocation);
+			};
 
 			this.ShowAll();
 		}
@@ -92,7 +99,6 @@ namespace CodeWalriiNotify
 
 			set {
 				BodyHTML = value;
-				UpdateBody();
 			}
 		}
 
@@ -121,16 +127,34 @@ namespace CodeWalriiNotify
 			set;
 		}
 
-		public void UpdateBody()
+		protected void UpdateBody(uint Width)
 		{
-			Gtk.Requisition size = bodyRenderarea.SizeRequest();
+			UpdateRenderImage(Width);
+			bodyRenderarea.HeightRequest = bodyRenderarea.Pixbuf.Height + 20;
+		}
+
+		protected void UpdateRenderImage(uint Width)
+		{
 			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML(
 				SettingsProvider.CurrentSettings.BodyFormat.Replace("<post>", BodyHTML),
-				(uint)size.Width,
+				Width,
 				0,
 				SettingsProvider.CurrentSettings.BodyUseAntiAlias
 			);
-			bodyRenderarea.HeightRequest = bodyRenderarea.Pixbuf.Height + 20;
+		}
+
+		protected void OnBodyRenderareaExposeEvent(object o, ExposeEventArgs args)
+		{
+			if (args.Args.Length == 0)
+				return;
+			if (args.Args[0].GetType() != typeof(EventExpose))
+				return;
+
+			var expose = (EventExpose)args.Args[0];
+			if (expose.Area.Width == LastRenderWidth)
+				return;
+			LastRenderWidth = (uint)expose.Area.Width;
+			UpdateBody(LastRenderWidth);
 		}
 	}
 }

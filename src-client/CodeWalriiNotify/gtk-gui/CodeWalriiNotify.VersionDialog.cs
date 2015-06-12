@@ -120,7 +120,7 @@ namespace CodeWalriiNotify
 			this.dateLblLbl.Name = "dateLblLbl";
 			this.dateLblLbl.Xalign = 1F;
 			this.dateLblLbl.Yalign = 0F;
-			this.dateLblLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Date:");
+			this.dateLblLbl.LabelProp = global::Mono.Unix.Catalog.GetString ("Build Date:");
 			this.infoTable.Add (this.dateLblLbl);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.infoTable [this.dateLblLbl]));
 			w8.TopAttach = ((uint)(1));

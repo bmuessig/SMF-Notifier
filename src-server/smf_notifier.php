@@ -17,12 +17,24 @@ define("CACHE_POSTS", 50);
 define("DEFAULT_MAX_POSTS", 10);
 define("DEFAULT_STRIPHTML_MODE", "NONE");
 
+/* Custom client styles */
+define("SERVE_CLIENT_STYLES", true);
+define("CLIENT_HEADER_BG_COLOR", "#6EB489");
+define("CLIENT_TITLE_FG_COLOR", "#FFFFFF");
+define("CLIENT_SUBTITLE_FG_COLOR", "#D8D8D8");
+define("CLIENT_BODY_BG_COLOR", "#FAFAFA");
+define("CLIENT_FOOTER_BG_COLOR", "#FAFAFA");
+define("CLIENT_FOOTER_FG_COLOR", "#C6C6C6");
+define("CLIENT_TITLE_FONT", "Tahoma 16");
+define("CLIENT_DETAIL_FONT", "Tahoma 11");
+define("CLIENT_BODY_HTML", "<html>\n<head>\n<style>\nbody {\n font-family: 'Tahoma';\n}\n\nimg {\n max-width:100%;\n height:auto;\n}\n\na {\n text-decoration:none;\n}\n</style>\n</head>\n<body>\n<post>\n</body>\n</html>");
+define("CLIENT_BODY_ANTIALIAS", true);
 
 /* DO NOT CHANGE ANYTHING BELOW THIS LINE! */
 
 // Static internal constants
 define("API_VERSION_MAJOR", 4);
-define("API_VERSION_MINOR", 4);
+define("API_VERSION_MINOR", 5);
 define("API_VERSION_REV", 0);
 
 // Internal Constants
@@ -132,13 +144,36 @@ date_default_timezone_set("UTC");
 										"data"			=> null,
 								));
 	}
+} else if(isset($_GET['styles'])) {
+	if(SERVE_CLIENT_STYLES) {
+		$json = json_encode(array(	"success"		=> true,
+									"colors"		=> array(	"header_bg" 	=> CLIENT_HEADER_BG_COLOR,
+																"title_fg"		=> CLIENT_TITLE_FG_COLOR,
+																"subtitle_fg"	=> CLIENT_SUBTITLE_FG_COLOR,
+																"body_bg"		=> CLIENT_BODY_BG_COLOR,
+																"footer_bg"		=> CLIENT_FOOTER_BG_COLOR,
+																"footer_fg"		=> CLIENT_FOOTER_FG_COLOR
+														),
+									"text"			=> array(	"title_font"		=> CLIENT_TITLE_FONT,
+																"detail_font" 		=> CLIENT_DETAIL_FONT,
+																"body_html"			=> CLIENT_BODY_HTML,
+																"body_anti_alias"	=> CLIENT_BODY_ANTIALIAS
+														)
+						));
+	} else {
+		$json = json_encode(array(	"success"	=> false,
+									"colors"	=> null,
+									"text"		=> null
+							));
+	}
 } else {
 	$json = json_encode(array(	"whoami"		=> "SMF Notifier Query API",
 								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
-								"configuration"	=> array(	"cache_ttl" 	=> CACHE_TIME,
-															"cache_posts"	=> CACHE_POSTS,
-															"site_url"		=> BASE_SITE_URL,
-															"site_title"	=> SITE_TITLE
+								"configuration"	=> array(	"cache_ttl" 		=> CACHE_TIME,
+															"cache_posts"		=> CACHE_POSTS,
+															"site_url"			=> BASE_SITE_URL,
+															"site_title"		=> SITE_TITLE,
+															"provide_styles"	=> SERVE_CLIENT_STYLES
 														),
 								"defaults"		=> array(	"max_posts"			=> DEFAULT_MAX_POSTS,
 															"html_stripmode" 	=> DEFAULT_STRIPHTML_MODE

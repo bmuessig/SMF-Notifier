@@ -1,27 +1,32 @@
 ﻿<Properties StartupItem="CodeWalriiNotify\CodeWalriiNotify.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\IgnoredEntity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CodeWalriiNotify\MyToolbox.cs">
     <Files>
-      <File FileName="CodeWalriiNotify\PostMeta.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\PostMeta.cs" Line="40" Column="27" />
       <File FileName="CodeWalriiNotify\APIInfoQueryMeta.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\APIPostQueryMeta.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\APIPostQueryMeta.cs" Line="37" Column="27" />
       <File FileName="CodeWalriiNotify\RecyclerView.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\SettingsProvider.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\SettingsData.cs" Line="1" Column="1" />
+      <File FileName="CodeWalriiNotify\SettingsProvider.cs" Line="42" Column="98" />
       <File FileName="CodeWalriiNotify\Program.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\PostWidget.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\Notificator.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\NotificationWindow.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\NotifierCore.cs" Line="319" Column="23" />
-      <File FileName="CodeWalriiNotify\SettingsDialog.cs" Line="43" Column="13" />
-      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="51" Column="37" />
-      <File FileName="CodeWalriiNotify\VersionDialog.cs" Line="19" Column="48" />
+      <File FileName="CodeWalriiNotify\PostWidget.cs" Line="137" Column="3" />
+      <File FileName="CodeWalriiNotify\Notificator.cs" Line="69" Column="53" />
+      <File FileName="CodeWalriiNotify\NotificationWindow.cs" Line="137" Column="68" />
+      <File FileName="CodeWalriiNotify\FeedRetriever.cs" Line="38" Column="54" />
+      <File FileName="CodeWalriiNotify\SettingsDialog.cs" Line="126" Column="4" />
+      <File FileName="CodeWalriiNotify\MyToolbox.cs" Line="58" Column="55" />
+      <File FileName="CodeWalriiNotify\VersionDialog.cs" Line="1" Column="1" />
       <File FileName="CodeWalriiNotify\Properties\AssemblyInfo.cs" Line="1" Column="1" />
       <File FileName="c:\Users\Benedikt\Documents\GitHub\CodeWalrii-Notifier\src-client\CodeWalriiNotify\HTMLRenderer.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\APIStylesQueryMeta.cs" Line="1" Column="1" />
-      <File FileName="CodeWalriiNotify\IgnoredEntity.cs" Line="31" Column="32" />
+      <File FileName="CodeWalriiNotify\MainWindow.cs" Line="32" Column="28" />
+      <File FileName="CodeWalriiNotify\APIStylesQueryMeta.cs" Line="71" Column="32" />
+      <File FileName="CodeWalriiNotify\IgnoredEntity.cs" Line="48" Column="18" />
+      <File FileName="CodeWalriiNotify\SettingsData.cs" Line="21" Column="36" />
+      <File FileName="CodeWalriiNotify\GeneralSettingsMeta.cs" Line="23" Column="4" />
+      <File FileName="CodeWalriiNotify\QuerySettingsMeta.cs" Line="1" Column="14" />
+      <File FileName="CodeWalriiNotify\NotificationSettingsMeta.cs" Line="45" Column="4" />
+      <File FileName="CodeWalriiNotify\ContentSettingsMeta.cs" Line="24" Column="8" />
+      <File FileName="CodeWalriiNotify\StyleSettingsMeta.cs" Line="6" Column="32" />
+      <File FileName="CodeWalriiNotify\NotifierCore.cs" Line="377" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

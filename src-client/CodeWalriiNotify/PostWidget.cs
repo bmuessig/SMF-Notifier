@@ -18,25 +18,27 @@ namespace CodeWalriiNotify
 
 			LastRenderWidth = 0;
 
-			var headerBackcolor = SettingsProvider.CurrentSettings.HeaderBackcolor;
-			var timeForecolor = SettingsProvider.CurrentSettings.TimestampForecolor;
-			var titleForecolor = SettingsProvider.CurrentSettings.TitleForecolor;
-			var bodyBackcolor = SettingsProvider.CurrentSettings.BodyBackcolor;
-			var footerBackcolor = SettingsProvider.CurrentSettings.FooterBackcolor;
-			var authorForecolor = SettingsProvider.CurrentSettings.AuthorForecolor;
+			SettingsData settings = SettingsProvider.CurrentSettings;
 
-			var titleFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.TitleFont);
-			var detailFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.DetailFont);
+			var headerBackcolor = settings.Styles.HeaderBackcolor;
+			var timeForecolor = settings.Styles.TimestampForecolor;
+			var titleForecolor = settings.Styles.TitleForecolor;
+			var bodyBackcolor = settings.Styles.BodyBackcolor;
+			var footerBackcolor = settings.Styles.FooterBackcolor;
+			var authorForecolor = settings.Styles.AuthorForecolor;
 
-			headerBox.ModifyBg(Gtk.StateType.Normal, headerBackcolor);
-			topicLabel.ModifyFg(Gtk.StateType.Normal, titleForecolor);
+			var titleFont = Pango.FontDescription.FromString(settings.Styles.TitleFont);
+			var detailFont = Pango.FontDescription.FromString(settings.Styles.DetailFont);
+
+			headerBox.ModifyBg(StateType.Normal, headerBackcolor);
+			topicLabel.ModifyFg(StateType.Normal, titleForecolor);
 			topicLabel.ModifyFont(titleFont);
-			timeLabel.ModifyFg(Gtk.StateType.Normal, timeForecolor);
+			timeLabel.ModifyFg(StateType.Normal, timeForecolor);
 			timeLabel.ModifyFont(detailFont);
-			bodyBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
-			mainBox.ModifyBg(Gtk.StateType.Normal, bodyBackcolor);
-			footerBox.ModifyBg(Gtk.StateType.Normal, footerBackcolor);
-			posterLabel.ModifyFg(Gtk.StateType.Normal, authorForecolor);
+			bodyBox.ModifyBg(StateType.Normal, bodyBackcolor);
+			mainBox.ModifyBg(StateType.Normal, bodyBackcolor);
+			footerBox.ModifyBg(StateType.Normal, footerBackcolor);
+			posterLabel.ModifyFg(StateType.Normal, authorForecolor);
 			posterLabel.ModifyFont(detailFont);
 
 			headerBox.Realized += delegate {
@@ -136,10 +138,10 @@ namespace CodeWalriiNotify
 		protected void UpdateRenderImage(uint Width)
 		{
 			bodyRenderarea.Pixbuf = HTMLRenderer.RenderHTML(
-				SettingsProvider.CurrentSettings.BodyFormat.Replace("<post>", BodyHTML),
+				SettingsProvider.CurrentSettings.Styles.BodyFormat.Replace("<post>", BodyHTML),
 				Width,
 				0,
-				SettingsProvider.CurrentSettings.BodyUseAntiAlias
+				SettingsProvider.CurrentSettings.Styles.BodyUseAntiAlias
 			);
 		}
 

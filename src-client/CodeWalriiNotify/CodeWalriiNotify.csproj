@@ -99,6 +99,11 @@
     <Compile Include="APIStylesQueryMeta.cs" />
     <Compile Include="APIInfoQueryMeta.cs" />
     <Compile Include="IgnoredEntity.cs" />
+    <Compile Include="ContentSettingsMeta.cs" />
+    <Compile Include="StyleSettingsMeta.cs" />
+    <Compile Include="NotificationSettingsMeta.cs" />
+    <Compile Include="GeneralSettingsMeta.cs" />
+    <Compile Include="QuerySettingsMeta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

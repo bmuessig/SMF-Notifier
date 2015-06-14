@@ -19,14 +19,16 @@ namespace CodeWalriiNotify
 			winMain = MainWindow;
 			notifier = Notifier;
 
-			var headerBackcolor = SettingsProvider.CurrentSettings.HeaderBackcolor;
-			var titleForecolor = SettingsProvider.CurrentSettings.TitleForecolor;
-			var bodyBackcolor = SettingsProvider.CurrentSettings.BodyBackcolor;
-			var footerBackcolor = SettingsProvider.CurrentSettings.FooterBackcolor;
-			var authorForecolor = SettingsProvider.CurrentSettings.AuthorForecolor;
+			SettingsData settings = SettingsProvider.CurrentSettings;
 
-			var titleFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.TitleFont);
-			var detailFont = Pango.FontDescription.FromString(SettingsProvider.CurrentSettings.DetailFont);
+			var headerBackcolor = settings.Styles.HeaderBackcolor;
+			var titleForecolor = settings.Styles.TitleForecolor;
+			var bodyBackcolor = settings.Styles.BodyBackcolor;
+			var footerBackcolor = settings.Styles.FooterBackcolor;
+			var authorForecolor = settings.Styles.AuthorForecolor;
+
+			var titleFont = Pango.FontDescription.FromString(settings.Styles.TitleFont);
+			var detailFont = Pango.FontDescription.FromString(settings.Styles.DetailFont);
 
 			headerBox.ModifyBg(StateType.Normal, headerBackcolor);
 			subjectLabel.ModifyFg(StateType.Normal, titleForecolor);
@@ -42,7 +44,7 @@ namespace CodeWalriiNotify
 
 			this.KeepAbove = true;
 
-			this.Move(this.Screen.Width + this.WidthRequest, (int)((this.Screen.Height - this.HeightRequest) * SettingsProvider.CurrentSettings.VisualNotifyVerticalAlignment));
+			this.Move(this.Screen.Width + this.WidthRequest, (int)((this.Screen.Height - this.HeightRequest) * SettingsProvider.CurrentSettings.Notifications.VisualNotifyVerticalAlignment));
 
 			hasTimeout = false;
 			restartTimeout = false;
@@ -83,7 +85,7 @@ namespace CodeWalriiNotify
 		{
 			hasTimeout = true;
 			restartTimeout = false;
-			GLib.Timeout.Add(SettingsProvider.CurrentSettings.VisualNotifyTimeout * 1000, new GLib.TimeoutHandler(() => {
+			GLib.Timeout.Add(SettingsProvider.CurrentSettings.Notifications.VisualNotifyTimeout * 1000, new GLib.TimeoutHandler(() => {
 				if (!restartTimeout)
 					End();
 				else {
@@ -109,8 +111,8 @@ namespace CodeWalriiNotify
 		{
 			targetX = this.Screen.Width - this.WidthRequest;
 
-			if (SettingsProvider.CurrentSettings.VisualNotifyDoAnimate) {
-				GLib.Timeout.Add(SettingsProvider.CurrentSettings.VisualNotifyAnimationInterval, new GLib.TimeoutHandler(() => {
+			if (SettingsProvider.CurrentSettings.Notifications.VisualNotifyDoAnimate) {
+				GLib.Timeout.Add(SettingsProvider.CurrentSettings.Notifications.VisualNotifyAnimationInterval, new GLib.TimeoutHandler(() => {
 					int x;
 					int y;
 					this.GetPosition(out x, out y);
@@ -131,8 +133,8 @@ namespace CodeWalriiNotify
 
 			targetX = this.Screen.Width + this.WidthRequest;
 
-			if (SettingsProvider.CurrentSettings.VisualNotifyDoAnimate) {
-				GLib.Timeout.Add(SettingsProvider.CurrentSettings.VisualNotifyAnimationInterval, new GLib.TimeoutHandler(() => {
+			if (SettingsProvider.CurrentSettings.Notifications.VisualNotifyDoAnimate) {
+				GLib.Timeout.Add(SettingsProvider.CurrentSettings.Notifications.VisualNotifyAnimationInterval, new GLib.TimeoutHandler(() => {
 					int x;
 					int y;
 					this.GetPosition(out x, out y);

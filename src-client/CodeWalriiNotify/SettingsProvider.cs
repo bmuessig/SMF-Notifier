@@ -35,18 +35,18 @@ namespace CodeWalriiNotify
 			try {
 				CurrentSettings = (SettingsData)JsonConvert.DeserializeObject(rawSettingsJson, typeof(SettingsData));
 				CurrentFilename = Path;
-				if (!File.Exists(CurrentSettings.IconFile)) {
+				if (!File.Exists(CurrentSettings.General.IconFile)) {
 					if (DefaultOnError) {
-						CurrentSettings.UseCustomIcon = false;
+						CurrentSettings.General.UseCustomIcon = false;
 					} else
-						throw new FileNotFoundException("The Icon file couldn't be found!", CurrentSettings.IconFile);
+						throw new FileNotFoundException("The Icon file couldn't be found!", CurrentSettings.General.IconFile);
 					errorEncountered = true;
 				}
-				if (!File.Exists(CurrentSettings.AudioNotifyFile) && CurrentSettings.AudioNotifyEnable) {
+				if (!File.Exists(CurrentSettings.Notifications.AudioNotifyFile) && CurrentSettings.Notifications.AudioNotifyEnable) {
 					if (DefaultOnError) {
-						CurrentSettings.AudioNotifyUseCustomAudio = false;
+						CurrentSettings.Notifications.AudioNotifyUseCustomAudio = false;
 					} else
-						throw new FileNotFoundException("The Audio file couldn't be found!", CurrentSettings.AudioNotifyFile);
+						throw new FileNotFoundException("The Audio file couldn't be found!", CurrentSettings.Notifications.AudioNotifyFile);
 					errorEncountered = true;
 				}
 			} catch (Exception ex) {

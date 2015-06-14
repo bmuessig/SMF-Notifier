@@ -6,7 +6,7 @@ using Gtk;
 
 namespace CodeWalriiNotify
 {
-	public partial class SettingsDialog : Gtk.Dialog
+	public partial class SettingsDialog : Dialog
 	{
 		MainWindow winMain;
 
@@ -21,89 +21,91 @@ namespace CodeWalriiNotify
 		protected void ReadSettings(SettingsData CurrentSettings)
 		{
 			// General
-			feedUrlTxt.Text = CurrentSettings.FeedURL;
-			feedTitleTxt.Text = CurrentSettings.FeedTitle;
-			customIconCb.Active = CurrentSettings.UseCustomIcon;
-			iconFileSel.SetFilename(CurrentSettings.IconFile);
+			feedUrlTxt.Text = CurrentSettings.Query.FeedURL;
+			feedTitleTxt.Text = CurrentSettings.General.FeedTitle;
+			customIconCb.Active = CurrentSettings.General.UseCustomIcon;
+			iconFileSel.SetFilename(CurrentSettings.General.IconFile);
 
 			// Query
-			queryIntervalDec.Value = CurrentSettings.QueryInterval;
-			maxPostsDec.Value = CurrentSettings.MaximumPosts;
+			queryIntervalDec.Value = CurrentSettings.Query.QueryInterval;
+			maxPostsDec.Value = CurrentSettings.Query.MaximumPosts;
 
 			// Content
-			SetComboboxEntries(ignTopicsComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.IgnoredTopics)));
-			SetComboboxEntries(ignUsersComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.IgnoredUsers)));
-			hideIgnoredPostsCb.Active = CurrentSettings.HideIgnoredPosts;
+			SetComboboxEntries(ignTopicsComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.Content.IgnoredTopics)));
+			SetComboboxEntries(ignUsersComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.Content.IgnoredUsers)));
+			hideIgnoredPostsCb.Active = CurrentSettings.Content.HideIgnoredPosts;
+			minWordsDec.Value = CurrentSettings.Content.MinimumWordcount;
 
 			// Notification
-			visualNotifyEnabledCb.Active = CurrentSettings.VisualNotifyEnable;
-			visualNotifyVerticalAlignmentSlide.Value = CurrentSettings.VisualNotifyVerticalAlignment;
-			visualNotifyAnimationCb.Active = CurrentSettings.VisualNotifyDoAnimate;
-			visualNotifyAnimationIntervalDec.Value = CurrentSettings.VisualNotifyAnimationInterval;
-			visualNotifyTimeoutDec.Value = CurrentSettings.VisualNotifyTimeout;
-			audioNotifyEnabledCb.Active = CurrentSettings.AudioNotifyEnable;
-			audioNotifyCustomAudioCb.Active = CurrentSettings.AudioNotifyUseCustomAudio;
-			audioNotifyFileSel.SetFilename(CurrentSettings.AudioNotifyFile);
+			visualNotifyEnabledCb.Active = CurrentSettings.Notifications.VisualNotifyEnable;
+			visualNotifyVerticalAlignmentSlide.Value = CurrentSettings.Notifications.VisualNotifyVerticalAlignment;
+			visualNotifyAnimationCb.Active = CurrentSettings.Notifications.VisualNotifyDoAnimate;
+			visualNotifyAnimationIntervalDec.Value = CurrentSettings.Notifications.VisualNotifyAnimationInterval;
+			visualNotifyTimeoutDec.Value = CurrentSettings.Notifications.VisualNotifyTimeout;
+			audioNotifyEnabledCb.Active = CurrentSettings.Notifications.AudioNotifyEnable;
+			audioNotifyCustomAudioCb.Active = CurrentSettings.Notifications.AudioNotifyUseCustomAudio;
+			audioNotifyFileSel.SetFilename(CurrentSettings.Notifications.AudioNotifyFile);
 
 			// Colors
-			headerBgColorBtn.Color = CurrentSettings.HeaderBackcolor;
-			timeFgColorBtn.Color = CurrentSettings.TimestampForecolor;
-			titleFgColorBtn.Color = CurrentSettings.TitleForecolor;
-			bodyBgColorBtn.Color = CurrentSettings.BodyBackcolor;
-			footerBgColorBtn.Color = CurrentSettings.FooterBackcolor;
-			authorFgColorBtn.Color = CurrentSettings.AuthorForecolor;
+			headerBgColorBtn.Color = CurrentSettings.Styles.HeaderBackcolor;
+			timeFgColorBtn.Color = CurrentSettings.Styles.TimestampForecolor;
+			titleFgColorBtn.Color = CurrentSettings.Styles.TitleForecolor;
+			bodyBgColorBtn.Color = CurrentSettings.Styles.BodyBackcolor;
+			footerBgColorBtn.Color = CurrentSettings.Styles.FooterBackcolor;
+			authorFgColorBtn.Color = CurrentSettings.Styles.AuthorForecolor;
 
 			// Fonts
-			titleFontBtn.SetFontName(CurrentSettings.TitleFont);
-			detailFontBtn.SetFontName(CurrentSettings.DetailFont);
-			bodyFormatTxt.Buffer.Text = CurrentSettings.BodyFormat;
+			titleFontBtn.SetFontName(CurrentSettings.Styles.TitleFont);
+			detailFontBtn.SetFontName(CurrentSettings.Styles.DetailFont);
+			bodyFormatTxt.Buffer.Text = CurrentSettings.Styles.BodyFormat;
 
 			// Rendering
-			bodyAntiAliasCb.Active = CurrentSettings.BodyUseAntiAlias;
+			bodyAntiAliasCb.Active = CurrentSettings.Styles.BodyUseAntiAlias;
 		}
 
 		protected void WriteSettings(SettingsData CurrentSettings)
 		{
 			// General
-			CurrentSettings.FeedURL = feedUrlTxt.Text;
-			CurrentSettings.FeedTitle = feedTitleTxt.Text;
-			CurrentSettings.UseCustomIcon = customIconCb.Active;
-			CurrentSettings.IconFile = iconFileSel.Filename;
+			CurrentSettings.Query.FeedURL = feedUrlTxt.Text;
+			CurrentSettings.General.FeedTitle = feedTitleTxt.Text;
+			CurrentSettings.General.UseCustomIcon = customIconCb.Active;
+			CurrentSettings.General.IconFile = iconFileSel.Filename;
 
 			// Query
-			CurrentSettings.QueryInterval = (uint)queryIntervalDec.ValueAsInt;
-			CurrentSettings.MaximumPosts = (byte)maxPostsDec.ValueAsInt;
+			CurrentSettings.Query.QueryInterval = (uint)queryIntervalDec.ValueAsInt;
+			CurrentSettings.Query.MaximumPosts = (byte)maxPostsDec.ValueAsInt;
 
 			// Content
-			CurrentSettings.IgnoredTopics = ParseEntries(GetComboboxEntries(ignTopicsComboEntry)).ToArray();
-			CurrentSettings.IgnoredUsers = ParseEntries(GetComboboxEntries(ignUsersComboEntry)).ToArray();
-			CurrentSettings.HideIgnoredPosts = hideIgnoredPostsCb.Active;
+			CurrentSettings.Content.IgnoredTopics = ParseEntries(GetComboboxEntries(ignTopicsComboEntry)).ToArray();
+			CurrentSettings.Content.IgnoredUsers = ParseEntries(GetComboboxEntries(ignUsersComboEntry)).ToArray();
+			CurrentSettings.Content.HideIgnoredPosts = hideIgnoredPostsCb.Active;
+			CurrentSettings.Content.MinimumWordcount = (uint)minWordsDec.ValueAsInt;
 
 			// Notification
-			CurrentSettings.VisualNotifyEnable = visualNotifyEnabledCb.Active;
-			CurrentSettings.VisualNotifyVerticalAlignment = (float)visualNotifyVerticalAlignmentSlide.Value;
-			CurrentSettings.VisualNotifyDoAnimate = visualNotifyAnimationCb.Active;
-			CurrentSettings.VisualNotifyAnimationInterval = (uint)visualNotifyAnimationIntervalDec.ValueAsInt;
-			CurrentSettings.VisualNotifyTimeout = (uint)visualNotifyTimeoutDec.ValueAsInt;
-			CurrentSettings.AudioNotifyEnable = audioNotifyEnabledCb.Active;
-			CurrentSettings.AudioNotifyUseCustomAudio = audioNotifyCustomAudioCb.Active;
-			CurrentSettings.AudioNotifyFile = audioNotifyFileSel.Filename;
+			CurrentSettings.Notifications.VisualNotifyEnable = visualNotifyEnabledCb.Active;
+			CurrentSettings.Notifications.VisualNotifyVerticalAlignment = (float)visualNotifyVerticalAlignmentSlide.Value;
+			CurrentSettings.Notifications.VisualNotifyDoAnimate = visualNotifyAnimationCb.Active;
+			CurrentSettings.Notifications.VisualNotifyAnimationInterval = (uint)visualNotifyAnimationIntervalDec.ValueAsInt;
+			CurrentSettings.Notifications.VisualNotifyTimeout = (uint)visualNotifyTimeoutDec.ValueAsInt;
+			CurrentSettings.Notifications.AudioNotifyEnable = audioNotifyEnabledCb.Active;
+			CurrentSettings.Notifications.AudioNotifyUseCustomAudio = audioNotifyCustomAudioCb.Active;
+			CurrentSettings.Notifications.AudioNotifyFile = audioNotifyFileSel.Filename;
 
 			// Colors
-			CurrentSettings.HeaderBackcolor = headerBgColorBtn.Color;
-			CurrentSettings.TimestampForecolor = timeFgColorBtn.Color;
-			CurrentSettings.TitleForecolor = titleFgColorBtn.Color;
-			CurrentSettings.BodyBackcolor = bodyBgColorBtn.Color;
-			CurrentSettings.FooterBackcolor = footerBgColorBtn.Color;
-			CurrentSettings.AuthorForecolor = authorFgColorBtn.Color;
+			CurrentSettings.Styles.HeaderBackcolor = headerBgColorBtn.Color;
+			CurrentSettings.Styles.TimestampForecolor = timeFgColorBtn.Color;
+			CurrentSettings.Styles.TitleForecolor = titleFgColorBtn.Color;
+			CurrentSettings.Styles.BodyBackcolor = bodyBgColorBtn.Color;
+			CurrentSettings.Styles.FooterBackcolor = footerBgColorBtn.Color;
+			CurrentSettings.Styles.AuthorForecolor = authorFgColorBtn.Color;
 
 			// Fonts
-			CurrentSettings.TitleFont = titleFontBtn.FontName;
-			CurrentSettings.DetailFont = detailFontBtn.FontName;
-			CurrentSettings.BodyFormat = bodyFormatTxt.Buffer.Text;
+			CurrentSettings.Styles.TitleFont = titleFontBtn.FontName;
+			CurrentSettings.Styles.DetailFont = detailFontBtn.FontName;
+			CurrentSettings.Styles.BodyFormat = bodyFormatTxt.Buffer.Text;
 
 			// Rendering
-			CurrentSettings.BodyUseAntiAlias = bodyAntiAliasCb.Active;
+			CurrentSettings.Styles.BodyUseAntiAlias = bodyAntiAliasCb.Active;
 		}
 
 		protected void OnOkButtonClicked(object sender, EventArgs e)
@@ -141,14 +143,14 @@ namespace CodeWalriiNotify
 			MessageBox.Show(
 				Message,
 				"Invalid Configuration", 
-				Gtk.MessageType.Error,
-				Gtk.ButtonsType.OkCancel,
-				new Gtk.ResponseHandler(delegate(object o, Gtk.ResponseArgs args) {
-					if (args.ResponseId == Gtk.ResponseType.Ok) {
-						Gtk.Application.Invoke(delegate {
+				MessageType.Error,
+				ButtonsType.OkCancel,
+				new ResponseHandler(delegate(object o, ResponseArgs args) {
+					if (args.ResponseId == ResponseType.Ok) {
+						Application.Invoke(delegate {
 							using (var settings = new SettingsDialog(MainWindow)) {
 								settings.Close += delegate {
-									Gtk.Application.Invoke(delegate {
+									Application.Invoke(delegate {
 										MainWindow.Shutdown();
 									});
 								};
@@ -275,6 +277,65 @@ namespace CodeWalriiNotify
 			foreach (string entry in Entries) {
 				EntryBox.AppendText(entry);
 			}
+		}
+
+		protected void OnNotificationLoadDefaultsBtnClicked(object sender, EventArgs e)
+		{
+			var currentSettings = new SettingsData();
+			var newSettings = new SettingsData();
+
+			WriteSettings(currentSettings);
+
+			newSettings.Content = currentSettings.Content;
+			newSettings.General = currentSettings.General;
+			newSettings.Query = currentSettings.Query;
+			newSettings.Styles = currentSettings.Styles;
+
+			ReadSettings(newSettings);
+		}
+
+		protected void OnContentLoadDefaultsBtnClicked(object sender, EventArgs e)
+		{
+			var currentSettings = new SettingsData();
+			var newSettings = new SettingsData();
+
+			WriteSettings(currentSettings);
+
+			newSettings.Notifications = currentSettings.Notifications;
+			newSettings.General = currentSettings.General;
+			newSettings.Query = currentSettings.Query;
+			newSettings.Styles = currentSettings.Styles;
+
+			ReadSettings(newSettings);
+		}
+
+		protected void OnStylesLoadDefaultsBtnClicked(object sender, EventArgs e)
+		{
+			var currentSettings = new SettingsData();
+			var newSettings = new SettingsData();
+
+			WriteSettings(currentSettings);
+
+			newSettings.Content = currentSettings.Content;
+			newSettings.General = currentSettings.General;
+			newSettings.Query = currentSettings.Query;
+			newSettings.Notifications = currentSettings.Notifications;
+
+			ReadSettings(newSettings);
+		}
+
+		protected void OnGeneralLoadDefaultsClicked(object sender, EventArgs e)
+		{
+			var currentSettings = new SettingsData();
+			var newSettings = new SettingsData();
+
+			WriteSettings(currentSettings);
+
+			newSettings.Content = currentSettings.Content;
+			newSettings.Notifications = currentSettings.Notifications;
+			newSettings.Styles = currentSettings.Styles;
+
+			ReadSettings(newSettings);
 		}
 	}
 }

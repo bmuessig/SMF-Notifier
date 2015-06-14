@@ -22,8 +22,8 @@ namespace CodeWalriiNotify
 
 			this.Present();
 
-			string iconFileName = SettingsProvider.CurrentSettings.IconFile;
-			this.Icon = SettingsProvider.CurrentSettings.UseCustomIcon ? new Gdk.Pixbuf(iconFileName) : Gdk.Pixbuf.LoadFromResource("Bell.png");
+			string iconFileName = SettingsProvider.CurrentSettings.General.IconFile;
+			this.Icon = SettingsProvider.CurrentSettings.General.UseCustomIcon ? new Gdk.Pixbuf(iconFileName) : Gdk.Pixbuf.LoadFromResource("Bell.png");
 
 			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings);
 			notifier.TimerRunningChanged += Notifier_TimerRunningChanged;

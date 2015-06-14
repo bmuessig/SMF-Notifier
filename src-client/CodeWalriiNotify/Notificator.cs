@@ -26,7 +26,7 @@ namespace CodeWalriiNotify
 
 		public void NewPost(PostMeta Post)
 		{
-			if (settings.VisualNotifyEnable && !IsMainWindowVisible) {
+			if (settings.Notifications.VisualNotifyEnable && !IsMainWindowVisible) {
 				var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain, notifier);
 				nwin.ShowMe();
 			}
@@ -34,7 +34,7 @@ namespace CodeWalriiNotify
 			if (IsMainWindowVisible)
 				winMain.ShowLatestPost();
 
-			if (settings.AudioNotifyEnable)
+			if (settings.Notifications.AudioNotifyEnable)
 				PlayAudio();
 		}
 
@@ -49,7 +49,7 @@ namespace CodeWalriiNotify
 				return;
 			}
 				
-			if (settings.VisualNotifyEnable && !IsMainWindowVisible) {
+			if (settings.Notifications.VisualNotifyEnable && !IsMainWindowVisible) {
 				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new posts", (Posts.Length - 1)), winMain, notifier);
 				nwin.ShowMe();
 			}
@@ -57,16 +57,16 @@ namespace CodeWalriiNotify
 			if (IsMainWindowVisible)
 				winMain.ShowLatestPost();
 
-			if (settings.AudioNotifyEnable)
+			if (settings.Notifications.AudioNotifyEnable)
 				PlayAudio();
 		}
 
 		protected void PlayAudio()
 		{
 			SoundPlayer player;
-			if (settings.AudioNotifyUseCustomAudio) {
+			if (settings.Notifications.AudioNotifyUseCustomAudio) {
 				try {
-					player = new SoundPlayer(settings.AudioNotifyFile);
+					player = new SoundPlayer(settings.Notifications.AudioNotifyFile);
 				} catch (Exception) {
 					return;
 				}

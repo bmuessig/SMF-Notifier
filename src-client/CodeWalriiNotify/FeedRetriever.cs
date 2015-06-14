@@ -10,7 +10,7 @@ namespace CodeWalriiNotify
 		public static string RetrieveFeedInfo(SettingsData Settings)
 		{
 			var wc = new WebClient();
-			return wc.DownloadString(Settings.FeedURL);
+			return wc.DownloadString(Settings.Query.FeedURL);
 		}
 
 		public static string RetrieveFeedInfo()
@@ -21,7 +21,7 @@ namespace CodeWalriiNotify
 		public static string RetrieveFeedStyles(SettingsData Settings)
 		{
 			var wc = new WebClient();
-			var queryString = new StringBuilder(Settings.FeedURL);
+			var queryString = new StringBuilder(Settings.Query.FeedURL);
 			queryString.Append("?styles");
 
 			return wc.DownloadString(queryString.ToString());
@@ -35,7 +35,7 @@ namespace CodeWalriiNotify
 		public static string RetrieveFeedData(SettingsData Settings, KeyValuePair<string, string>[] Opts = null)
 		{
 			var wc = new WebClient();
-			var queryString = new StringBuilder(Settings.FeedURL);
+			var queryString = new StringBuilder(Settings.Query.FeedURL);
 			queryString.Append("?query");
 
 			if (Opts != null) {

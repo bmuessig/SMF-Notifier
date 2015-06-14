@@ -5,16 +5,13 @@ namespace CodeWalriiNotify
 {
 	public class APIStylesQueryMeta
 	{
+		/*
 		public const uint API_MAJOR = 4;
 		public const uint API_MIN_MINOR = 3;
 
-		public string Whoami { get; private set; }
+		public bool Success { get; private set; }
 
-		public VersionStruct Version { get; private set; }
-
-		public ConfigurationStruct Configuration { get; private set; }
-
-		public DefaultStruct Defaults { get; private set; }
+		public StylesMeta { GetType; private set; }
 
 		public APIStylesQueryMeta(string Json)
 		{
@@ -72,7 +69,7 @@ namespace CodeWalriiNotify
 		{
 			public byte MaxPosts;
 			public string HTMLStripmode;
-		}
+		}*/
 	}
 }
 

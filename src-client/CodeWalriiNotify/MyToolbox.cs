@@ -9,11 +9,21 @@ namespace CodeWalriiNotify
 	public static class MyToolbox
 	{
 		private static readonly Regex urlMatchingRegex;
+		private static readonly Regex bracketStrippingRegex;
+		private static readonly Regex htmlStrippingRegex;
+		private static readonly Regex blockquoteStrippingRegex;
+		private static readonly Regex divquoteStrippingRegex;
+		private static readonly Regex wordCountingRegex;
 
 		static MyToolbox()
 		{
 			// Regex is slightly modified from https://gist.github.com/dperini/729294
-			urlMatchingRegex = new Regex("^(?:https?:\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?:.)?(?::\\d{2,5})?(?:\\/\\S*)?$");	
+			urlMatchingRegex = new Regex("^(?:https?:\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?:.)?(?::\\d{2,5})?(?:\\/\\S*)?$");
+			bracketStrippingRegex = new Regex("[ \\t]*\\[.*?\\][ \\t]*");
+			htmlStrippingRegex = new Regex("<.*?>", RegexOptions.Multiline);
+			blockquoteStrippingRegex = new Regex("<blockquote.*?><\\/blockquote>", RegexOptions.Multiline);
+			divquoteStrippingRegex = new Regex("<div class=\"quoteheader\">.*?<\\/div>", RegexOptions.Multiline);
+			wordCountingRegex = new Regex("[\\S]+", RegexOptions.Multiline);
 		}
 
 		public static bool CheckUrl(string URL)
@@ -37,7 +47,32 @@ namespace CodeWalriiNotify
 
 		public static string BuildTitle(SettingsData Settings, uint UnreadPosts, string CustomStatus = "")
 		{
-			return Settings.FeedTitle + (Settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} Unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+			return Settings.General.FeedTitle + (Settings.General.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} Unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+		}
+
+		public static string StripHTML(string Input)
+		{
+			return htmlStrippingRegex.Replace(Input, "");
+		}
+
+		public static string StripDivquote(string Input)
+		{
+			return divquoteStrippingRegex.Replace(Input, "");
+		}
+
+		public static string StripBlockquote(string Input)
+		{
+			return blockquoteStrippingRegex.Replace(Input, "");
+		}
+
+		public static string StripTitleTags(string Input)
+		{
+			return bracketStrippingRegex.Replace(Input, "");
+		}
+
+		public static uint CountWords(string Input)
+		{
+			return (uint)wordCountingRegex.Matches(Input).Count;
 		}
 
 		public static List<string> ListStoreToList(ListStore Model)

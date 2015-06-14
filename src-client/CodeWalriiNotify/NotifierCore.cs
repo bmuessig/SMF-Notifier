@@ -91,7 +91,7 @@ namespace CodeWalriiNotify
 			if (TimerRunning && TimerAlive)
 				return;
 			if (!TimerAlive) {
-				GLib.Timeout.Add(settings.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
+				GLib.Timeout.Add(settings.Query.QueryInterval * 1000, new GLib.TimeoutHandler(delegate {
 					if (!TimerRunning)
 						return true;
 				
@@ -344,7 +344,9 @@ namespace CodeWalriiNotify
 						var newPosts = new List<PostMeta>(); // List of the new posts
 
 						foreach (PostMeta post in query.Posts) { // Go through the posts
-							if ((Settings.HideIgnoredPosts ? !CheckIgnorePost(post, Settings) : true)) {
+							bool hidePost = CheckIgnorePost(post, Settings);
+
+							if (!hidePost || !Settings.Content.HideIgnoredPosts) {
 								var pw = new PostWidget(); // Create new PostWidget
 								pw.Topic = post.Subject; // Set the content
 								pw.Body = post.Body;
@@ -352,16 +354,11 @@ namespace CodeWalriiNotify
 								pw.Time = post.Time.ToString();
 								pw.URL = post.Link;
 								widgets.Add(pw);
-
 							}
 
-							if (post.Time > LastPostTime) { // If the post was never than the last seen post...
-								if (!Settings.HideIgnoredPosts) {
-									if (!CheckIgnorePost(post, Settings)) // ... check if we need to ignore it and ...
-										newPosts.Add(post); //... add it to the list of new posts eventually
-								} else {
+							if (!hidePost) {
+								if (post.Time > LastPostTime) // If the post was never than the last seen post...
 									newPosts.Add(post); //... and add it to the list of new posts eventually
-								}
 							}
 						}
 
@@ -377,7 +374,12 @@ namespace CodeWalriiNotify
 
 		protected bool CheckIgnorePost(PostMeta Post, SettingsData Settings)
 		{
-			foreach (IgnoredEntity user in Settings.IgnoredUsers) { // ... check if we ignore it ...
+			string strippedText = MyToolbox.StripHTML(MyToolbox.StripDivquote(MyToolbox.StripBlockquote(Post.Body)));
+			uint words = MyToolbox.CountWords(strippedText);
+			if (words < Settings.Content.MinimumWordcount)
+				return true;
+
+			foreach (IgnoredEntity user in Settings.Content.IgnoredUsers) { // ... check if we ignore it ...
 				if (user.ID > 0) {
 					if (Post.PosterID == user.ID) {
 						return true;
@@ -398,7 +400,7 @@ namespace CodeWalriiNotify
 				}
 			}
 				
-			foreach (IgnoredEntity topic in Settings.IgnoredTopics) { // ... check if we ignore it - again ...
+			foreach (IgnoredEntity topic in Settings.Content.IgnoredTopics) { // ... check if we ignore it - again ...
 				if (topic.ID > 0) {
 					if (Post.TopicID == topic.ID) {
 						return true;
@@ -413,7 +415,7 @@ namespace CodeWalriiNotify
 
 					}
 				} else {
-					if (Post.Topic == topic.Name) {
+					if (MyToolbox.StripTitleTags(Post.Topic) == topic.Name) {
 						return true;
 					}
 				}

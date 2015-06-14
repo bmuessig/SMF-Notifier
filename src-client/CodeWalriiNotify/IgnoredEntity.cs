@@ -9,12 +9,13 @@ namespace CodeWalriiNotify
 		public string Name;
 		public bool RegexMatch;
 		
-		private static Regex ParseMatcher;
+		private static readonly Regex ParseMatcher;
 
 		static IgnoredEntity()
 		{
 			ParseMatcher = new Regex(
-				@"^[ \t]*(?:(?:\(|\[)(\d+)(?:\)|\][ \t]*:?)|(\d+)[ \t]*:|#(\d+)[ \t]*:?|(\d+)[ \t]*\/)?[ \t]*(?:([\w ]+)|""([^\n\r]*)""|@\[([^\[\]]*)\])?[ \t]*$"
+				@"^[ \t]*(?:(?:\(|\[)(\d+)(?:\)|\][ \t]*:?)|(\d+)[ \t]*:|#(\d+)[ \t]*:?|(\d+)[ \t]*\/)?[ \t]*(?:([\w ]+)|""([^\n\r]*)""|@\[(.*)\])?[ \t]*$",
+				RegexOptions.Singleline
 			);
 		}
 

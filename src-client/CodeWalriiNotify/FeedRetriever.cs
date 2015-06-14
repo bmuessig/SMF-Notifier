@@ -18,6 +18,20 @@ namespace CodeWalriiNotify
 			return RetrieveFeedInfo(SettingsProvider.CurrentSettings);
 		}
 
+		public static string RetrieveFeedStyles(SettingsData Settings)
+		{
+			var wc = new WebClient();
+			var queryString = new StringBuilder(Settings.FeedURL);
+			queryString.Append("?styles");
+
+			return wc.DownloadString(queryString.ToString());
+		}
+
+		public static string RetrieveFeedStyles()
+		{
+			return RetrieveFeedStyles(SettingsProvider.CurrentSettings);
+		}
+
 		public static string RetrieveFeedData(SettingsData Settings, KeyValuePair<string, string>[] Opts = null)
 		{
 			var wc = new WebClient();

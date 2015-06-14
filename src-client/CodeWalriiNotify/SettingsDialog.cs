@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Collections.Generic;
+using Gtk;
 
 namespace CodeWalriiNotify
 {
@@ -27,6 +29,11 @@ namespace CodeWalriiNotify
 			// Query
 			queryIntervalDec.Value = CurrentSettings.QueryInterval;
 			maxPostsDec.Value = CurrentSettings.MaximumPosts;
+
+			// Content
+			SetComboboxEntries(ignTopicsComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.IgnoredTopics)));
+			SetComboboxEntries(ignUsersComboEntry, GetReadableEntries(new List<IgnoredEntity>(CurrentSettings.IgnoredUsers)));
+			hideIgnoredPostsCb.Active = CurrentSettings.HideIgnoredPosts;
 
 			// Notification
 			visualNotifyEnabledCb.Active = CurrentSettings.VisualNotifyEnable;
@@ -67,6 +74,11 @@ namespace CodeWalriiNotify
 			CurrentSettings.QueryInterval = (uint)queryIntervalDec.ValueAsInt;
 			CurrentSettings.MaximumPosts = (byte)maxPostsDec.ValueAsInt;
 
+			// Content
+			CurrentSettings.IgnoredTopics = ParseEntries(GetComboboxEntries(ignTopicsComboEntry)).ToArray();
+			CurrentSettings.IgnoredUsers = ParseEntries(GetComboboxEntries(ignUsersComboEntry)).ToArray();
+			CurrentSettings.HideIgnoredPosts = hideIgnoredPostsCb.Active;
+
 			// Notification
 			CurrentSettings.VisualNotifyEnable = visualNotifyEnabledCb.Active;
 			CurrentSettings.VisualNotifyVerticalAlignment = (float)visualNotifyVerticalAlignmentSlide.Value;
@@ -96,17 +108,19 @@ namespace CodeWalriiNotify
 
 		protected void OnOkButtonClicked(object sender, EventArgs e)
 		{
-			WriteSettings(SettingsProvider.CurrentSettings);
-			SettingsProvider.ToFile(SettingsProvider.CurrentFilename);
 			MessageBox.Show(
-				"The notifier needs to be restarted in order to apply the new settings.",
+				"The notifier needs to be restarted in order to apply the new settings.\nDo you want to save and restart now?",
 				"Configuration change requires restart",
-				Gtk.MessageType.Info,
-				Gtk.ButtonsType.Ok,
-				new Gtk.ResponseHandler((o, args) => Gtk.Application.Invoke(delegate {
-					this.Destroy();
-					winMain.Shutdown();
-					Process.Start(Assembly.GetExecutingAssembly().Location);
+				MessageType.Question,
+				ButtonsType.OkCancel,
+				new ResponseHandler((o, args) => Application.Invoke(delegate {
+					if (args.ResponseId == ResponseType.Ok) {
+						WriteSettings(SettingsProvider.CurrentSettings);
+						SettingsProvider.ToFile(SettingsProvider.CurrentFilename);
+						this.Destroy();
+						winMain.Shutdown();
+						Process.Start(Assembly.GetExecutingAssembly().Location);
+					}
 				}))
 			);
 		}
@@ -142,10 +156,125 @@ namespace CodeWalriiNotify
 							}
 						});
 					} else {
-						Gtk.Application.Invoke((object sender, EventArgs e) => MainWindow.Shutdown());
+						Application.Invoke((object sender, EventArgs e) => MainWindow.Shutdown());
 					}
 				})
 			);
+		}
+
+		protected void OnIgnTopicAddBtnClicked(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(ignTopicsComboEntry.Entry.Text))
+				return;
+
+			IgnoredEntity entity;
+			if (!IgnoredEntity.TryParse(ignTopicsComboEntry.Entry.Text, out entity))
+				return;
+			if (GetComboboxEntries(ignTopicsComboEntry).Contains(entity.ToString()))
+				return;
+
+			ignTopicsComboEntry.AppendText(entity.ToString());
+			ignTopicsComboEntry.Entry.Text = "";
+		}
+
+		protected void OnIgnTopicsRemoveBtnClicked(object sender, EventArgs e)
+		{
+			if (ignTopicsComboEntry.Active < 0)
+				return;
+			ignTopicsComboEntry.RemoveText(ignTopicsComboEntry.Active);
+			ignTopicsComboEntry.Entry.Text = "";
+		}
+
+		protected void OnIgnUsersAddBtnClicked(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(ignUsersComboEntry.Entry.Text))
+				return;
+
+			IgnoredEntity entity;
+			if (!IgnoredEntity.TryParse(ignUsersComboEntry.Entry.Text, out entity))
+				return;
+			if (GetComboboxEntries(ignUsersComboEntry).Contains(entity.ToString()))
+				return;
+
+			ignUsersComboEntry.AppendText(entity.ToString());
+			ignUsersComboEntry.Entry.Text = "";
+		}
+
+		protected void OnIgnUsersRemoveBtnClicked(object sender, EventArgs e)
+		{
+			if (ignUsersComboEntry.Active < 0)
+				return;
+			ignUsersComboEntry.RemoveText(ignUsersComboEntry.Active);
+			ignUsersComboEntry.Entry.Text = "";
+		}
+
+		protected List<IgnoredEntity> ParseEntries(List<string> RawEntries, bool SuppressErrors = true)
+		{
+			if (RawEntries == null) {
+				if (SuppressErrors)
+					return null;
+				else
+					throw new ArgumentNullException("RawEntries");
+			}
+
+			var entities = new List<IgnoredEntity>();
+
+			foreach (string entry in RawEntries) {
+				try {
+					IgnoredEntity entity;
+					if (IgnoredEntity.TryParse(entry, out entity))
+						entities.Add(entity);
+				} catch (Exception ex) {
+					if (!SuppressErrors)
+						throw ex;
+				}
+			}
+
+			return entities;
+		}
+
+		protected List<string> GetReadableEntries(List<IgnoredEntity> Entities)
+		{
+			if (Entities == null)
+				throw new ArgumentNullException("Entities");
+
+			var entries = new List<string>();
+			foreach (IgnoredEntity entity in Entities) {
+				string entry = entity.ToString();
+				if (!string.IsNullOrWhiteSpace(entry))
+					entries.Add(entry);
+			}
+
+			return entries;
+		}
+
+		protected List<string> GetComboboxEntries(ComboBoxEntry EntryBox)
+		{
+			if (EntryBox == null)
+				throw new ArgumentNullException("EntryBox");
+			var listStore = EntryBox.Model as ListStore;
+			return (listStore != null) ? (MyToolbox.ListStoreToList(listStore) ?? new List<string>()) : new List<string>();
+		}
+
+		protected void ClearComboboxEntries(ComboBoxEntry EntryBox)
+		{
+			if (EntryBox == null)
+				throw new ArgumentNullException("EntryBox");
+			EntryBox.Model = new ListStore(typeof(string));
+			EntryBox.Entry.Text = "";
+		}
+
+		protected void SetComboboxEntries(ComboBoxEntry EntryBox, List<string> Entries)
+		{
+			if (EntryBox == null)
+				throw new ArgumentNullException("EntryBox");
+			if (Entries == null)
+				throw new ArgumentNullException("Entries");
+			ClearComboboxEntries(EntryBox);
+
+			foreach (string entry in Entries) {
+				EntryBox.AppendText(entry);
+			}
 		}
 	}
 }

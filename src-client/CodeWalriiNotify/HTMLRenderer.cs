@@ -24,12 +24,12 @@ namespace CodeWalriiNotify
 		}
 
 		static Gdk.Pixbuf ImageToPixbuf(Image image)
-		{ 
-			using (var stream = new MemoryStream()) { 
-				image.Save(stream, ImageFormat.Png); 
-				stream.Position = 0; 
-				return new Gdk.Pixbuf(stream); 
-			} 
+		{
+			using (var stream = new MemoryStream()) {
+				image.Save(stream, ImageFormat.Png);
+				stream.Position = 0;
+				return new Gdk.Pixbuf(stream);
+			}
 		}
 	}
 }

@@ -4,17 +4,23 @@ namespace CodeWalriiNotify
 {
 	public class PostMeta
 	{
-		public String Subject { get; set; }
+		public string Subject { get; set; }
 
-		public String Poster { get; set; }
+		public string Topic { get; set; }
 
-		public String Body { get; set; }
+		public uint TopicID { get; set; }
+
+		public string Poster { get; set; }
+
+		public uint PosterID { get; set; }
+
+		public string Body { get; set; }
 
 		public DateTime Time { get; set; }
 
-		public String Link { get; set; }
+		public string Link { get; set; }
 
-		public String FormatTime(String Format)
+		public string FormatTime(String Format)
 		{
 			return Time.ToString();
 		}
@@ -28,10 +34,13 @@ namespace CodeWalriiNotify
 			Link = "";
 		}
 
-		public PostMeta(String Subject, String Poster, String Body, DateTime Time, String Link)
+		public PostMeta(string Subject, string TopicName, uint TopicID, string Poster, uint PosterID, string Body, DateTime Time, string Link)
 		{
 			this.Subject = Subject;
+			this.Topic = TopicName;
+			this.TopicID = TopicID;
 			this.Poster = Poster;
+			this.PosterID = PosterID;
 			this.Body = Body;
 			this.Time = Time;
 			this.Link = Link;

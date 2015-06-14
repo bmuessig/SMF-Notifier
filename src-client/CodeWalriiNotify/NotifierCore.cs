@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Gtk;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace CodeWalriiNotify
 {
@@ -27,7 +28,7 @@ namespace CodeWalriiNotify
 		private BackgroundWorker asyncThread;
 
 		// The informations about the API
-		private APIMeta apiInfo;
+		private APIInfoQueryMeta apiInfo;
 
 		// The visual notificator
 		private Notificator notificator;
@@ -138,7 +139,7 @@ namespace CodeWalriiNotify
 		protected void AsyncThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
 			Application.Invoke(delegate {
-				mainWindow.Title = MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0), "Post Notifier - Synchronizing... (Almost done, hold on!)");
+				mainWindow.Title = MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0), "Synchronizing... (Almost done, hold on!)");
 
 				var result = (RefreshResult)e.Result;
 				bool postRefreshSuccess = true;
@@ -152,7 +153,7 @@ namespace CodeWalriiNotify
 				if (infoQuerySuccess) {
 					mainWindow.Title = postRefreshSuccess ? MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0)) : MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0), "Post Notifier - Refreshing failed!");
 				} else {
-					mainWindow.Title = MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0), "Post Notifier - Invalid API, please check your settings!");
+					mainWindow.Title = MyToolbox.BuildTitle(settings, (NewPosts != null ? (uint)NewPosts.Length : 0), "Invalid API, please check your settings!");
 					PauseTimer();
 				}
 			});
@@ -283,7 +284,7 @@ namespace CodeWalriiNotify
 		protected APIQueryResult DoAPIInfoQuery(SettingsData Settings, uint MaxTries = 3, uint Sleep = 500)
 		{
 			byte repeat = 0;
-			APIMeta apiMeta = null;
+			APIInfoQueryMeta apiMeta = null;
 			Exception lastErr = null;
 
 			while (apiMeta == null && repeat < MaxTries) {
@@ -293,7 +294,7 @@ namespace CodeWalriiNotify
 				object result = GetAPIInfo(Settings, out success); 
 
 				if (success) {
-					apiMeta = (APIMeta)result;
+					apiMeta = (APIInfoQueryMeta)result;
 				} else {
 					lastErr = (Exception)result;
 				}
@@ -316,7 +317,7 @@ namespace CodeWalriiNotify
 				String js = FeedRetriever.RetrieveFeedInfo(Settings); // We need to request info from the API
 
 				Success = true;
-				return new APIMeta(js);
+				return new APIInfoQueryMeta(js);
 			} catch (Exception ex) {
 				Success = false;
 				return ex;
@@ -335,7 +336,7 @@ namespace CodeWalriiNotify
 			try {
 				String js = FeedRetriever.RetrieveFeedData(Settings); // We need to request data from the API
 
-				var query = new APIQueryMeta(js); // The .ctor of the APIQueryMeta class will parse the raw Json
+				var query = new APIPostQueryMeta(js); // The .ctor of the APIQueryMeta class will parse the raw Json
 
 				if (query.Success) { // Was the query successful
 					if (query.Changed > LastChanged) { // Was the last update behind the newest change
@@ -343,16 +344,25 @@ namespace CodeWalriiNotify
 						var newPosts = new List<PostMeta>(); // List of the new posts
 
 						foreach (PostMeta post in query.Posts) { // Go through the posts
-							var pw = new PostWidget(); // Create new PostWidget
-							pw.Topic = post.Subject; // Set the conent
-							pw.Body = post.Body;
-							pw.Poster = post.Poster;
-							pw.Time = post.Time.ToString();
-							pw.URL = post.Link;
-							widgets.Add(pw);
+							if ((Settings.HideIgnoredPosts ? !CheckIgnorePost(post, Settings) : true)) {
+								var pw = new PostWidget(); // Create new PostWidget
+								pw.Topic = post.Subject; // Set the content
+								pw.Body = post.Body;
+								pw.Poster = post.Poster;
+								pw.Time = post.Time.ToString();
+								pw.URL = post.Link;
+								widgets.Add(pw);
 
-							if (post.Time > LastPostTime) // If the post was never than the last seen post...
-								newPosts.Add(post); //... add it to the list of new posts
+							}
+
+							if (post.Time > LastPostTime) { // If the post was never than the last seen post...
+								if (!Settings.HideIgnoredPosts) {
+									if (!CheckIgnorePost(post, Settings)) // ... check if we need to ignore it and ...
+										newPosts.Add(post); //... add it to the list of new posts eventually
+								} else {
+									newPosts.Add(post); //... and add it to the list of new posts eventually
+								}
+							}
 						}
 
 						return new PostRefreshResult(query, newPosts.ToArray(), widgets); // Return successful result
@@ -363,6 +373,53 @@ namespace CodeWalriiNotify
 			} catch (Exception ex) {
 				return new PostRefreshResult(ex); // Return possible exception when parsing and handling with the query
 			}
+		}
+
+		protected bool CheckIgnorePost(PostMeta Post, SettingsData Settings)
+		{
+			foreach (IgnoredEntity user in Settings.IgnoredUsers) { // ... check if we ignore it ...
+				if (user.ID > 0) {
+					if (Post.PosterID == user.ID) {
+						return true;
+					}
+				} else if (user.RegexMatch) {
+					try {
+						var nameMatcher = new Regex(user.Name);
+						if (nameMatcher.Match(Post.Poster).Success) {
+							return true;
+						}
+					} catch {
+
+					}
+				} else {
+					if (Post.Poster == user.Name) {
+						return true;
+					}
+				}
+			}
+				
+			foreach (IgnoredEntity topic in Settings.IgnoredTopics) { // ... check if we ignore it - again ...
+				if (topic.ID > 0) {
+					if (Post.TopicID == topic.ID) {
+						return true;
+					}
+				} else if (topic.RegexMatch) {
+					try {
+						var nameMatcher = new Regex(topic.Name);
+						if (nameMatcher.Match(Post.Topic).Success) {
+							return true;
+						}
+					} catch {
+
+					}
+				} else {
+					if (Post.Topic == topic.Name) {
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -422,7 +479,7 @@ namespace CodeWalriiNotify
 			// How many tries did it take to retrieve the data
 			public Exception Exception;
 			// The thrown exceptions, on failure
-			public APIMeta Meta;
+			public APIInfoQueryMeta Meta;
 			// The retrieved data, on success
 
 			public APIQueryResult(Exception Exception, uint Tries)
@@ -433,7 +490,7 @@ namespace CodeWalriiNotify
 				Meta = null;
 			}
 
-			public APIQueryResult(APIMeta Meta, uint Tries)
+			public APIQueryResult(APIInfoQueryMeta Meta, uint Tries)
 			{
 				Success = Meta != null;
 				Exception = null;
@@ -455,7 +512,7 @@ namespace CodeWalriiNotify
 			// What was the exception (on failure)
 			public List<Widget> Widgets;
 			// The list of widgets (on refresh and success)
-			public APIQueryMeta Meta;
+			public APIPostQueryMeta Meta;
 			// The raw parsed APIQueryStruct from the API
 			public PostMeta[] NewPosts;
 			// The list of new posts (on success and refresh)
@@ -480,7 +537,7 @@ namespace CodeWalriiNotify
 				Widgets = null;
 			}
 
-			public PostRefreshResult(APIQueryMeta Meta, PostMeta[] NewPosts, List<Widget> Widgets)
+			public PostRefreshResult(APIPostQueryMeta Meta, PostMeta[] NewPosts, List<Widget> Widgets)
 			{
 				Success = Meta != null;
 				Refresh = Widgets != null;

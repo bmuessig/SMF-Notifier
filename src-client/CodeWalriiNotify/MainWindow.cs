@@ -34,8 +34,10 @@ namespace CodeWalriiNotify
 
 		protected void OnFocusInEvent(object o, FocusInEventArgs args)
 		{
-			if (notifier != null)
+			if (notifier != null) {
 				notifier.MarkPostsRead();
+				this.Title = MyToolbox.BuildTitle(SettingsProvider.CurrentSettings, (notifier.NewPosts != null ? (uint)notifier.NewPosts.Length : 0));
+			}
 		}
 
 		protected void Notifier_TimerRunningChanged(object sender, NotifierCore.TimerRunningEventArgs e)
@@ -50,6 +52,7 @@ namespace CodeWalriiNotify
 			this.Present();
 			this.mainRecyclerview.ScrollUp();
 			this.notifier.MarkPostsRead();
+			this.Title = MyToolbox.BuildTitle(SettingsProvider.CurrentSettings, (notifier.NewPosts != null ? (uint)notifier.NewPosts.Length : 0));
 		}
 
 		public void Shutdown()

@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
-	public class APIMeta
+	public class APIStylesQueryMeta
 	{
 		public const uint API_MAJOR = 4;
 		public const uint API_MIN_MINOR = 3;
@@ -16,7 +16,7 @@ namespace CodeWalriiNotify
 
 		public DefaultStruct Defaults { get; private set; }
 
-		public APIMeta(string Json)
+		public APIStylesQueryMeta(string Json)
 		{
 			try {
 

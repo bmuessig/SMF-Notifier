@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.Collections.Generic;
+using Gtk;
 
 namespace CodeWalriiNotify
 {
@@ -30,12 +32,33 @@ namespace CodeWalriiNotify
 		public static string GetVersionString()
 		{
 			Version ver = Assembly.GetExecutingAssembly().GetName().Version;
-			return string.Format("{0}.{1}", ver.Major.ToString(), ver.Minor.ToString());
+			return string.Format("{0}.{1}", ver.Major, ver.Minor);
 		}
 
 		public static string BuildTitle(SettingsData Settings, uint UnreadPosts, string CustomStatus = "")
 		{
-			return Settings.FeedTitle + (Settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+			return Settings.FeedTitle + (Settings.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} Unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+		}
+
+		public static List<string> ListStoreToList(ListStore Model)
+		{
+			if (Model == null)
+				return null;
+			if (Model.NColumns != 1)
+				return null;
+
+			var list = new List<string>();
+			foreach (object[] row in Model) {
+				if (row.Length == 1) {
+					var str = row[0] as string;
+					if (str != null)
+						list.Add(str);
+					else
+						return null;
+				} else
+					return null;
+			}
+			return list;
 		}
 	}
 }

@@ -4,9 +4,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CodeWalriiNotify
 {
-	public class APIQueryMeta
+	public class APIPostQueryMeta
 	{
-		public APIQueryMeta(string Json)
+		public APIPostQueryMeta(string Json)
 		{
 			try {
 				dynamic apiObj = JObject.Parse(Json);
@@ -30,7 +30,7 @@ namespace CodeWalriiNotify
 						dynamic starterFields = postObj.starter;
 						dynamic boardFields = postObj.board;
 
-						var post = new PostMeta((string)postFields.subject, (string)posterFields.name, (string)postFields.body, UnixTimeStampToDateTime((ulong)postFields.time), (string)postFields.link);
+						var post = new PostMeta((string)postFields.subject, (string)topicFields.subject, (uint)topicFields.id, (string)posterFields.name, (uint)posterFields.id, (string)postFields.body, UnixTimeStampToDateTime((ulong)postFields.time), (string)postFields.link);
 						posts.Add(post);
 					}
 						
@@ -60,7 +60,7 @@ namespace CodeWalriiNotify
 			}
 		}
 
-		public APIQueryMeta(bool Success, bool Cached, uint Timestamp, uint Changed, APIException[] Exceptions, PostMeta[] Posts)
+		public APIPostQueryMeta(bool Success, bool Cached, uint Timestamp, uint Changed, APIException[] Exceptions, PostMeta[] Posts)
 		{
 			this.Success = Success;
 			this.Cached = Cached;

@@ -25,6 +25,21 @@ namespace CodeWalriiNotify
 			set;
 		}
 
+		public IgnoredEntity[] IgnoredTopics {
+			get;
+			set;
+		}
+
+		public IgnoredEntity[] IgnoredUsers {
+			get;
+			set;
+		}
+
+		public bool HideIgnoredPosts {
+			get;
+			set;
+		}
+
 		public bool AudioNotifyEnable {
 			get;
 			set;
@@ -131,13 +146,16 @@ namespace CodeWalriiNotify
 			FeedTitle = "CodeWalr.us";
 			QueryInterval = 50;
 			MaximumPosts = 10;
+			IgnoredTopics = new IgnoredEntity[]{ };
+			IgnoredUsers = new IgnoredEntity[]{ };
+			HideIgnoredPosts = false;
 			AudioNotifyEnable = false;
 			AudioNotifyUseCustomAudio = false;
 			AudioNotifyFile = "";
 			UseCustomIcon = true;
 			IconFile = "walrii.gif";
 			VisualNotifyEnable = true;
-			VisualNotifyVerticalAlignment = 1.0f;
+			VisualNotifyVerticalAlignment = 0.9f;
 			VisualNotifyDoAnimate = true;
 			VisualNotifyAnimationInterval = 10;
 			VisualNotifyTimeout = 10;
@@ -150,7 +168,27 @@ namespace CodeWalriiNotify
 			AuthorForecolor = new Color(198, 198, 198);
 			TitleFont = "Tahoma 16";
 			DetailFont = "Tahoma 11";
-			BodyFormat = "<html>\n<head>\n<style>\nimg{\nmax-width:100%;\nheight:auto;\n}\n\na{\ntext-decoration:none;\n}\n</style>\n</head>\n<body>\n<post>\n</body>\n</html>";
+			BodyFormat = @"<html>
+<head>
+<style>
+body {
+ font-family: 'Tahoma';
+}
+
+img {
+ max-width:100%;
+ height:auto;
+}
+
+a {
+ text-decoration:none;
+}
+</style>
+</head>
+<body>
+<post>
+</body>
+</html>";
 		}
 	}
 }

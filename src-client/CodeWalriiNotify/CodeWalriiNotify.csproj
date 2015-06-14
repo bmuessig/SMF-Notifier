@@ -9,7 +9,7 @@
     <AssemblyName>CodeWalriiNotify</AssemblyName>
     <StartupObject>CodeWalriiNotify.MainClass</StartupObject>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ReleaseVersion>1.2</ReleaseVersion>
+    <ReleaseVersion>1.3</ReleaseVersion>
     <ApplicationIcon>Bell.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -83,20 +83,22 @@
     <Compile Include="gtk-gui\CodeWalriiNotify.RecyclerView.cs" />
     <Compile Include="SettingsProvider.cs" />
     <Compile Include="HTMLRenderer.cs" />
-    <Compile Include="APIQueryMeta.cs" />
     <Compile Include="NotifierCore.cs" />
     <Compile Include="SettingsData.cs" />
     <Compile Include="SettingsDialog.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.SettingsDialog.cs" />
     <Compile Include="WindowsTools.cs" />
     <Compile Include="APIException.cs" />
-    <Compile Include="APIMeta.cs" />
     <Compile Include="NotificationWindow.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.NotificationWindow.cs" />
     <Compile Include="Notificator.cs" />
     <Compile Include="MyToolbox.cs" />
     <Compile Include="VersionDialog.cs" />
     <Compile Include="gtk-gui\CodeWalriiNotify.VersionDialog.cs" />
+    <Compile Include="APIPostQueryMeta.cs" />
+    <Compile Include="APIStylesQueryMeta.cs" />
+    <Compile Include="APIInfoQueryMeta.cs" />
+    <Compile Include="IgnoredEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -50,7 +50,7 @@ namespace CodeWalriiNotify
 			}
 				
 			if (settings.VisualNotifyEnable && !IsMainWindowVisible) {
-				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new posts", (Posts.Length - 1).ToString()), winMain, notifier);
+				var nwin = new NotificationWindow(Posts[0].Subject, string.Format("and {0} other new posts", (Posts.Length - 1)), winMain, notifier);
 				nwin.ShowMe();
 			}
 

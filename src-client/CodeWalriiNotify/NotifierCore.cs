@@ -1,5 +1,5 @@
 ﻿/*	NotifierCore.cs
- *  Processes the data async, 
+ *  The heart of the notifier :walrii:
  * 
  *  (c) 2015 Benedikt Müssig <muessigb.net>
  *  Licenced under the terms of the MIT Licence
@@ -344,9 +344,10 @@ namespace CodeWalriiNotify
 						var newPosts = new List<PostMeta>(); // List of the new posts
 
 						foreach (PostMeta post in query.Posts) { // Go through the posts
-							bool hidePost = CheckIgnorePost(post, Settings);
+							bool ignorePost = CheckIgnorePost(post, Settings);
+							bool hidePost = ignorePost && Settings.Content.HideIgnoredPosts;
 
-							if (!hidePost || !Settings.Content.HideIgnoredPosts) {
+							if (!hidePost) {
 								var pw = new PostWidget(); // Create new PostWidget
 								pw.Topic = post.Subject; // Set the content
 								pw.Body = post.Body;
@@ -356,7 +357,7 @@ namespace CodeWalriiNotify
 								widgets.Add(pw);
 							}
 
-							if (!hidePost) {
+							if (!ignorePost) {
 								if (post.Time > LastPostTime) // If the post was never than the last seen post...
 									newPosts.Add(post); //... and add it to the list of new posts eventually
 							}

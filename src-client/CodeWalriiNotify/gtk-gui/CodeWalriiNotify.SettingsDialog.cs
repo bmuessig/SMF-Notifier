@@ -1115,6 +1115,7 @@ namespace CodeWalriiNotify
 			// Container child contentTable.Gtk.Table+TableChild
 			this.ignUsersBtnBox = new global::Gtk.HButtonBox ();
 			this.ignUsersBtnBox.Name = "ignUsersBtnBox";
+			this.ignUsersBtnBox.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 			// Container child ignUsersBtnBox.Gtk.ButtonBox+ButtonBoxChild
 			this.ignUsersAddBtn = new global::Gtk.Button ();
 			this.ignUsersAddBtn.CanFocus = true;

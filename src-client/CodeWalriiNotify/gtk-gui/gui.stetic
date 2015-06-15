@@ -1691,6 +1691,7 @@
                               <widget class="Gtk.HButtonBox" id="ignUsersBtnBox">
                                 <property name="MemberName" />
                                 <property name="Size">2</property>
+                                <property name="LayoutStyle">Spread</property>
                                 <child>
                                   <widget class="Gtk.Button" id="ignUsersAddBtn">
                                     <property name="MemberName" />

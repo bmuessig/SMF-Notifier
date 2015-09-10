@@ -74,7 +74,6 @@ namespace CodeWalriiNotify
 			w2.Fill = false;
 			// Container child horizontalSplit.Gtk.Box+BoxChild
 			this.mainRecyclerview = new global::CodeWalriiNotify.RecyclerView ();
-			this.mainRecyclerview.HeightRequest = 500;
 			this.mainRecyclerview.Events = ((global::Gdk.EventMask)(256));
 			this.mainRecyclerview.Name = "mainRecyclerview";
 			this.mainRecyclerview.VScroll = 0D;

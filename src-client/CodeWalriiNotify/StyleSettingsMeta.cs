@@ -35,12 +35,27 @@ namespace CodeWalriiNotify
 			set;
 		}
 
+		public Color IconBackcolor {
+			get;
+			set;
+		}
+
+		public Color IconForecolor {
+			get;
+			set;
+		}
+
 		public string TitleFont {
 			get;
 			set;
 		}
 
 		public string DetailFont {
+			get;
+			set;
+		}
+
+		public string IconFont {
 			get;
 			set;
 		}
@@ -64,8 +79,11 @@ namespace CodeWalriiNotify
 			BodyBackcolor = new Color(250, 250, 250);
 			FooterBackcolor = new Color(250, 250, 250);
 			AuthorForecolor = new Color(198, 198, 198);
+			IconBackcolor = new Color(255, 69, 0);
+			IconForecolor = new Color(0, 0, 0);
 			TitleFont = "Tahoma 16";
 			DetailFont = "Tahoma 11";
+			IconFont = "Sans 10";
 			BodyFormat = @"<html>
 <head>
 <style>

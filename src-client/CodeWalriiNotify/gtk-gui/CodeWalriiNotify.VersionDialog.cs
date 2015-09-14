@@ -178,7 +178,7 @@ namespace CodeWalriiNotify
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 400;
-			this.DefaultHeight = 240;
+			this.DefaultHeight = 280;
 			this.Show ();
 			this.okButton.Clicked += new global::System.EventHandler (this.OnOkButtonClicked);
 		}

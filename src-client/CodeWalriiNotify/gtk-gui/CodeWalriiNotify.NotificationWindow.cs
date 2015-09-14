@@ -20,7 +20,7 @@ namespace CodeWalriiNotify
 		
 		private global::Gtk.HButtonBox actionButtonBox;
 		
-		private global::Gtk.Button dismissButton;
+		private global::Gtk.Button closeButton;
 		
 		private global::Gtk.Button viewButton;
 
@@ -84,14 +84,14 @@ namespace CodeWalriiNotify
 			this.actionButtonBox.Name = "actionButtonBox";
 			this.actionButtonBox.BorderWidth = ((uint)(6));
 			// Container child actionButtonBox.Gtk.ButtonBox+ButtonBoxChild
-			this.dismissButton = new global::Gtk.Button ();
-			this.dismissButton.Name = "dismissButton";
-			this.dismissButton.UseUnderline = true;
-			this.dismissButton.FocusOnClick = false;
-			this.dismissButton.Relief = ((global::Gtk.ReliefStyle)(2));
-			this.dismissButton.Label = global::Mono.Unix.Catalog.GetString ("Dismiss");
-			this.actionButtonBox.Add (this.dismissButton);
-			global::Gtk.ButtonBox.ButtonBoxChild w5 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.actionButtonBox [this.dismissButton]));
+			this.closeButton = new global::Gtk.Button ();
+			this.closeButton.Name = "dismissButton";
+			this.closeButton.UseUnderline = true;
+			this.closeButton.FocusOnClick = false;
+			this.closeButton.Relief = ((global::Gtk.ReliefStyle)(2));
+			this.closeButton.Label = global::Mono.Unix.Catalog.GetString ("Dismiss");
+			this.actionButtonBox.Add (this.closeButton);
+			global::Gtk.ButtonBox.ButtonBoxChild w5 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.actionButtonBox [this.closeButton]));
 			w5.Secondary = true;
 			w5.Expand = false;
 			w5.Fill = false;
@@ -123,7 +123,7 @@ namespace CodeWalriiNotify
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.MotionNotifyEvent += new global::Gtk.MotionNotifyEventHandler (this.OnMotionNotifyEvent);
-			this.dismissButton.Clicked += new global::System.EventHandler (this.OnDismissButtonClicked);
+			this.closeButton.Clicked += new global::System.EventHandler (this.OnDismissButtonClicked);
 			this.viewButton.Clicked += new global::System.EventHandler (this.OnViewButtonClicked);
 		}
 	}

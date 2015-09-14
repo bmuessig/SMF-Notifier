@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Collections.Generic;
 using Gtk;
+using Gdk;
+using System.IO;
 
 namespace CodeWalriiNotify
 {
@@ -94,6 +96,42 @@ namespace CodeWalriiNotify
 					return null;
 			}
 			return list;
+		}
+
+		public static Pixbuf ImageToPixbuf(System.Drawing.Image Image)
+		{
+			using (var stream = new MemoryStream()) {
+				Image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+				Image.Save("image.png");
+				stream.Position = 0;
+				return new Pixbuf(stream);
+			}
+		}
+
+		public static Gdk.Color DrawingToGdkColor(System.Drawing.Color Color)
+		{
+			return new Gdk.Color(Color.R, Color.G, Color.B);
+		}
+
+		public static System.Drawing.Color GdkToDrawingColor(Gdk.Color Color)
+		{
+			return System.Drawing.Color.FromArgb(Color.Red * 255 / 65535, Color.Green * 255 / 65535, Color.Blue);
+		}
+
+		public static Pango.FontDescription DrawingToPangoFont(System.Drawing.Font Font)
+		{
+			return Pango.FontDescription.FromString(string.Format("{0} {1}", Font.Name, Font.SizeInPoints));
+		}
+
+		public static System.Drawing.Font PangoToDrawingFont(Pango.FontDescription Font)
+		{
+			int size = (int)(Font.Size / Pango.Scale.PangoScale);
+			return new System.Drawing.Font(Font.Family, size);
+		}
+
+		public static int Map(int x, int in_min, int in_max, int out_min, int out_max)
+		{
+			return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 		}
 	}
 }

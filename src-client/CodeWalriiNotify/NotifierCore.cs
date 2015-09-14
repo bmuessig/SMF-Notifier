@@ -13,6 +13,7 @@ using System.ComponentModel;
 using Gtk;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace CodeWalriiNotify
 {
@@ -67,7 +68,7 @@ namespace CodeWalriiNotify
 		/// <param name="MainWindow">Main window</param>
 		/// <param name="PostsView">Posts view</param>
 		/// <param name="Settings">Application settings</param>
-		public NotifierCore(MainWindow MainWindow, RecyclerView PostsView, SettingsData Settings)
+		public NotifierCore(MainWindow MainWindow, RecyclerView PostsView, SettingsData Settings, System.Drawing.Image Icon)
 		{
 			mainWindow = MainWindow;
 			postsView = PostsView;
@@ -81,7 +82,7 @@ namespace CodeWalriiNotify
 			lastUnreadPostTime = DateTime.Now;
 			lastPostTime = DateTime.Now;
 
-			notificator = new Notificator(Settings, MainWindow, this);
+			notificator = new Notificator(Settings, MainWindow, this, Icon);
 
 			TimerAlive = false;
 		}
@@ -210,6 +211,12 @@ namespace CodeWalriiNotify
 					lastPostTime = lastUnreadPostTime;
 			} else
 				lastPostTime = lastUnreadPostTime;
+			SetDefaultIcon();
+		}
+
+		public void SetDefaultIcon()
+		{
+			notificator.UpdateIcon(0);
 		}
 
 		/// <summary>

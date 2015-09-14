@@ -2,6 +2,7 @@
 using Gtk;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Drawing;
 
 namespace CodeWalriiNotify
 {
@@ -23,12 +24,13 @@ namespace CodeWalriiNotify
 			this.Present();
 
 			string iconFileName = SettingsProvider.CurrentSettings.General.IconFile;
-			this.Icon = SettingsProvider.CurrentSettings.General.UseCustomIcon ? new Gdk.Pixbuf(iconFileName) : Gdk.Pixbuf.LoadFromResource("Bell.png");
+			System.Drawing.Image icon = SettingsProvider.CurrentSettings.General.UseCustomIcon ? System.Drawing.Image.FromFile(iconFileName) : System.Drawing.Image.FromStream(this.GetType().Assembly.GetManifestResourceStream("Bell.png"));
 
-			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings);
+			notifier = new NotifierCore(this, mainRecyclerview, SettingsProvider.CurrentSettings, icon);
 			notifier.TimerRunningChanged += Notifier_TimerRunningChanged;
 
 			notifier.Run();
+			notifier.SetDefaultIcon();
 			notifier.RefreshPosts();
 		}
 

@@ -45,6 +45,8 @@ namespace CodeWalriiNotify
 			audioNotifyEnabledCb.Active = CurrentSettings.Notifications.AudioNotifyEnable;
 			audioNotifyCustomAudioCb.Active = CurrentSettings.Notifications.AudioNotifyUseCustomAudio;
 			audioNotifyFileSel.SetFilename(CurrentSettings.Notifications.AudioNotifyFile);
+			taskbarIconUnreadEnabledCb.Active = CurrentSettings.Notifications.TaskbarIconUnreadCounterEnable;
+			taskbarIconUnreadPositionCbx.Active = (int)CurrentSettings.Notifications.TaskbarIconUnreadCounterAlignment;
 
 			// Colors
 			headerBgColorBtn.Color = CurrentSettings.Styles.HeaderBackcolor;
@@ -53,10 +55,13 @@ namespace CodeWalriiNotify
 			bodyBgColorBtn.Color = CurrentSettings.Styles.BodyBackcolor;
 			footerBgColorBtn.Color = CurrentSettings.Styles.FooterBackcolor;
 			authorFgColorBtn.Color = CurrentSettings.Styles.AuthorForecolor;
+			iconBgColorBtn.Color = CurrentSettings.Styles.IconBackcolor;
+			iconFgColorBtn.Color = CurrentSettings.Styles.IconForecolor;
 
 			// Fonts
 			titleFontBtn.SetFontName(CurrentSettings.Styles.TitleFont);
 			detailFontBtn.SetFontName(CurrentSettings.Styles.DetailFont);
+			iconFontBtn.SetFontName(CurrentSettings.Styles.IconFont);
 			bodyFormatTxt.Buffer.Text = CurrentSettings.Styles.BodyFormat;
 
 			// Rendering
@@ -90,6 +95,8 @@ namespace CodeWalriiNotify
 			CurrentSettings.Notifications.AudioNotifyEnable = audioNotifyEnabledCb.Active;
 			CurrentSettings.Notifications.AudioNotifyUseCustomAudio = audioNotifyCustomAudioCb.Active;
 			CurrentSettings.Notifications.AudioNotifyFile = audioNotifyFileSel.Filename;
+			CurrentSettings.Notifications.TaskbarIconUnreadCounterEnable = taskbarIconUnreadEnabledCb.Active;
+			CurrentSettings.Notifications.TaskbarIconUnreadCounterAlignment = (Align)taskbarIconUnreadPositionCbx.Active;
 
 			// Colors
 			CurrentSettings.Styles.HeaderBackcolor = headerBgColorBtn.Color;
@@ -98,10 +105,13 @@ namespace CodeWalriiNotify
 			CurrentSettings.Styles.BodyBackcolor = bodyBgColorBtn.Color;
 			CurrentSettings.Styles.FooterBackcolor = footerBgColorBtn.Color;
 			CurrentSettings.Styles.AuthorForecolor = authorFgColorBtn.Color;
+			CurrentSettings.Styles.IconBackcolor = iconBgColorBtn.Color;
+			CurrentSettings.Styles.IconForecolor = iconFgColorBtn.Color;
 
 			// Fonts
 			CurrentSettings.Styles.TitleFont = titleFontBtn.FontName;
 			CurrentSettings.Styles.DetailFont = detailFontBtn.FontName;
+			CurrentSettings.Styles.IconFont = iconFontBtn.FontName;
 			CurrentSettings.Styles.BodyFormat = bodyFormatTxt.Buffer.Text;
 
 			// Rendering

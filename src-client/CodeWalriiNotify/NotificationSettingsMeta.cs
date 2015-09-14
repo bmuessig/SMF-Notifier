@@ -44,6 +44,16 @@ namespace CodeWalriiNotify
 			set;
 		}
 
+		public bool TaskbarIconUnreadCounterEnable {
+			get;
+			set;
+		}
+
+		public Align TaskbarIconUnreadCounterAlignment {
+			get;
+			set;
+		}
+
 		public NotificationSettingsMeta()
 		{
 			AudioNotifyEnable = false;
@@ -54,6 +64,8 @@ namespace CodeWalriiNotify
 			VisualNotifyDoAnimate = true;
 			VisualNotifyAnimationInterval = 10;
 			VisualNotifyTimeout = 10;
+			TaskbarIconUnreadCounterEnable = true;
+			TaskbarIconUnreadCounterAlignment = Align.BottomRight;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AssemblyName>CodeWalriiNotify</AssemblyName>
     <StartupObject>CodeWalriiNotify.MainClass</StartupObject>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ReleaseVersion>1.3</ReleaseVersion>
+    <ReleaseVersion>1.5</ReleaseVersion>
     <ApplicationIcon>Bell.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -63,9 +63,6 @@
     <EmbeddedResource Include="..\..\..\..\..\Pictures\Bell.png">
       <LogicalName>Bell.png</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Chime.wav">
-      <LogicalName>Chime.wav</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -99,11 +96,15 @@
     <Compile Include="APIStylesQueryMeta.cs" />
     <Compile Include="APIInfoQueryMeta.cs" />
     <Compile Include="IgnoredEntity.cs" />
+    <EmbeddedResource Include="Chime.wav">
+      <LogicalName>Chime.wav</LogicalName>
+    </EmbeddedResource>
     <Compile Include="ContentSettingsMeta.cs" />
     <Compile Include="StyleSettingsMeta.cs" />
     <Compile Include="NotificationSettingsMeta.cs" />
     <Compile Include="GeneralSettingsMeta.cs" />
     <Compile Include="QuerySettingsMeta.cs" />
+    <Compile Include="Align.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

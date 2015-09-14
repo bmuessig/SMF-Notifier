@@ -102,7 +102,6 @@ namespace CodeWalriiNotify
 		{
 			using (var stream = new MemoryStream()) {
 				Image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-				Image.Save("image.png");
 				stream.Position = 0;
 				return new Pixbuf(stream);
 			}

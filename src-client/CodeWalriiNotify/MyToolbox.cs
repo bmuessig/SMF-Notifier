@@ -49,7 +49,7 @@ namespace CodeWalriiNotify
 
 		public static string BuildTitle(SettingsData Settings, uint UnreadPosts, string CustomStatus = "")
 		{
-			return Settings.General.FeedTitle + (Settings.General.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} Unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
+			return Settings.General.FeedTitle + (Settings.General.FeedTitle.Length > 0 ? " " : "") + "Post Notifier" + (UnreadPosts > 0 ? string.Format(" - {0} unread posts", UnreadPosts) : "") + (CustomStatus.Length > 0 ? " - Synchronizing..." : "");
 		}
 
 		public static string StripHTML(string Input)

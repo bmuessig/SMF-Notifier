@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("CodeWalriiNotify")]
-[assembly: AssemblyDescription("Notification program for SMF based websites")]
+[assembly: AssemblyTitle("SMF-Notifier")]
+[assembly: AssemblyDescription("Notification program for Simple Machines Forums")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("(c) 2015 Benedikt Müssig (DarkestEx)")]
+[assembly: AssemblyCopyright("(c) 2017 Benedikt Müssig")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

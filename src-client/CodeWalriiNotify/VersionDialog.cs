@@ -20,7 +20,7 @@ namespace CodeWalriiNotify
 
 			versionLbl.Text = MyToolbox.GetVersionString();
 			dateLbl.Text = MyToolbox.GetBuildDate().ToString();
-			copyrightLbl.Text = @"Copyright © 2015 by Benedikt Müssig (bmuessig.eu)
+			copyrightLbl.Text = @"Copyright © 2017 by Benedikt Müssig (bmuessig.eu)
 Source code and binary form licenced under the terms of the MIT Licence.
 
 Live long and prosper!";

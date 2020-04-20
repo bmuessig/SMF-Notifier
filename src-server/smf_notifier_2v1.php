@@ -6,13 +6,13 @@
 
 /* CHANGE YOUR SETTINGS BELOW */
 
-define("BASE_SITE_URL", "http://codewalr.us");
+define("BASE_SITE_URL", "https://codewalr.us");
 define("SITE_INDEX_URL", BASE_SITE_URL . "/index.php");
 define("SITE_TITLE", "CodeWalr.us");
 define("TMP_CACHE_FILE", "smf-notify_cache_" . md5(BASE_SITE_URL) . ".db");
 define("TMP_INFO_FILE", "smf-notify_info_" . md5(BASE_SITE_URL) . ".db");
 define("CACHE_TIME", 40);
-define("CACHE_POSTS", 50);
+define("CACHE_POSTS", 10);
 define("DEFAULT_MAX_POSTS", 10);
 define("DEFAULT_STRIPHTML_MODE", "NONE");
 
@@ -33,7 +33,7 @@ define("CLIENT_BODY_ANTIALIAS", true);
 
 // Static internal constants
 define("API_VERSION_MAJOR", 4);
-define("API_VERSION_MINOR", 6);
+define("API_VERSION_MINOR", 7);
 define("API_VERSION_REV", 0);
 
 // Internal Constants
@@ -170,7 +170,7 @@ date_default_timezone_set("UTC");
 							));
 	}
 } else {
-	$json = json_encode(array(	"whoami"		=> "SMF Notifier Query API",
+	$json = json_encode(array(	"whoami"		=> "SMF 2.1 Notifier Query API (compatibility mode) by bmuessig",
 								"version"		=> array(API_VERSION_MAJOR, API_VERSION_MINOR, API_VERSION_REV),
 								"configuration"	=> array(	"cache_ttl" 		=> CACHE_TIME,
 															"cache_posts"		=> CACHE_POSTS,
@@ -220,7 +220,7 @@ function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 														"time"		=> ToUnixTime(strval($post->pubDate)), // req'd
 														"link"		=> strval($post->link) // req'd
 												),
-								"poster"	=> array(	"name"	=> "SMF 2.1 <3", // req'd
+								"poster"	=> array(	"name"	=> "Author deprecated", // req'd
 														"id"	=> 0, // req'd
 														"link"	=> ""
 													),
@@ -228,11 +228,11 @@ function UltraSMFParser($rawXml, $maxPostCount, $htmlMode)
 														"id"		=> $topicId, // req'd
 														"link"		=> $topicUrl // req'd
 													),
-								"starter"	=> array(	"name"		=> "Unknown",
+								"starter"	=> array(	"name"		=> "OP deprecated",
 														"id"		=> 0,
 														"link"		=> ""
 													),
-								"board"		=> array(	"name"		=> "Unknown",
+								"board"		=> array(	"name"		=> "Board deprecated",
 														"id"		=> 0,
 														"link"		=> ""
 													)

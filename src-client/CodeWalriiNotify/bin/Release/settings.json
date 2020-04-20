@@ -1,0 +1,85 @@
+{
+  "General": {
+    "FeedTitle": "CodeWalr.us",
+    "UseCustomIcon": true,
+    "IconFile": "C:\\Users\\Benedikt\\Documents\\Visual Studio 2010\\Projects\\SMF-Notifier\\src-client\\CodeWalriiNotify\\bin\\Release\\walrii.gif"
+  },
+  "Query": {
+    "FeedURL": "https://benedikt.cloud/experiments/cwnotify/",
+    "QueryInterval": 50,
+    "MaximumPosts": 10
+  },
+  "Content": {
+    "IgnoredTopics": [],
+    "IgnoredUsers": [],
+    "HideIgnoredPosts": false,
+    "MinimumWordcount": 0
+  },
+  "Notifications": {
+    "AudioNotifyEnable": false,
+    "AudioNotifyUseCustomAudio": false,
+    "AudioNotifyFile": "C:\\Users\\Benedikt\\Documents\\Visual Studio 2010\\Projects\\SMF-Notifier\\src-client\\CodeWalriiNotify\\bin\\Release",
+    "VisualNotifyEnable": true,
+    "VisualNotifyVerticalAlignment": 0.9,
+    "VisualNotifyDoAnimate": true,
+    "VisualNotifyAnimationInterval": 10,
+    "VisualNotifyTimeout": 10,
+    "TaskbarIconUnreadCounterEnable": true,
+    "TaskbarIconUnreadCounterAlignment": 3
+  },
+  "Styles": {
+    "HeaderBackcolor": {
+      "Pixel": 3131961357,
+      "Red": 28270,
+      "Green": 46260,
+      "Blue": 35209
+    },
+    "TimestampForecolor": {
+      "Pixel": 3131961357,
+      "Red": 55512,
+      "Green": 55512,
+      "Blue": 55512
+    },
+    "AuthorForecolor": {
+      "Pixel": 3131961357,
+      "Red": 50886,
+      "Green": 50886,
+      "Blue": 50886
+    },
+    "TitleForecolor": {
+      "Pixel": 3131961357,
+      "Red": 65535,
+      "Green": 65535,
+      "Blue": 65535
+    },
+    "BodyBackcolor": {
+      "Pixel": 3131961357,
+      "Red": 64250,
+      "Green": 64250,
+      "Blue": 64250
+    },
+    "FooterBackcolor": {
+      "Pixel": 3131961357,
+      "Red": 64250,
+      "Green": 64250,
+      "Blue": 64250
+    },
+    "IconBackcolor": {
+      "Pixel": 3131961357,
+      "Red": 65535,
+      "Green": 17733,
+      "Blue": 0
+    },
+    "IconForecolor": {
+      "Pixel": 3131961357,
+      "Red": 0,
+      "Green": 0,
+      "Blue": 0
+    },
+    "TitleFont": "Tahoma 16",
+    "DetailFont": "Tahoma 11",
+    "IconFont": "Sans 10",
+    "BodyUseAntiAlias": true,
+    "BodyFormat": "<html>\r\n<head>\r\n<style>\r\nbody {\r\n font-family: 'Tahoma';\r\n}\r\n\r\nimg {\r\n max-width:100%;\r\n height:auto;\r\n}\r\n\r\na {\r\n text-decoration:none;\r\n}\r\n</style>\r\n</head>\r\n<body>\r\n<post>\r\n</body>\r\n</html>"
+  }
+}

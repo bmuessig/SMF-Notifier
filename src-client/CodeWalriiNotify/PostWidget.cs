@@ -110,7 +110,7 @@ namespace CodeWalriiNotify
 			}
 
 			set {
-				posterLabel.Text = value;
+				posterLabel.Text = "";
 			}
 		}
 

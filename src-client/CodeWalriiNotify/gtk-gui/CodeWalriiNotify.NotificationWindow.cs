@@ -71,7 +71,7 @@ namespace CodeWalriiNotify
 			this.secondLabel.Name = "secondLabel";
 			this.secondLabel.Xpad = 5;
 			this.secondLabel.Xalign = 1F;
-			this.secondLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Poster");
+			this.secondLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Subtitle");
 			this.footerBox.Add (this.secondLabel);
 			this.vLayoutBox.Add (this.footerBox);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vLayoutBox [this.footerBox]));
@@ -85,11 +85,11 @@ namespace CodeWalriiNotify
 			this.actionButtonBox.BorderWidth = ((uint)(6));
 			// Container child actionButtonBox.Gtk.ButtonBox+ButtonBoxChild
 			this.closeButton = new global::Gtk.Button ();
-			this.closeButton.Name = "dismissButton";
+			this.closeButton.Name = "closeButton";
 			this.closeButton.UseUnderline = true;
 			this.closeButton.FocusOnClick = false;
 			this.closeButton.Relief = ((global::Gtk.ReliefStyle)(2));
-			this.closeButton.Label = global::Mono.Unix.Catalog.GetString ("Dismiss");
+			this.closeButton.Label = global::Mono.Unix.Catalog.GetString ("Close");
 			this.actionButtonBox.Add (this.closeButton);
 			global::Gtk.ButtonBox.ButtonBoxChild w5 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.actionButtonBox [this.closeButton]));
 			w5.Secondary = true;
@@ -101,7 +101,7 @@ namespace CodeWalriiNotify
 			this.viewButton.UseUnderline = true;
 			this.viewButton.FocusOnClick = false;
 			this.viewButton.Relief = ((global::Gtk.ReliefStyle)(2));
-			this.viewButton.Label = global::Mono.Unix.Catalog.GetString ("View");
+			this.viewButton.Label = global::Mono.Unix.Catalog.GetString ("Open Notifier");
 			this.actionButtonBox.Add (this.viewButton);
 			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.actionButtonBox [this.viewButton]));
 			w6.Position = 1;

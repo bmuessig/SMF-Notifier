@@ -31,7 +31,7 @@ namespace CodeWalriiNotify
 		public void NewPost(PostMeta Post)
 		{
 			if (settings.Notifications.VisualNotifyEnable && !IsMainWindowVisible) {
-				var nwin = new NotificationWindow(Post.Subject, "by " + Post.Poster, winMain, notifier);
+				var nwin = new NotificationWindow(Post.Subject, "", winMain, notifier);
 				nwin.ShowMe();
 			}
 				

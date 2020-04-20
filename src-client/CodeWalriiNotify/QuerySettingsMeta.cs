@@ -21,7 +21,7 @@ namespace CodeWalriiNotify
 
 		public QuerySettingsMeta()
 		{
-			FeedURL = "http://codewalr.us/notifier/";
+			FeedURL = "https://codewalr.us/notifier/";
 			QueryInterval = 50;
 			MaximumPosts = 10;
 		}

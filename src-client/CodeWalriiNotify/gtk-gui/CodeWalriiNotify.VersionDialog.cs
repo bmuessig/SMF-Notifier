@@ -32,11 +32,14 @@ namespace CodeWalriiNotify
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget CodeWalriiNotify.VersionDialog
+			this.WidthRequest = 600;
+			this.HeightRequest = 300;
 			this.Name = "CodeWalriiNotify.VersionDialog";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Version");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Dnd);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
 			// Internal child CodeWalriiNotify.VersionDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialogVbox";
@@ -52,7 +55,7 @@ namespace CodeWalriiNotify
 			// Container child headerHbox.Gtk.Box+BoxChild
 			this.logoImg = new global::Gtk.Image ();
 			this.logoImg.Name = "logoImg";
-			this.logoImg.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("Bell.png");
+			this.logoImg.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("CodeWalriiNotify.Bell.png");
 			this.headerHbox.Add (this.logoImg);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.headerHbox [this.logoImg]));
 			w2.Position = 0;
@@ -177,8 +180,8 @@ namespace CodeWalriiNotify
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 280;
+			this.DefaultWidth = 718;
+			this.DefaultHeight = 400;
 			this.Show ();
 			this.okButton.Clicked += new global::System.EventHandler (this.OnOkButtonClicked);
 		}

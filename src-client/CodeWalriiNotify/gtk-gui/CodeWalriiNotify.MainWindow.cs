@@ -56,7 +56,7 @@ namespace CodeWalriiNotify
 			this.Name = "CodeWalriiNotify.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Notifier");
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.DefaultWidth = 540;
 			this.DefaultHeight = 580;
 			// Container child CodeWalriiNotify.MainWindow.Gtk.Container+ContainerChild
